@@ -6,8 +6,13 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
+import { Product, Products } from '../../types/product';
 
-const CatalogScreen = (): JSX.Element => (
+type CatalogScreenProps = {
+  productCards: Products;
+}
+
+const CatalogScreen = ({ productCards }: CatalogScreenProps): JSX.Element => (
   <div className="wrapper">
     <Header />
     <main>
@@ -24,12 +29,14 @@ const CatalogScreen = (): JSX.Element => (
               <div className="catalog__content">
                 <CatalogSort />
                 <div className="cards catalog__cards">
-                  <ProductCard />
-                  <ProductCard />
-                  <ProductCard />
-                  <ProductCard />
-                  <ProductCard />
-                  <ProductCard />
+                  {
+                    productCards.map((productCard: Product) => (
+                      <ProductCard
+                        key={productCard.id}
+                        productCard={productCard}
+                      />
+                    ))
+                  }
                 </div>
                 <Pagination />
               </div>

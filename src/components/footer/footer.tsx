@@ -10,7 +10,7 @@ const Footer = (): JSX.Element => (
         <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
         <ul className="social">
           <li className="social__item">
-            <a className="link" href="#" aria-label="Переход на страницу вконтатке">
+            <a className="link" href="#" aria-label="Переход на страницу вконтакте">
               <svg width="20" height="20" aria-hidden="true">
                 <use xlinkHref="#icon-vk"></use>
               </svg>
