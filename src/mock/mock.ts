@@ -1,3 +1,12 @@
+const Promo = {
+  id: 1,
+  name: 'Ретрокамера Dus Auge lV',
+  previewImg: 'img/content/banner-bg.jpg',
+  previewImg2x: 'img/content/banner-bg@2x.jpg',
+  previewImgWebp: 'img/content/banner-bg.webp',
+  previewImgWebp2x: 'img/content/banner-bg@2x.webp'
+};
+
 const products = [
   {
     id: 1,
@@ -49,4 +58,4 @@ const products = [
   },
 ];
 
-export { products };
+export { products, Promo };

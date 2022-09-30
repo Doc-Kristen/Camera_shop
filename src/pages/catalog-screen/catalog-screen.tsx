@@ -6,6 +6,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
+import { Promo } from '../../mock/mock';
 import { Product, Products } from '../../types/product';
 
 type CatalogScreenProps = {
@@ -16,7 +17,9 @@ const CatalogScreen = ({ productCards }: CatalogScreenProps): JSX.Element => (
   <div className="wrapper">
     <Header />
     <main>
-      <Banner />
+      <Banner
+        promo={Promo}
+      />
       <div className="page-content">
         <Breadcrumbs />
         <section className="catalog">
