@@ -5,7 +5,6 @@ import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import Pagination from '../../components/pagination/pagination';
 import { useAppSelector } from '../../hooks';
 import { getProductLoadedStatus } from '../../store/product-data/selectors';
 
@@ -33,7 +32,6 @@ const CatalogScreen = (): JSX.Element => {
                     isProductLoaded ? <p>Загрузка данных...</p> :
                       <CardList />
                   }
-                  <Pagination />
                 </div>
               </div>
             </div>

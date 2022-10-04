@@ -13,6 +13,10 @@ const App = (): JSX.Element => (
         }
       />
       <Route
+        path={AppRoute.Catalog}
+        element={<CatalogScreen />}
+      />
+      <Route
         path={AppRoute.ProductById}
         element={<ItemScreen />}
       />
