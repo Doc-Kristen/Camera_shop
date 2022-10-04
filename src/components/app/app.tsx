@@ -13,7 +13,7 @@ const App = (): JSX.Element => (
         }
       />
       <Route
-        path={AppRoute.Product}
+        path={AppRoute.ProductById}
         element={<ItemScreen />}
       />
       <Route

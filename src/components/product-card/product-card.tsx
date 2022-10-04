@@ -1,6 +1,7 @@
 import { Product } from '../../types/product';
 import Rating from '../rating/rating';
-import { ratingLevels } from '../../helpers/const';
+import { AppRoute, ratingLevels } from '../../helpers/const';
+import { Link } from 'react-router-dom';
 
 type ProductCardProps = {
   productCard: Product;
@@ -8,6 +9,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
   const {
+    id,
     name,
     price,
     previewImg,
@@ -45,8 +47,8 @@ const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <a className="btn btn--transparent" href="/#">Подробнее
-        </a>
+        <Link className="btn btn--transparent" to={`${AppRoute.Products}/${id}`}>Подробнее
+        </Link>
       </div>
     </div>
   );
