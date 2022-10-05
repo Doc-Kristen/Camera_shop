@@ -1,3 +1,5 @@
+const COUNT_CARDS_PER_PAGE = 9;
+
 enum AppRoute {
     Main = '/',
     Products = '/cameras',
@@ -17,4 +19,10 @@ enum NameSpace {
 
 const ratingLevels = [1, 2, 3, 4, 5];
 
-export { ratingLevels, AppRoute, APIRoute, NameSpace };
+export {
+  COUNT_CARDS_PER_PAGE,
+  ratingLevels,
+  AppRoute,
+  APIRoute,
+  NameSpace
+};

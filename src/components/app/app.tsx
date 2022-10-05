@@ -3,13 +3,19 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../helpers/const';
 import ItemScreen from '../../pages/item-screen/item-screen';
 import BasketScreen from '../../pages/basket/basket-screen';
+import MainScreenRoute from '../main-screen-route/main-screen-route';
 
 const App = (): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route path={AppRoute.Main}
         element={
-          <CatalogScreen />
+          <MainScreenRoute
+            mainPageIsDeveloped = {false}
+            // mainPageIsDeveloped
+          >
+            <CatalogScreen />
+          </MainScreenRoute>
         }
       />
       <Route

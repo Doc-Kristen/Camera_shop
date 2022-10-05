@@ -4,11 +4,12 @@ import { getProductErrorStatus, getProducts } from '../../store/product-data/sel
 import ProductCard from '../product-card/product-card';
 import usePagination from '../../hooks/usePagination';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { COUNT_CARDS_PER_PAGE } from '../../helpers/const';
 
 const CardList = (): JSX.Element => {
   const products = useAppSelector(getProducts);
   const isProductError = useAppSelector(getProductErrorStatus);
-
   const {
     firstContentIndex,
     lastContentIndex,
@@ -18,8 +19,18 @@ const CardList = (): JSX.Element => {
     setPage,
     totalPages,
   } = usePagination({
-    contentPerPage: 9,
+    contentPerPage: COUNT_CARDS_PER_PAGE,
     count: products.length,
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      window.history.replaceState(null, '', `/catalog/page_${page}`);
+    }
+    return () => {
+      isMounted = false;
+    };
   });
 
   if (isProductError) {
@@ -38,9 +49,6 @@ const CardList = (): JSX.Element => {
           ))}
       </div>
       <div className="pagination">
-        <p className="text">
-          {page}/{totalPages}
-        </p>
         <ul className="pagination__list">
           {firstContentIndex > page ?
             <li className="pagination__item">

@@ -1,22 +1,27 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface UsePaginationProps {
-    contentPerPage: number;
-    count: number;
+  contentPerPage: number;
+  count: number;
 }
 interface UsePaginationReturn {
-    page: number;
-    totalPages: number;
-    firstContentIndex: number;
-    lastContentIndex: number;
-    nextPage: () => void;
-    prevPage: () => void;
-    setPage: (page: number) => void;
+  page: number;
+  totalPages: number;
+  firstContentIndex: number;
+  lastContentIndex: number;
+  nextPage: () => void;
+  prevPage: () => void;
+  setPage: (page: number) => void;
 }
 type UsePagination = (arg0: UsePaginationProps) => (UsePaginationReturn);
 
 const usePagination: UsePagination = ({ contentPerPage, count }) => {
-  const [page, setPage] = useState(1);
+
+  const { pageNumber } = useParams();
+  const actualpageNumber = pageNumber?.match(/\d+/);
+
+  const [page, setPage] = useState(Number(actualpageNumber));
 
   const pageCount = Math.ceil(count / contentPerPage);
 
