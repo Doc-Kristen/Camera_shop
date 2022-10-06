@@ -3,12 +3,11 @@ import Rating from '../rating/rating';
 
 type ProductDetailedProps = {
     productDetailed: Product;
-  }
+}
 
-const ProductDetailed = ({productDetailed} : ProductDetailedProps): JSX.Element => {
+const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element => {
 
   const {
-    // id,
     name,
     vendorCode,
     type,
@@ -21,21 +20,19 @@ const ProductDetailed = ({productDetailed} : ProductDetailedProps): JSX.Element 
     previewImgWebp2x,
     price,
   } = productDetailed;
-  return(
+  return (
     <section className="product">
       <div className="container">
         <div className="product__img">
           <picture>
             <source type="image/webp" srcSet={`/${previewImg}, /${previewImgWebp}, /${previewImgWebp2x} 2x`} />
             <img src={`/${previewImg}`} srcSet={`/${previewImg2x}`} width="560" height="480" alt={name} />
-            {/* <source type="image/webp" srcSet="/img/content/img1.webp, /img/content/img1@2x.webp 2x" />
-          <img src="/img/content/img1.jpg" srcSet="/img/content/img1@2x.jpg 2x" width="560" height="480" alt="Ретрокамера Das Auge IV" /> */}
           </picture>
         </div>
         <div className="product__content">
           <h1 className="title title--h3">{name}</h1>
           <Rating
-            productCard = {productDetailed}
+            productCard={productDetailed}
           />
           <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
           <button className="btn btn--purple" type="button">
