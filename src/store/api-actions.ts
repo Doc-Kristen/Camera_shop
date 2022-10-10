@@ -41,3 +41,4 @@ export const fetchSelectedProductAction = createAsyncThunk<Product, number, {
     return data;
   },
 );
+

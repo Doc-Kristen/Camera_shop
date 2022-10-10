@@ -1,6 +1,5 @@
 import { Product } from '../../types/product';
-import { AppRoute } from '../../helpers/const';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Rating from '../rating/rating';
 
 type ProductCardProps = {
@@ -8,6 +7,8 @@ type ProductCardProps = {
 }
 
 const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
+  const location = useLocation();
+
   const {
     id,
     name,
@@ -37,7 +38,7 @@ const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`${AppRoute.Products}/${id}`}>Подробнее
+        <Link className="btn btn--transparent" to={`${location.pathname}/${id}`}>Подробнее
         </Link>
       </div>
     </div>
