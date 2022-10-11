@@ -1,13 +1,15 @@
 import { Product } from '../../types/product';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Rating from '../rating/rating';
+import { AppRoute } from '../../helpers/const';
 
 type ProductCardProps = {
   productCard: Product;
+  isActive?: boolean;
 }
 
-const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
-  const location = useLocation();
+const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element => {
+  const { pageNumber } = useParams();
 
   const {
     id,
@@ -20,7 +22,7 @@ const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
   } = productCard;
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${isActive ? 'is-active' : ''}`}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImg}, /${previewImgWebp}, /${previewImgWebp2x} 2x`} />
@@ -38,7 +40,7 @@ const ProductCard = ({ productCard }: ProductCardProps): JSX.Element => {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`${location.pathname}/${id}`}>Подробнее
+        <Link className="btn btn--transparent" to={`${AppRoute.Catalog}${pageNumber ? pageNumber : ''}/${id}`}>Подробнее
         </Link>
       </div>
     </div>

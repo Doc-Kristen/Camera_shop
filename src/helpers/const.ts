@@ -2,8 +2,8 @@ const COUNT_CARDS_PER_PAGE = 9;
 
 enum AppRoute {
     Main = '/',
-    Products = '/catalog/:pageNumber/:id',
-    Catalog = '/catalog/:pageNumber',
+    Catalog = '/catalog/',
+    Products = '/catalog/:pageNumber',
     ProductById = '/catalog/:pageNumber/:id',
     Basket = '/orders',
 }

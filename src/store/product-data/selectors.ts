@@ -9,6 +9,8 @@ export const getProducts = (state: State): Products => state[NameSpace.Data].pro
 
 export const getSelectedProduct = (state: State): Product | undefined => state[NameSpace.Data].selectedProduct;
 
+export const getSimilarProducts = (state: State): Products => state[NameSpace.Data].similarProducts;
+
 export const getPromoErrorStatus = (state: State): boolean => state[NameSpace.Data].isPromoError;
 
 export const getProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isProductError;

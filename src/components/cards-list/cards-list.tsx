@@ -27,11 +27,12 @@ const CardList = (): JSX.Element => {
     let isMounted = true;
     if (isMounted) {
       window.history.replaceState(null, '', `/catalog/page_${page}`);
+      window.scrollTo(0, 0);
     }
     return () => {
       isMounted = false;
     };
-  });
+  }, [page]);
 
   if (isProductError) {
     return <p>Сервер с данными о товарах недоступен. Воспользуйтесь другими разделами сайта, либо зайдите позже.</p>;

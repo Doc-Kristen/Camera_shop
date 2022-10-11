@@ -31,7 +31,6 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
 
   const changePage = (direction: boolean) => {
     setPage((state) => {
-
       if (direction) {
 
         if (state === pageCount) {

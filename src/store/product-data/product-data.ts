@@ -2,7 +2,7 @@ import { Product, Products } from '../../types/product';
 import { Promo } from '../../types/promo';
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../helpers/const';
-import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction } from '../api-actions';
+import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 
 type InitalState = {
   promo?: Promo;
@@ -12,6 +12,7 @@ type InitalState = {
   isSelectedProductError: boolean;
   products: Products;
   selectedProduct?: Product;
+  similarProducts: Products;
 }
 
 const initialState: InitalState = {
@@ -20,6 +21,7 @@ const initialState: InitalState = {
   isProductError: false,
   isSelectedProductError: false,
   products: [],
+  similarProducts: []
 };
 
 export const productData = createSlice({
@@ -47,7 +49,6 @@ export const productData = createSlice({
         state.isProductError = true;
       })
       .addCase(fetchSelectedProductAction.pending, (state, action) => {
-        state.selectedProduct = action.payload;
         state.isProductLoaded = true;
       })
       .addCase(fetchSelectedProductAction.fulfilled, (state, action) => {
@@ -56,6 +57,18 @@ export const productData = createSlice({
         state.isSelectedProductError = false;
       })
       .addCase(fetchSelectedProductAction.rejected, (state) => {
+        state.isSelectedProductError = true;
+        state.isProductLoaded = false;
+      })
+      .addCase(fetchSimilarProductsAction.pending, (state) => {
+        state.isProductLoaded = true;
+      })
+      .addCase(fetchSimilarProductsAction.fulfilled, (state, action) => {
+        state.similarProducts = action.payload;
+        state.isProductLoaded = false;
+        state.isSelectedProductError = false;
+      })
+      .addCase(fetchSimilarProductsAction.rejected, (state) => {
         state.isSelectedProductError = true;
         state.isProductLoaded = false;
       });

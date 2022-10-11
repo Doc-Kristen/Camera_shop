@@ -5,30 +5,33 @@ import ProductDetailed from '../../components/product-detailed/product-detailed'
 import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedProduct } from '../../store/product-data/selectors';
+import { getSelectedProduct, getSimilarProducts } from '../../store/product-data/selectors';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchSelectedProductAction } from '../../store/api-actions';
+import { fetchSelectedProductAction, fetchSimilarProductsAction } from '../../store/api-actions';
 
-const ItemScreen = (): JSX.Element => {
+const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
   const ProductId = Number(id);
   const productDetailed = useAppSelector(getSelectedProduct);
+  const productsSimilar = useAppSelector(getSimilarProducts);
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       const fetchData = () => {
         dispatch(fetchSelectedProductAction(ProductId));
+        dispatch(fetchSimilarProductsAction(ProductId));
+        window.scroll(0, 0);
       };
       fetchData();
     }
     return () => {
       isMounted = false;
     };
-  }, [dispatch, ProductId]);
+  }, [ProductId, dispatch]);
 
   return (
     <div className="wrapper">
@@ -46,9 +49,14 @@ const ItemScreen = (): JSX.Element => {
                 : <p>Loading...</p>
             }
           </div>
-          <div className="page-content__section">
-            <ProductSimilar />
-          </div>
+          {
+            productsSimilar ?
+              <div className="page-content__section">
+                <ProductSimilar />
+              </div>
+              :
+              null
+          }
           <div className="page-content__section">
             <ReviewBlock />
           </div>
@@ -64,4 +72,4 @@ const ItemScreen = (): JSX.Element => {
   );
 };
 
-export default ItemScreen;
+export default ProductScreen;
