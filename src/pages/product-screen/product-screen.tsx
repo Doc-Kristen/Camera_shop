@@ -3,12 +3,34 @@ import Header from '../../components/header/header';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import ProductDetailed from '../../components/product-detailed/product-detailed';
 import ProductSimilar from '../../components/product-similar/product-similar';
-import ReviewBlock from '../../components/review-block/review-block';
+import ReviewsList from '../../components/reviews-list/reviews-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSelectedProduct, getSimilarProducts } from '../../store/product-data/selectors';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchSelectedProductAction, fetchSimilarProductsAction } from '../../store/api-actions';
+const reviewProps = [
+  {
+    id: '2ab4a018-2e53-4f7c-abc7-7f868093e9a5',
+    userName: 'Кирилл',
+    advantage: 'Легкая в плане веса, удобная в интерфейсе',
+    disadvantage: 'Быстро садиться зарядка',
+    review: 'Это моя первая камера. Я в восторге, нареканий нет',
+    rating: 4,
+    createAt: '2022-07-09T13:24:57.980Z',
+    cameraId: 1
+  },
+  {
+    id: '2ab4a018-2e53-4kf7c-abc7-7f868093e9a5',
+    userName: 'Кирилл',
+    advantage: 'Легкая в плане веса, удобная в интерфейсе',
+    disadvantage: 'Быстро садиться зарядка',
+    review: 'Это моя первая камера. Я в восторге, нареканий нет',
+    rating: 4,
+    createAt: '2022-07-09T13:24:57.980Z',
+    cameraId: 1
+  }
+];
 
 const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -58,7 +80,9 @@ const ProductScreen = (): JSX.Element => {
               null
           }
           <div className="page-content__section">
-            <ReviewBlock />
+            <ReviewsList
+              reviews={reviewProps}
+            />
           </div>
         </div>
       </main>
