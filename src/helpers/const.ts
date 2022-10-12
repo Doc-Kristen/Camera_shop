@@ -1,5 +1,7 @@
 const COUNT_CARDS_PER_PAGE = 9;
 
+const MAX_REVIEWS_COUNT_PER_PAGE = 3;
+
 enum AppRoute {
     Main = '/',
     Catalog = '/catalog/',
@@ -37,6 +39,7 @@ const MonthsDictionary: { [char: string]: string } = {
 
 export {
   COUNT_CARDS_PER_PAGE,
+  MAX_REVIEWS_COUNT_PER_PAGE,
   ratingLevels,
   MonthsDictionary,
   AppRoute,

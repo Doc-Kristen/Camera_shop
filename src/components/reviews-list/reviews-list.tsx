@@ -1,10 +1,14 @@
+// import { MAX_REVIEWS_COUNT_PER_PAGE } from '../../helpers/const';
+import { sortReviewsDayDown } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import { getReviews } from '../../store/review-data/selectors';
 import ReviewItem from '../review-item/review-item';
 
 const ReviewsList = (): JSX.Element => {
 
-  const reviews = useAppSelector(getReviews);
+  const allReviews = useAppSelector(getReviews);
+  // const lastReviews = allReviews && allReviews.slice().sort(sortReviewsDayDown).slice(0, MAX_REVIEWS_COUNT_PER_PAGE);
+  const lastReviews = allReviews && allReviews.slice().sort(sortReviewsDayDown);
 
   return(
     <section className="review-block">
@@ -16,7 +20,7 @@ const ReviewsList = (): JSX.Element => {
         <ul className="review-block__list">
           <map name=""></map>
           {
-            reviews.map((review) =>
+            lastReviews.map((review) =>
               (
                 <ReviewItem
                   key={review.id}
