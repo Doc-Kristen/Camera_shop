@@ -4,6 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { APIRoute } from '../helpers/const';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
+import { Reviews } from '../types/review';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -51,6 +52,19 @@ export const fetchSimilarProductsAction = createAsyncThunk<Products, number, {
   async (productId: number, { extra: api }) => {
 
     const { data } = await api.get<Products>(`${APIRoute.Products}/${productId}/similar`);
+    return data;
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk<Reviews, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchReviews',
+  async (productId: number, { extra: api }) => {
+
+    const { data } = await api.get<Reviews>(`${APIRoute.Products}/${productId}/reviews`);
     return data;
   },
 );

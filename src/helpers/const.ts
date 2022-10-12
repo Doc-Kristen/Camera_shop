@@ -15,6 +15,7 @@ enum APIRoute {
 
 enum NameSpace {
     Data = 'DATA',
+    Review = 'REVIEW',
 }
 
 const ratingLevels = [1, 2, 3, 4, 5];

@@ -1,4 +1,3 @@
-// import { ratingLevels } from '../../helpers/const';
 import { ratingLevels } from '../../helpers/const';
 import { Review } from '../../types/review';
 import RatingStars from '../rating-stars/rating-stars';
@@ -9,14 +8,11 @@ type ReviewItemProps = {
 
 const ReviewItem = ({ userReview }: ReviewItemProps): JSX.Element => {
   const {
-    // id,
-    // userName,
     advantage,
     disadvantage,
     review,
     rating,
     createAt,
-    // cameraId
   } = userReview;
 
   return (
