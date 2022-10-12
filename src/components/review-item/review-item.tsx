@@ -1,4 +1,5 @@
-import { ratingLevels } from '../../helpers/const';
+import { MonthsDictionary, ratingLevels } from '../../helpers/const';
+import { getRussifiedDate } from '../../helpers/utils';
 import { Review } from '../../types/review';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -15,11 +16,13 @@ const ReviewItem = ({ userReview }: ReviewItemProps): JSX.Element => {
     createAt,
   } = userReview;
 
+  const date = getRussifiedDate(createAt, MonthsDictionary);
+
   return (
     <li className="review-card">
       <div className="review-card__head">
         <p className="title title--h4"></p>
-        <time className="review-card__data" dateTime={createAt}>{createAt}</time>
+        <time className="review-card__data" dateTime={createAt}>{date}</time>
       </div>
       <div className="rate review-card__rate">
         {
