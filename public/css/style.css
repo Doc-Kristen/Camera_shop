@@ -3570,6 +3570,14 @@ button,
     background-color: #a2a2ff;
   }
 
+  .btn--review:hover {
+    background-color: #a2a2ff;
+  }
+
+  .btn--review:focus {
+    background-color: #7575e2;
+  }
+
   .btn--purple:active {
     background-color: #525288;
   }

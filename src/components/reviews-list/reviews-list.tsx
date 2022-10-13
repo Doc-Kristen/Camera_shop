@@ -1,9 +1,9 @@
-import { MAX_REVIEWS_COUNT_PER_PAGE } from '../../helpers/const';
-import { sortReviewsDayDown } from '../../helpers/utils';
+import { MAX_REVIEWS_COUNT_PER_PAGE, MonthsDictionary, ratingLevels } from '../../helpers/const';
+import { getRussifiedDate, sortReviewsDayDown } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
 import { getReviews } from '../../store/review-data/selectors';
-import ReviewItem from '../review-item/review-item';
+import RatingStars from '../rating-stars/rating-stars';
 
 const ReviewsList = (): JSX.Element => {
 
@@ -13,11 +13,13 @@ const ReviewsList = (): JSX.Element => {
   const {
     firstContentIndex,
     lastReviewIndex,
-    setlastReviewIndex
+    setLastReviewIndex
   } = usePagination({
     contentPerPage: MAX_REVIEWS_COUNT_PER_PAGE,
     count: allReviews.length,
   });
+
+  const lastReviewsPerPage = lastReviews.slice(firstContentIndex, lastReviewIndex);
 
   return (
     <section className="review-block">
@@ -29,14 +31,55 @@ const ReviewsList = (): JSX.Element => {
         <ul className="review-block__list">
           <map name=""></map>
           {
-            lastReviews.slice(firstContentIndex, lastReviewIndex)
-              .map((review) =>
-                (
-                  <ReviewItem
-                    key={review.id}
-                    userReview={review}
-                  />
-                )
+            lastReviewsPerPage
+              .map((review, index) => (
+                <li
+                  key={review.id}
+                  className="review-card"
+                  onWheel={
+                    (evt) => {
+                      if(
+                        evt.deltaY >= 0
+                        &&
+                        lastReviewsPerPage.length - 1 === index
+                        &&
+                        lastReviewsPerPage.length !== allReviews.length
+                      )
+                      {
+                        setLastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
+                      }
+                    }
+                  }
+                >
+                  <div className="review-card__head">
+                    <p className="title title--h4"></p>
+                    <time className="review-card__data" dateTime={review.createAt}>{getRussifiedDate(review.createAt, MonthsDictionary)}</time>
+                  </div>
+                  <div className="rate review-card__rate">
+                    {
+                      ratingLevels.map((level) => (
+                        <RatingStars
+                          productCard={review}
+                          ratingLevel={level}
+                          key={level}
+                        />
+                      ))
+                    }
+                    <p className="visually-hidden">Оценка: {review.rating}</p>
+                  </div>
+                  <ul className="review-card__list">
+                    <li className="item-list"><span className="item-list__title">Достоинства:</span>
+                      <p className="item-list__text">{review.advantage}</p>
+                    </li>
+                    <li className="item-list"><span className="item-list__title">Недостатки:</span>
+                      <p className="item-list__text">{review.disadvantage}</p>
+                    </li>
+                    <li className="item-list"><span className="item-list__title">Комментарий:</span>
+                      <p className="item-list__text">{review.review}</p>
+                    </li>
+                  </ul>
+                </li>
+              )
               )
           }
         </ul>
@@ -45,9 +88,9 @@ const ReviewsList = (): JSX.Element => {
             lastReviewIndex >= lastReviews.length
               ? null
               :
-              <button className="btn btn--purple" type="button" onClick={
+              <button className="btn btn--purple btn--review" type="button" onClick={
                 () => {
-                  setlastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
+                  setLastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
                 }
               }
               >

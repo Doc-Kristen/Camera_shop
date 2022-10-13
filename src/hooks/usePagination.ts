@@ -14,7 +14,7 @@ interface UsePaginationReturn {
   prevPage: () => void;
   setPage: (page: number) => void;
   lastReviewIndex: number;
-  setlastReviewIndex: (page: number) => void;
+  setLastReviewIndex: (page: number) => void;
 }
 type UsePagination = (arg0: UsePaginationProps) => (UsePaginationReturn);
 
@@ -31,7 +31,7 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
 
   const firstContentIndex = lastContentIndex - contentPerPage;
 
-  const [ lastReviewIndex, setlastReviewIndex] = useState(lastContentIndex);
+  const [ lastReviewIndex, setLastReviewIndex] = useState(lastContentIndex);
 
   const changePage = (direction: boolean) => {
     setPage((state) => {
@@ -71,7 +71,7 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
     lastContentIndex,
     page,
     lastReviewIndex,
-    setlastReviewIndex
+    setLastReviewIndex
   };
 };
 export default usePagination;

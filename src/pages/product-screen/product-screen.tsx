@@ -63,11 +63,16 @@ const ProductScreen = (): JSX.Element => {
           </div>
         </div>
       </main>
-      <a className="up-btn" href="#header">
+      <button
+        className="up-btn" type="button"
+        onClick={
+          ()=> { window.scrollTo({top: 0, behavior: 'smooth'});}
+        }
+      >
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </button>
       <Footer />
     </div>
   );
