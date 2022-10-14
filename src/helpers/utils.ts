@@ -17,9 +17,14 @@ const getRussifiedDate = (date: string, monthsDictionary: { [char: string]: stri
 
 const sortReviewsDayDown = (reviewA: Review, reviewB: Review) => dayjs(reviewB.createAt).diff(dayjs(reviewA.createAt));
 
+// Функция проверки нажатия клавиши Escape
+
+const isEscapeKeyPressed = (evt: KeyboardEvent) => evt.key === 'Escape';
+
 export {
   humanizeHeaderDueDate,
   getRussifiedDate,
-  sortReviewsDayDown
+  sortReviewsDayDown,
+  isEscapeKeyPressed
 };
 

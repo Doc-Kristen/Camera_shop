@@ -1,14 +1,24 @@
 import { MAX_REVIEWS_COUNT_PER_PAGE, MonthsDictionary, ratingLevels } from '../../helpers/const';
 import { getRussifiedDate, sortReviewsDayDown } from '../../helpers/utils';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
+import { setModalOpeningStatus } from '../../store/action';
 import { getReviews } from '../../store/review-data/selectors';
+import { getFormOpenedStatus } from '../../store/user-process/selectors';
 import RatingStars from '../rating-stars/rating-stars';
+import ReviewModal from '../review-modal/review-modal';
 
 const ReviewsList = (): JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const allReviews = useAppSelector(getReviews);
   const lastReviews = allReviews && allReviews.slice().sort(sortReviewsDayDown);
+
+  const isFormOpened = useAppSelector(getFormOpenedStatus);
+
+  const handleButtonClick = () => {
+    dispatch(setModalOpeningStatus(true));
+  };
 
   const {
     firstContentIndex,
@@ -26,7 +36,11 @@ const ReviewsList = (): JSX.Element => {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button">Оставить свой отзыв</button>
+          <button className="btn"
+            type="button"
+            onClick={handleButtonClick}
+          >Оставить свой отзыв
+          </button>
         </div>
         <ul className="review-block__list">
           <map name=""></map>
@@ -100,6 +114,7 @@ const ReviewsList = (): JSX.Element => {
 
         </div>
       </div>
+      { isFormOpened && <ReviewModal />}
     </section>
   );
 };

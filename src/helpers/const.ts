@@ -13,11 +13,13 @@ enum AppRoute {
 enum APIRoute {
     Promo = '/promo',
     Products = '/cameras',
+    Reviews = '/reviews'
 }
 
 enum NameSpace {
     Data = 'DATA',
     Review = 'REVIEW',
+    User = 'USER'
 }
 
 const ratingLevels = [1, 2, 3, 4, 5];
