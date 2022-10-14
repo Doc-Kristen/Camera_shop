@@ -1,10 +1,38 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../helpers/const';
 import { isEscapeKeyPressed } from '../../helpers/utils';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useReviewForm } from '../../hooks/useReviewForm';
 import { setModalOpeningStatus } from '../../store/action';
+import { getFormBlockedStatus } from '../../store/user-process/selectors';
+import ReviewFormRatingList from '../review-form-rating-list/review-form-rating-list';
 
 const ReviewModal = (): JSX.Element => {
   const dispatch = useAppDispatch();
+
+  const { id } = useParams();
+  const productId = Number(id);
+
+  const isFormDisabled = useAppSelector(getFormBlockedStatus);
+
+  const formContentDefault = {
+    cameraId: productId,
+    userName: '',
+    advantage: '',
+    disadvantage:'',
+    review: '',
+    rating: 0
+  };
+
+  const [
+    formData,
+    handleFormSubmit,
+    handleRadioChange,
+    handleRadioUserNameChange,
+    handleRadioAdvantageChange,
+    handleRadioDisdvantageChange,
+    handleTextAreaChange] = useReviewForm(formContentDefault, productId);
 
   useEffect(() => {
     const keyCloseHandler = (evt : KeyboardEvent) => {
@@ -12,7 +40,6 @@ const ReviewModal = (): JSX.Element => {
         dispatch(setModalOpeningStatus(false));
       }
     };
-    document.addEventListener('keydown', keyCloseHandler);
     document.addEventListener('keydown', keyCloseHandler);
     return () => {
       document.removeEventListener('keydown', keyCloseHandler);
@@ -29,32 +56,16 @@ const ReviewModal = (): JSX.Element => {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+            <form method="post"
+              onSubmit={handleFormSubmit}
+            >
               <div className="form-review__rate">
-                <fieldset className="rate form-review__item">
-                  <legend className="rate__caption">Рейтинг
-                    <svg width="9" height="9" aria-hidden="true">
-                      <use xlinkHref="#icon-snowflake"></use>
-                    </svg>
-                  </legend>
-                  <div className="rate__bar">
-                    <div className="rate__group">
-                      <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5" />
-                      <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
-                      <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4" />
-                      <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
-                      <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3" />
-                      <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
-                      <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2" />
-                      <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
-                      <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1" />
-                      <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
-                    </div>
-                    <div className="rate__progress"><span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
-                    </div>
-                  </div>
-                  <p className="rate__message">Нужно оценить товар</p>
-                </fieldset>
+                <ReviewFormRatingList
+                  currentRating={formData.rating}
+                  radioChangeHandle={handleRadioChange}
+                  isFormDisabled={isFormDisabled}
+
+                />
                 <div className="custom-input form-review__item">
                   <label>
                     <span className="custom-input__label">Ваше имя
@@ -62,7 +73,15 @@ const ReviewModal = (): JSX.Element => {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-name" placeholder="Введите ваше имя" required />
+                    <input
+                      type="text"
+                      name="user-name"
+                      placeholder="Введите ваше имя"
+                      value={formData.userName}
+                      onChange={handleRadioUserNameChange}
+                      disabled={isFormDisabled}
+                      required
+                    />
                   </label>
                   <p className="custom-input__error">Нужно указать имя</p>
                 </div>
@@ -73,7 +92,17 @@ const ReviewModal = (): JSX.Element => {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
+                    <input
+                      type="text"
+                      name="user-plus"
+                      placeholder="Основные преимущества товара"
+                      value={formData.advantage}
+                      onChange={handleRadioAdvantageChange}
+                      minLength={MIN_COMMENT_LENGTH}
+                      maxLength={MAX_COMMENT_LENGTH}
+                      disabled={isFormDisabled}
+                      required
+                    />
                   </label>
                   <p className="custom-input__error">Нужно указать достоинства</p>
                 </div>
@@ -84,7 +113,15 @@ const ReviewModal = (): JSX.Element => {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
+                    <input
+                      type="text"
+                      name="user-minus"
+                      placeholder="Главные недостатки товара"
+                      value={formData.disadvantage}
+                      onChange={handleRadioDisdvantageChange}
+                      disabled={isFormDisabled}
+                      required
+                    />
                   </label>
                   <p className="custom-input__error">Нужно указать недостатки</p>
                 </div>
@@ -95,12 +132,25 @@ const ReviewModal = (): JSX.Element => {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"></textarea>
+                    <textarea
+                      name="user-comment"
+                      placeholder="Поделитесь своим опытом покупки"
+                      onChange={handleTextAreaChange}
+                      minLength={MIN_COMMENT_LENGTH}
+                      maxLength={MAX_COMMENT_LENGTH}
+                      disabled={isFormDisabled}
+                    >
+                    </textarea>
                   </label>
                   <div className="custom-textarea__error">Нужно добавить комментарий</div>
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+              <button
+                className="btn btn--purple form-review__btn"
+                type="submit"
+                disabled={isFormDisabled}
+              >{isFormDisabled ? 'Отправка отзыва...' : 'Отправить отзыв'}
+              </button>
             </form>
           </div>
           <button

@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { APIRoute } from '../helpers/const';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
-import { Reviews } from '../types/review';
+import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
@@ -70,16 +70,14 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, number, {
   },
 );
 
-export const sendReview = createAsyncThunk<void, ReviewPost, {
+export const sendReview = createAsyncThunk<Review, ReviewPost, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/postReview',
   async (review: ReviewPost, { extra: api }) => {
-    const { data } = await api.post(APIRoute.Reviews, review);
-    console.log(data);
+    const { data } = await api.post<Review>(APIRoute.Reviews, review);
     return data;
   }
 );
-
