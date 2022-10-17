@@ -1,12 +1,15 @@
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../helpers/const';
 import ProductScreen from '../../pages/product-screen/product-screen';
 import BasketScreen from '../../pages/basket/basket-screen';
 import MainScreenRoute from '../main-screen-route/main-screen-route';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import HistoryRoute from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 const App = (): JSX.Element => (
-  <BrowserRouter>
+  <HistoryRoute history={browserHistory}>
     <Routes>
       <Route path={AppRoute.Main}
         element={
@@ -30,8 +33,12 @@ const App = (): JSX.Element => (
         path={AppRoute.Basket}
         element={<BasketScreen />}
       />
+      <Route
+        path="*"
+        element={<NotFoundScreen />}
+      />
     </Routes>
-  </BrowserRouter>
+  </HistoryRoute>
 );
 
 export default App;
