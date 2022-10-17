@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
 import { setModalOpeningStatus } from '../../store/action';
 import { getReviews } from '../../store/review-data/selectors';
-import { getFormOpenedStatus } from '../../store/user-process/selectors';
+import { getReviewSuccessStatus, getFormOpenedStatus } from '../../store/user-process/selectors';
+import ReviewSuccess from '../review-success/review-success';
 import RatingStars from '../rating-stars/rating-stars';
 import ReviewModal from '../review-modal/review-modal';
 
@@ -15,6 +16,7 @@ const ReviewsList = (): JSX.Element => {
   const lastReviews = allReviews && allReviews.slice().sort(sortReviewsDayDown);
 
   const isFormOpened = useAppSelector(getFormOpenedStatus);
+  const isReviewSuccess = useAppSelector(getReviewSuccessStatus);
 
   const handleButtonClick = () => {
     dispatch(setModalOpeningStatus(true));
@@ -115,6 +117,7 @@ const ReviewsList = (): JSX.Element => {
         </div>
       </div>
       { isFormOpened && <ReviewModal />}
+      { isReviewSuccess && <ReviewSuccess />}
     </section>
   );
 };

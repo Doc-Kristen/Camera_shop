@@ -10,7 +10,8 @@ type ResultUseReviewForm = [
     (evt: React.ChangeEvent<HTMLInputElement>) => void,
     (evt: React.ChangeEvent<HTMLInputElement>) => void,
     (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLTextAreaElement>) => void];
+    (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
+  ];
 
 export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): ResultUseReviewForm => {
 
@@ -19,11 +20,9 @@ export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): Re
   const [formData, setFormData] = useState(formContentDefault);
 
   const sendUserReview = () => {
-    dispatch(sendReview(formData)).then(()=> {
+    dispatch(sendReview(formData)).finally(()=> {
       dispatch(fetchReviewsAction(urlId));
     });
-    setFormData(formContentDefault);
-
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {
@@ -58,5 +57,6 @@ export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): Re
     handleRadioUserNameChange,
     handleRadioAdvantageChange,
     handleRadioDisdvantageChange,
-    handleTextAreaChange];
+    handleTextAreaChange,
+  ];
 };

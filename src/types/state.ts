@@ -8,7 +8,8 @@ type UserProcess = {
     isFormOpened: boolean;
     isFormBlocked: boolean;
     isReviewPosted: boolean;
-    isReviewError: boolean;
+    isErrorSendingReview: boolean;
+    isReviewSuccess: boolean;
 };
 
 export type { State, AppDispatch, UserProcess };

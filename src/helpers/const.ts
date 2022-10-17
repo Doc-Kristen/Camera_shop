@@ -4,7 +4,7 @@ const MAX_REVIEWS_COUNT_PER_PAGE = 3;
 
 const MIN_COMMENT_LENGTH = 5;
 
-const MAX_COMMENT_LENGTH = 300;
+const ERROR_MESSAGE_TIME = 2000;
 
 enum AppRoute {
     Main = '/',
@@ -71,7 +71,7 @@ export {
   COUNT_CARDS_PER_PAGE,
   MAX_REVIEWS_COUNT_PER_PAGE,
   MIN_COMMENT_LENGTH,
-  MAX_COMMENT_LENGTH,
+  ERROR_MESSAGE_TIME,
   ratingLevels,
   MonthsDictionary,
   RatingValues,

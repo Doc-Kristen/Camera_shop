@@ -5,10 +5,11 @@ type ReviewFormRatingListProps = {
     currentRating: number;
     radioChangeHandle: (evt: React.ChangeEvent<HTMLInputElement>) => void;
     isFormDisabled: boolean;
+    isFormRatingValid: boolean;
   }
 
-const ReviewFormRatingList = ({currentRating, radioChangeHandle, isFormDisabled} : ReviewFormRatingListProps): JSX.Element => (
-  <fieldset className="rate form-review__item">
+const ReviewFormRatingList = ({currentRating, radioChangeHandle, isFormDisabled, isFormRatingValid} : ReviewFormRatingListProps): JSX.Element => (
+  <fieldset className={`rate form-review__item ${isFormRatingValid ? '' : 'is-invalid'}`}>
     <legend className="rate__caption">Рейтинг
       <svg width="9" height="9" aria-hidden="true">
         <use xlinkHref="#icon-snowflake"></use>

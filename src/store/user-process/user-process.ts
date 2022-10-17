@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../helpers/const';
 import { UserProcess } from '../../types/state';
-import { setModalOpeningStatus, setOrderErrorStatus } from '../action';
+import { setModalOpeningStatus, setReviewErrorStatus, setSuccessOpeningStatus } from '../action';
 import { sendReview } from '../api-actions';
 
 const initialState: UserProcess = {
   isFormOpened: false,
   isFormBlocked: false,
   isReviewPosted: false,
-  isReviewError: false
+  isErrorSendingReview: false,
+  isReviewSuccess: false,
 };
 
 export const userProcess = createSlice({
@@ -28,15 +29,19 @@ export const userProcess = createSlice({
         state.isFormBlocked = false;
         state.isFormOpened = false;
         state.isReviewPosted = false;
-        state.isReviewError = false;
+        state.isErrorSendingReview = false;
+        state.isReviewSuccess = true;
       })
       .addCase(sendReview.rejected, (state) => {
         state.isFormBlocked = false;
         state.isReviewPosted = false;
-        state.isReviewError = true;
+        state.isErrorSendingReview = true;
       })
-      .addCase(setOrderErrorStatus, (state, action) => {
-        state.isReviewError = action.payload;
+      .addCase(setReviewErrorStatus, (state, action) => {
+        state.isErrorSendingReview = action.payload;
+      })
+      .addCase(setSuccessOpeningStatus, (state, action) => {
+        state.isReviewSuccess = action.payload;
       });
   }
 });
