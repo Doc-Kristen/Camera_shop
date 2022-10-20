@@ -1,11 +1,32 @@
-import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import browserHistory from '../../browser-history';
+import { ProductDetailsType } from '../../helpers/const';
 import { Product } from '../../types/product';
 
 type TabProductProps = {
-    productDetailed: Product;
+  productDetailed: Product;
 }
 
 const TabProduct = ({ productDetailed }: TabProductProps): JSX.Element => {
+
+  const location = useLocation();
+
+  const userLocation = location.pathname
+    .replace(/\/$/, '')
+    .split('/');
+
+  const selectDetails = () => {
+    if (userLocation.includes('description')) {
+      return 'description';
+    }
+    if (userLocation.includes('specification')) {
+      return 'specification';
+    }
+    return '*';
+  };
+
+  const selectedDetails = selectDetails();
+
   const {
     vendorCode,
     type,
@@ -14,17 +35,12 @@ const TabProduct = ({ productDetailed }: TabProductProps): JSX.Element => {
     level,
   } = productDetailed;
 
-  const [specificationProduct, setSpecificationProduct] = useState(false);
-  const [descriptionProduct, setDescriptionProduct] = useState(true);
-
   const onClickButton = () => {
-    if (descriptionProduct) {
-      setDescriptionProduct(false);
-      setSpecificationProduct(true);
+    if (selectedDetails === ProductDetailsType.Description) {
+      browserHistory.push('specification');
     }
-    if (specificationProduct) {
-      setSpecificationProduct(false);
-      setDescriptionProduct(true);
+    if (selectedDetails === ProductDetailsType.Specification) {
+      browserHistory.push('description');
     }
   };
 
@@ -32,20 +48,20 @@ const TabProduct = ({ productDetailed }: TabProductProps): JSX.Element => {
     <div className="tabs product__tabs">
       <div className="tabs__controls product__tabs-controls">
         <button
-          className={`tabs__control ${specificationProduct ? 'is-active' : ''}`}
+          className={`tabs__control ${selectedDetails === 'specification' ? 'is-active' : ''}`}
           type="button"
           onClick={onClickButton}
         >Характеристики
         </button>
         <button
-          className={`tabs__control ${descriptionProduct ? 'is-active' : ''}`}
+          className={`tabs__control ${selectedDetails === 'description' ? 'is-active' : ''}`}
           type="button"
           onClick={onClickButton}
         >Описание
         </button>
       </div>
       <div className="tabs__content">
-        <div className={`tabs__element ${specificationProduct ? 'is-active' : ''}`}>
+        <div className={`tabs__element ${selectedDetails === 'specification' ? 'is-active' : ''}`}>
           <ul className="product__tabs-list">
             <li className="item-list"><span className="item-list__title">Артикул:</span>
               <p className="item-list__text">{vendorCode}</p>
@@ -61,7 +77,7 @@ const TabProduct = ({ productDetailed }: TabProductProps): JSX.Element => {
             </li>
           </ul>
         </div>
-        <div className={`tabs__element ${descriptionProduct ? 'is-active' : ''}`}>
+        <div className={`tabs__element ${selectedDetails === 'description' ? 'is-active' : ''}`}>
           <div className="product__tabs-text">
             <p>{description}</p>
           </div>

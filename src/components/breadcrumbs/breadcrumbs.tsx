@@ -9,25 +9,38 @@ const Breadcrumbs = (): JSX.Element => {
 
   const product = useAppSelector(getSelectedProduct);
 
+  const userLocation = location.pathname
+    .replace(/\/$/, '')
+    .split('/')
+    .reduce((previous: string, current: string) => `${previous}/${current}`);
+
+  const selectedDetails = location.pathname
+    .replace(/\/$/, '')
+    .split('/');
+
+  const selectDetails = () => {
+    if (selectedDetails.includes('description')) {
+      return 'description';
+    }
+    if (selectedDetails.includes('specification')) {
+      return 'specification';
+    }
+    return '*';
+  };
   const routes = [
     {
       path: '',
       breadcrumbName: 'Главная',
     },
     {
-      path: `catalog/${pageNumber ? pageNumber : ''}`,
+      path: `catalog/pages/${pageNumber ? pageNumber : ''}`,
       breadcrumbName: 'Каталог',
     },
     {
-      path: `catalog/${pageNumber ? pageNumber : ''}/${id ? id : ''}`,
+      path: `catalog/pages/${pageNumber ? pageNumber : ''}/${id ? id : ''}/${selectDetails()}`,
       breadcrumbName: product?.name,
     },
   ];
-
-  const userLocation = location.pathname
-    .replace(/\/$/, '')
-    .split('/')
-    .reduce((previous: string, current: string) => `${previous}/${current}`);
 
   return (
     <div className="breadcrumbs">

@@ -4,6 +4,8 @@ import App from './components/app/app';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { fetchProductsAction } from './store/api-actions';
+import browserHistory from './browser-history';
+import HistoryRoute from './components/history-route/history-route';
 
 store.dispatch(fetchProductsAction());
 
@@ -16,8 +18,9 @@ root.render(
     <Provider
       store={store}
     >
-      <App />
+      <HistoryRoute history={browserHistory}>
+        <App />
+      </HistoryRoute>
     </Provider>
-
   </React.StrictMode>,
 );

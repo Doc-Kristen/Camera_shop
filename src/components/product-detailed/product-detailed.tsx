@@ -16,6 +16,7 @@ const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element
     previewImgWebp2x,
     price,
   } = productDetailed;
+
   return (
     <section className="product">
       <div className="container">

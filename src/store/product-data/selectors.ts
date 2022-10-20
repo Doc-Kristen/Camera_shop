@@ -13,6 +13,12 @@ export const getSimilarProducts = (state: State): Products => state[NameSpace.Da
 
 export const getPromoErrorStatus = (state: State): boolean => state[NameSpace.Data].isPromoError;
 
-export const getProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isProductError;
+export const getProductsErrorStatus = (state: State): boolean => state[NameSpace.Data].isProductsError;
 
-export const getProductLoadedStatus = (state: State): boolean => state[NameSpace.Data].isProductLoaded;
+export const getSelectedProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isSelectedProductError;
+
+export const getSimilarProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isSimilarProductError;
+
+export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
+
+export const getProductDetails = (state: State): string => state[NameSpace.Data].ProductDetails;

@@ -3,13 +3,16 @@ import { createAction } from '@reduxjs/toolkit';
 const Action = {
   SET_REVIEW_MODAL_OPENING_STATUS: 'SET_REVIEW_MODAL_OPENING_STATUS',
   SET_REVIEW_ERROR_STATUS: 'SET_REVIEW_ERROR_STATUS',
-  SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS'
+  SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS',
+  SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
+  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
+  PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
 };
 
-// const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value) => (
-//   {
-//     payload: value,
-//   }));
+const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value : string) => (
+  {
+    payload: value,
+  }));
 
 const setModalOpeningStatus = createAction(Action.SET_REVIEW_MODAL_OPENING_STATUS, (value : boolean) => (
   {
@@ -26,10 +29,22 @@ const setSuccessOpeningStatus = createAction(Action.SET_REVIEW_SUCCESS_OPENING_S
     payload: value,
   }));
 
+const setSelectedProductErrorStatus = createAction(Action.SET_SELECTED_PRODUCT_ERROR_STATUS, (value : boolean) => (
+  {
+    payload: value,
+  }));
+
+const setProductDetailsShown = createAction(Action.PRODUCT_DETAILS_SHOWN, (value : string) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
-  //   redirectToRoute,
+  redirectToRoute,
   setModalOpeningStatus,
   setReviewErrorStatus,
-  setSuccessOpeningStatus
+  setSuccessOpeningStatus,
+  setSelectedProductErrorStatus,
+  setProductDetailsShown
 };

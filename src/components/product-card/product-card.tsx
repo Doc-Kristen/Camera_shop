@@ -1,15 +1,18 @@
 import { Product } from '../../types/product';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Rating from '../rating/rating';
-import { AppRoute } from '../../helpers/const';
+import { useAppSelector } from '../../hooks';
+import { getProductDetails } from '../../store/product-data/selectors';
 
 type ProductCardProps = {
   productCard: Product;
+  pageNumber: number;
   isActive?: boolean;
 }
 
-const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element => {
-  const { pageNumber } = useParams();
+const ProductCard = ({ productCard, pageNumber, isActive }: ProductCardProps): JSX.Element => {
+
+  const productDetails = useAppSelector(getProductDetails);
 
   const {
     id,
@@ -40,7 +43,7 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`${AppRoute.Catalog}${pageNumber ? pageNumber : ''}/${id}`}>Подробнее
+        <Link className="btn btn--transparent" to={`/catalog/pages/${pageNumber}/${id}/${productDetails}`}>Подробнее
         </Link>
       </div>
     </div>

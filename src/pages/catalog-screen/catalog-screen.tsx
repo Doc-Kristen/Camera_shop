@@ -5,12 +5,13 @@ import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+// import Loading from '../../components/loading/loading';
 import { useAppSelector } from '../../hooks';
-import { getProductLoadedStatus } from '../../store/product-data/selectors';
+import { getDataLoadedStatus } from '../../store/product-data/selectors';
 
 const CatalogScreen = (): JSX.Element => {
 
-  const isProductLoaded = useAppSelector(getProductLoadedStatus);
+  const isProductsLoaded = useAppSelector(getDataLoadedStatus);
 
   return (
     <div className="wrapper">
@@ -29,7 +30,7 @@ const CatalogScreen = (): JSX.Element => {
                 <div className="catalog__content">
                   <CatalogSort />
                   {
-                    isProductLoaded ? <p>Загрузка данных...</p> :
+                    isProductsLoaded ? <p>Загрузка данных...</p> :
                       <CardList />
                   }
                 </div>

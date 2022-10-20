@@ -26,13 +26,13 @@ export const reviewData = createSlice({
         state.isReviewsError = false;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
         state.isReviewsLoaded = false;
         state.isReviewsError = false;
+        state.reviews = action.payload;
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
-        state.isReviewsError = true;
         state.isReviewsLoaded = false;
+        state.isReviewsError = true;
       });
   }
 });
