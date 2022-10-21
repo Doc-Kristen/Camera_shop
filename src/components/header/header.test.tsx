@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import Header from './header';
 
-
 const history = createMemoryHistory();
 
 describe('Component: Header', () => {
@@ -15,6 +14,6 @@ describe('Component: Header', () => {
       </HistoryRoute>,
     );
 
-    expect(screen.getByPlaceholderText(/Поиск по сайту/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Поиск по сайту')).toBeInTheDocument();
   });
 });
