@@ -1,12 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { APIRoute, AppRoute } from '../helpers/const';
+import { APIRoute } from '../helpers/const';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
 import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
-import { redirectToRoute, setSelectedProductErrorStatus } from './action';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -38,17 +37,12 @@ export const fetchSelectedProductAction = createAsyncThunk<Product, number, {
   extra: AxiosInstance;
 }>(
   'data/fetchSelectedProduct',
-  async (productId, { dispatch, extra: api }) => {
-    try {
-      const {data} = await api.get(`${APIRoute.Products}/${productId}`);
-      dispatch(fetchSimilarProductsAction(productId));
-      dispatch(fetchReviewsAction(productId));
-      return data;
-    } catch {
-      dispatch(setSelectedProductErrorStatus(true));
-      dispatch(redirectToRoute(AppRoute.NotFound));
-    }
-  },
+  async (productId: number, { dispatch, extra: api }) => {
+    const { data } = await api.get<Product>(`${APIRoute.Products}/${productId}`);
+    dispatch(fetchSimilarProductsAction(productId));
+    dispatch(fetchReviewsAction(productId));
+    return data;
+  }
 );
 
 export const fetchSimilarProductsAction = createAsyncThunk<Products, number, {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '.';
-import { fetchReviewsAction, sendReview } from '../store/api-actions';
+import { sendReview } from '../store/api-actions';
 import { ReviewPost } from '../types/review-post';
 
 type ResultUseReviewForm = [
@@ -20,9 +20,7 @@ export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): Re
   const [formData, setFormData] = useState(formContentDefault);
 
   const sendUserReview = () => {
-    dispatch(sendReview(formData)).finally(()=> {
-      dispatch(fetchReviewsAction(urlId));
-    });
+    dispatch(sendReview(formData));
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {

@@ -12,6 +12,9 @@ import { fetchSelectedProductAction } from '../../store/api-actions';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Loading from '../../components/loading/loading';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
+import { getReviewSuccessStatus } from '../../store/user-process/selectors';
+import { AppRoute } from '../../helpers/const';
+import { redirectToRoute, setSelectedProductErrorStatus } from '../../store/action';
 
 const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -19,12 +22,13 @@ const ProductScreen = (): JSX.Element => {
   const { id } = useParams();
   const ProductId = Number(id);
   const productDetailed = useAppSelector(getSelectedProduct);
-  const productsSimilar = useAppSelector(getSimilarProducts);
+  const similarProducts = useAppSelector(getSimilarProducts);
   const productIsError = useAppSelector(getSelectedProductErrorStatus);
   const productIsLoaded = useAppSelector(getDataLoadedStatus);
   const isReviewError = useAppSelector(getReviewsErrorStatus);
   const allReviews = useAppSelector(getReviews);
   const productsSimilarIsError = useAppSelector(getSimilarProductErrorStatus);
+  const isReviewSuccess = useAppSelector(getReviewSuccessStatus);
 
   useEffect(() => {
     let isMounted = true;
@@ -38,13 +42,15 @@ const ProductScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch]);
+  }, [ProductId, dispatch, isReviewSuccess]);
 
   if (productIsLoaded) {
     return (<Loading />);
   }
 
   if (productIsError) {
+    dispatch(setSelectedProductErrorStatus(true));
+    dispatch(redirectToRoute(AppRoute.NotFound));
     return (<NotFoundScreen />);
   }
 
@@ -65,11 +71,11 @@ const ProductScreen = (): JSX.Element => {
             }
           </div>
           {
-            !productsSimilarIsError && productsSimilar.length === 0 ?
+            !productsSimilarIsError && similarProducts.length === 0 ?
               null
               :
               <ProductsSimilar
-                productsSimilar={productsSimilar}
+                productsSimilar={similarProducts}
               />
           }
           <div className="page-content__section">

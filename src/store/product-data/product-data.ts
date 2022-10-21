@@ -55,9 +55,15 @@ export const productData = createSlice({
       })
       .addCase(fetchSelectedProductAction.pending, (state) => {
         state.isDataLoaded = true;
+        state.isSelectedProductError = false;
       })
       .addCase(fetchSelectedProductAction.fulfilled, (state, action) => {
         state.selectedProduct = action.payload;
+        state.isDataLoaded = false;
+        state.isSelectedProductError = false;
+      })
+      .addCase(fetchSelectedProductAction.rejected, (state) => {
+        state.isSelectedProductError = true;
         state.isDataLoaded = false;
       })
       .addCase(fetchSimilarProductsAction.pending, (state) => {
