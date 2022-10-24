@@ -99,11 +99,44 @@ const mockProducts = [
 
 ];
 
+const mockReviews = [{
+  id: '1',
+  userName: 'userName 1',
+  advantage: 'advantage 1',
+  disadvantage: 'disadvantage 1',
+  review: 'review 1',
+  rating: 'rating 1',
+  createAt: 'createAt 1',
+  cameraId: 'cameraId 1'
+},
+{
+  id: '2',
+  userName: 'userName 2',
+  advantage: 'advantage 2',
+  disadvantage: 'disadvantage 2',
+  review: 'review 2',
+  rating: 'rating 2',
+  createAt: 'createAt 2',
+  cameraId: 'cameraId 2'
+},
+{
+  id: '3',
+  userName: 'userName 3',
+  advantage: 'advantage 3',
+  disadvantage: 'disadvantage 3',
+  review: 'review 3',
+  rating: 'rating 3',
+  createAt: 'createAt 3',
+  cameraId: 'cameraId 3'
+}
+];
+
 export {
   mockPromo,
   mockSelectedProduct,
   mockProductScreenURL,
   mockProducts,
   mockPageNumber,
-  mockRatingLevels
+  mockRatingLevels,
+  mockReviews
 };

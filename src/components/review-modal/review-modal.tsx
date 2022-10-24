@@ -100,6 +100,7 @@ const ReviewModal = (): JSX.Element => {
                       </svg>
                     </span>
                     <input
+                      data-testid="name"
                       type="text"
                       name="user-name"
                       placeholder="Введите ваше имя"
@@ -119,6 +120,7 @@ const ReviewModal = (): JSX.Element => {
                       </svg>
                     </span>
                     <input
+                      data-testid="advantage"
                       type="text"
                       name="user-plus"
                       placeholder="Основные преимущества товара"
@@ -138,6 +140,7 @@ const ReviewModal = (): JSX.Element => {
                       </svg>
                     </span>
                     <input
+                      data-testid="disadvantage"
                       type="text"
                       name="user-minus"
                       placeholder="Главные недостатки товара"
@@ -157,6 +160,7 @@ const ReviewModal = (): JSX.Element => {
                       </svg>
                     </span>
                     <textarea
+                      data-testid="comment"
                       name="user-comment"
                       placeholder="Поделитесь своим опытом покупки"
                       onChange={handleTextAreaChange}
@@ -173,6 +177,7 @@ const ReviewModal = (): JSX.Element => {
               <button
                 className="btn btn--purple form-review__btn"
                 type="submit"
+                data-testid="submit-review"
                 onClick={onButtonClick}
                 disabled={isFormDisabled}
               >{isFormDisabled ? 'Отправка отзыва...' : 'Отправить отзыв'}
