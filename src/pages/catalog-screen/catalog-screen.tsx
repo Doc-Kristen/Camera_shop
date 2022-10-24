@@ -1,6 +1,6 @@
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import CardList from '../../components/cards-list/cards-list';
+import CardsList from '../../components/cards-list/cards-list';
 import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
@@ -30,7 +30,7 @@ const CatalogScreen = (): JSX.Element => {
                   <CatalogSort />
                   {
                     isProductsLoaded ? <p>Загрузка данных...</p> :
-                      <CardList />
+                      <CardsList />
                   }
                 </div>
               </div>

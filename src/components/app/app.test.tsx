@@ -6,6 +6,7 @@ import HistoryRoute from '../history-route/history-route';
 import App from './app';
 import { AppRoute } from '../../helpers/const';
 import {Routes, Route} from 'react-router-dom';
+import MainScreen from '../../pages/main-screen/main-screen';
 
 const mockStore = configureMockStore();
 
@@ -31,7 +32,7 @@ describe('Application Routing', () => {
           <Routes>
             <Route
               path={'/'}
-              element={<h1>Main Route</h1>}
+              element={<MainScreen/>}
             />
             <Route
               path={'/'}
@@ -42,7 +43,7 @@ describe('Application Routing', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(/Main Route/i)).toBeInTheDocument();
+    expect(screen.getByText(/Главная страница находится в разработке. Вы будете автоматически перенаправлены на первую страницу каталога/i)).toBeInTheDocument();
     expect(screen.queryByText(/MainEmpty Route/i)).not.toBeInTheDocument();
   });
 

@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
-import Banner from './banner';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockPromo } from '../../helpers/mock';
+import { mockPageNumber, mockPromo, mockSelectedProduct } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import {Routes, Route} from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import ProductCard from './product-card';
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -16,11 +16,15 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    DATA: { promo: mockPromo, isPromoError: false, ProductDetails: ProductDetailsType.Description }
+    DATA: {
+      promo: mockPromo,
+      isPromoError: false,
+      ProductDetails: ProductDetailsType.Description,
+    }
   }
 );
 
-describe('Component: Banner', () => {
+describe('Component: ProductCard', () => {
   it('should render correctly', () => {
 
     render(
@@ -28,12 +32,15 @@ describe('Component: Banner', () => {
         store={store}
       >
         <HistoryRoute history={history}>
-          <Banner />
+          <ProductCard
+            pageNumber={mockPageNumber}
+            productCard={mockSelectedProduct}
+          />
         </HistoryRoute>
       </Provider>,
     );
 
-    expect(screen.getByText(/Профессиональная камера от известного производителя/i)).toBeInTheDocument();
+    expect(screen.getByText(/Тестовое название камеры/i)).toBeInTheDocument();
     expect(screen.getByRole('link').textContent).toBe('Подробнее');
   });
 
@@ -50,7 +57,12 @@ describe('Component: Banner', () => {
             />
             <Route
               path='*'
-              element={<Banner/>}
+              element={
+                <ProductCard
+                  pageNumber={mockPageNumber}
+                  productCard={mockSelectedProduct}
+                />
+              }
             />
           </Routes>
         </HistoryRoute>

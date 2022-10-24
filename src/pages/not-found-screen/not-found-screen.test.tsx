@@ -5,7 +5,7 @@ import NotFoundScreen from './not-found-screen';
 
 const history = createMemoryHistory();
 
-describe('Component: NoFoundSceen', () => {
+describe('Component: NotFoundSceen', () => {
   it('should render correctly', () => {
 
     render(

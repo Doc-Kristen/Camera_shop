@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { AppRoute, COUNT_CARDS_PER_PAGE } from '../../helpers/const';
 import { redirectToRoute } from '../../store/action';
 
-const CardList = (): JSX.Element => {
+const CardsList = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { pageNumber } = useParams();
 
@@ -89,4 +89,4 @@ const CardList = (): JSX.Element => {
   );
 };
 
-export default CardList;
+export default CardsList;
