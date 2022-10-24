@@ -12,6 +12,7 @@ const ReviewFormRatingItem = ({ starValue, currentRating, radioChangeHandle, isF
       name="rate"
       value={starValue}
       id={`star-${starValue}`}
+      data-testid='rating-star-item'
       type='radio'
       checked={currentRating === starValue}
       onChange={radioChangeHandle}

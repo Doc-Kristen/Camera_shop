@@ -3,6 +3,8 @@ const mockProductScreenURL = '/catalog/pages/1/7/description';
 
 const mockPageNumber = 1;
 
+const mockRatingLevels = [1, 2, 3, 4, 5];
+
 const mockPromo = {
   id: 4,
   name: 'string',
@@ -102,5 +104,6 @@ export {
   mockSelectedProduct,
   mockProductScreenURL,
   mockProducts,
-  mockPageNumber
+  mockPageNumber,
+  mockRatingLevels
 };

@@ -8,10 +8,20 @@ type RatingStarsProps = {
 
 const RatingStars = ({ productCard, ratingLevel }: RatingStarsProps): JSX.Element =>
   productCard.rating > ratingLevel || productCard.rating === ratingLevel ?
-    <svg width="17" height="16" aria-hidden="true">
+    <svg
+      data-testid='rating-stars'
+      width="17"
+      height="16"
+      aria-hidden="true"
+    >
       <use xlinkHref="#icon-full-star"></use>
     </svg> :
-    <svg width="17" height="16" aria-hidden="true">
+    <svg
+      data-testid='rating-stars'
+      width="17"
+      height="16"
+      aria-hidden="true"
+    >
       <use xlinkHref="#icon-star"></use>
     </svg>;
 

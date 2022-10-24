@@ -13,7 +13,7 @@ type ResultUseReviewForm = [
     (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
   ];
 
-export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): ResultUseReviewForm => {
+export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewForm => {
 
   const dispatch = useAppDispatch();
 
@@ -28,7 +28,7 @@ export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): Re
     sendUserReview();
   };
 
-  const handleRadioChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, rating: Number(evt.target.value) });
   };
 
@@ -51,7 +51,7 @@ export const useReviewForm = (formContentDefault: ReviewPost, urlId: number): Re
   return [
     formData,
     handleFormSubmit,
-    handleRadioChange,
+    handleRadioRatingChange,
     handleRadioUserNameChange,
     handleRadioAdvantageChange,
     handleRadioDisdvantageChange,

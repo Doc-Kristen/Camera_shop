@@ -30,11 +30,11 @@ const ReviewModal = (): JSX.Element => {
   const [
     formData,
     handleFormSubmit,
-    handleRadioChange,
+    handleRadioRatingChange,
     handleRadioUserNameChange,
     handleRadioAdvantageChange,
     handleRadioDisdvantageChange,
-    handleTextAreaChange] = useReviewForm(formContentDefault, productId);
+    handleTextAreaChange] = useReviewForm(formContentDefault);
 
   const [isFormRatingValid, setIsFormRatingValid] = useState(true);
 
@@ -88,7 +88,7 @@ const ReviewModal = (): JSX.Element => {
               <div className="form-review__rate">
                 <ReviewFormRatingList
                   currentRating={formData.rating}
-                  radioChangeHandle={handleRadioChange}
+                  radioChangeHandle={handleRadioRatingChange}
                   isFormDisabled={isFormDisabled}
                   isFormRatingValid={isFormRatingValid}
                 />

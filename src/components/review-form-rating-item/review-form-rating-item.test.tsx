@@ -3,9 +3,9 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockRatingLevels, mockSelectedProduct } from '../../helpers/mock';
+import { RatingValues } from '../../helpers/const';
 import thunk from 'redux-thunk';
-import RatingStars from './rating-stars';
+import ReviewFormRatingItem from './review-form-rating-item';
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -13,7 +13,12 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({});
 
-describe('Component: RatingStars', () => {
+const mockCurrentRating = 5;
+const radioChangeHandle = (evt: { preventDefault: () => void }) => {
+  evt.preventDefault();
+};
+
+describe('Component: ReviewFormRatingItem', () => {
   it('should render correctly', () => {
 
     render(
@@ -21,16 +26,20 @@ describe('Component: RatingStars', () => {
         store={store}
       >
         <HistoryRoute history={history}>
-          <RatingStars
-            productCard={mockSelectedProduct}
-            ratingLevel={mockRatingLevels[4]}
+          <ReviewFormRatingItem
+            starValue={RatingValues[0].Value}
+            currentRating={mockCurrentRating}
+            radioChangeHandle={radioChangeHandle}
+            isFormDisabled={false}
+            titleRating={RatingValues[0].Title}
           />
         </HistoryRoute>
       </Provider>,
     );
 
-    const element = screen.getByTestId('rating-stars');
+    const element = screen.getByTestId('rating-star-item');
     expect(element).toBeInTheDocument();
+    expect(screen.getByTitle(/Отлично/i)).toBeInTheDocument();
   });
 
 });

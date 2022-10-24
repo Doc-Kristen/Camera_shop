@@ -4,8 +4,7 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import Breadcrumbs from './breadcrumbs';
 import thunk from 'redux-thunk';
-import { ProductDetailsType } from '../../helpers/const';
-import { mockPromo, mockSelectedProduct } from '../../helpers/mock';
+import { mockSelectedProduct } from '../../helpers/mock';
 import { Provider } from 'react-redux';
 import {Routes, Route} from 'react-router-dom';
 
@@ -16,9 +15,6 @@ const mockStore = configureMockStore(middlewares);
 const store = mockStore(
   {
     DATA: {
-      promo: mockPromo,
-      isPromoError: false,
-      ProductDetails: ProductDetailsType.Description,
       selectedProduct: mockSelectedProduct,
     }
   }

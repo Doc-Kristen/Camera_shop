@@ -51,12 +51,14 @@ const TabProduct = ({ productDetailed }: TabProductProps): JSX.Element => {
           className={`tabs__control ${selectedDetails === 'specification' ? 'is-active' : ''}`}
           type="button"
           onClick={onClickButton}
+          data-testid='specification-button'
         >Характеристики
         </button>
         <button
           className={`tabs__control ${selectedDetails === 'description' ? 'is-active' : ''}`}
           type="button"
           onClick={onClickButton}
+          data-testid='description-button'
         >Описание
         </button>
       </div>
