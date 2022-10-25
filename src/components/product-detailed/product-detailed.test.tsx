@@ -3,14 +3,17 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import {mockPromo, mockSelectedProduct } from '../../helpers/mock';
+import {makeFakeProduct, makeFakePromo } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import ProductDetailed from './product-detailed';
 
+const mockPromo = makeFakePromo();
+
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const mockSelectedProduct = makeFakeProduct();
 
 const store = mockStore(
   {

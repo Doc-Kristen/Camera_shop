@@ -5,7 +5,9 @@ import HistoryRoute from '../history-route/history-route';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import ReviewsList from './reviews-list';
-import { mockReviews } from '../../helpers/mock';
+import { makeFakeReviews } from '../../helpers/mock';
+
+const mockReviews = makeFakeReviews();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];

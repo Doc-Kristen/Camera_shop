@@ -3,15 +3,16 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockSelectedProduct } from '../../helpers/mock';
+import { makeFakeProduct } from '../../helpers/mock';
 import thunk from 'redux-thunk';
 import TabProduct from './tab-product';
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
 const store = mockStore({});
+
+const mockSelectedProduct = makeFakeProduct();
 
 describe('Component: TabProduct', () => {
   it('should render correctly', () => {

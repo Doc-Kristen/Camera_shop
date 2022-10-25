@@ -3,11 +3,13 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockPromo } from '../../helpers/mock';
+import { makeFakePromo } from '../../helpers/mock';
 import { AppRoute, ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import {Routes, Route} from 'react-router-dom';
 import MainScreenRoute from './main-screen-route';
+
+const mockPromo = makeFakePromo();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];

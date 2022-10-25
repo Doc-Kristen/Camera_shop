@@ -77,8 +77,8 @@ export const productData = createSlice({
         state.isDataLoaded = false;
         state.isSimilarProductError = true;
       })
-      .addCase(setSelectedProductErrorStatus, (state) => {
-        state.isSelectedProductError = true;
+      .addCase(setSelectedProductErrorStatus, (state, action) => {
+        state.isSelectedProductError = action.payload;
       })
       .addCase(setProductDetailsShown, (state, action) => {
         state.ProductDetails = action.payload;

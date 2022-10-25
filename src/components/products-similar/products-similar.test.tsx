@@ -3,9 +3,11 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockProducts } from '../../helpers/mock';
+import { makeFakeProducts } from '../../helpers/mock';
 import thunk from 'redux-thunk';
 import ProductsSimilar from './products-similar';
+
+const mockProducts = makeFakeProducts();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];

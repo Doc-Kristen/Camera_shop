@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { mockPageNumber, mockSelectedProduct } from '../../helpers/mock';
+import { makeFakeProduct, mockPageNumber } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import {Routes, Route} from 'react-router-dom';
@@ -13,6 +13,7 @@ import ProductCard from './product-card';
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const mockSelectedProduct = makeFakeProduct();
 
 const store = mockStore(
   {
