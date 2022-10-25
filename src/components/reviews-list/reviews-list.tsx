@@ -4,23 +4,17 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
 import { setModalOpeningStatus } from '../../store/action';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
-import { getReviewSuccessStatus, getFormOpenedStatus } from '../../store/user-process/selectors';
-import ReviewSuccess from '../review-success/review-success';
 import RatingStars from '../rating-stars/rating-stars';
-import ReviewModal from '../review-modal/review-modal';
 
 type ReviewsListProps = {
   noReviews: boolean;
 }
 
-const ReviewsList = ({noReviews} : ReviewsListProps): JSX.Element => {
+const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const allReviews = useAppSelector(getReviews);
   const lastReviews = allReviews && allReviews.slice().sort(sortReviewsDayDown);
-
-  const isFormOpened = useAppSelector(getFormOpenedStatus);
-  const isReviewSuccess = useAppSelector(getReviewSuccessStatus);
   const isReviewError = useAppSelector(getReviewsErrorStatus);
 
   const handleButtonClick = () => {
@@ -38,7 +32,7 @@ const ReviewsList = ({noReviews} : ReviewsListProps): JSX.Element => {
 
   const lastReviewsPerPage = lastReviews.slice(firstContentIndex, lastReviewIndex);
 
-  if(isReviewError) {
+  if (isReviewError) {
     return (
       <section className="review-block">
         <div className="container">
@@ -61,7 +55,9 @@ const ReviewsList = ({noReviews} : ReviewsListProps): JSX.Element => {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn"
+          <button
+            data-testid='review-button'
+            className="btn"
             type="button"
             onClick={handleButtonClick}
           >Оставить свой отзыв
@@ -80,21 +76,20 @@ const ReviewsList = ({noReviews} : ReviewsListProps): JSX.Element => {
                     className="review-card"
                     onWheel={
                       (evt) => {
-                        if(
+                        if (
                           evt.deltaY >= 0
-                        &&
-                        lastReviewsPerPage.length - 1 === index
-                        &&
-                        lastReviewsPerPage.length !== allReviews.length
-                        )
-                        {
+                          &&
+                          lastReviewsPerPage.length - 1 === index
+                          &&
+                          lastReviewsPerPage.length !== allReviews.length
+                        ) {
                           setLastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
                         }
                       }
                     }
                   >
                     <div className="review-card__head">
-                      <p className="title title--h4"></p>
+                      <p className="title title--h4">{review.userName}</p>
                       <time className="review-card__data" dateTime={review.createAt}>{getRussifiedDate(review.createAt, MonthsDictionary)}</time>
                     </div>
                     <div className="rate review-card__rate">
@@ -136,14 +131,12 @@ const ReviewsList = ({noReviews} : ReviewsListProps): JSX.Element => {
                 }
               }
               >
-                  Показать больше отзывов
+                Показать больше отзывов
               </button>
           }
 
         </div>
       </div>
-      { isFormOpened && <ReviewModal />}
-      { isReviewSuccess && <ReviewSuccess />}
     </section>
   );
 };

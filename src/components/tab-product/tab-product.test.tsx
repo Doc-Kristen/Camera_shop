@@ -36,6 +36,9 @@ describe('Component: TabProduct', () => {
     expect(screen.getByText(/тест type/i)).toBeInTheDocument();
     expect(screen.getByText(/тест category/i)).toBeInTheDocument();
     expect(screen.getByText(/тест level/i)).toBeInTheDocument();
+
+    expect(screen.getByTestId('specification-button').textContent).toBe('Характеристики');
+    expect(screen.getByTestId('description-button').textContent).toBe('Описание');
   });
 
 });

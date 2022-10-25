@@ -12,9 +12,11 @@ import { fetchSelectedProductAction } from '../../store/api-actions';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Loading from '../../components/loading/loading';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
-import { getReviewSuccessStatus } from '../../store/user-process/selectors';
+import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
 import { AppRoute } from '../../helpers/const';
 import { redirectToRoute, setSelectedProductErrorStatus } from '../../store/action';
+import ReviewModal from '../../components/review-modal/review-modal';
+import ReviewSuccess from '../../components/review-success/review-success';
 
 const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -26,9 +28,11 @@ const ProductScreen = (): JSX.Element => {
   const productIsError = useAppSelector(getSelectedProductErrorStatus);
   const productIsLoaded = useAppSelector(getDataLoadedStatus);
   const isReviewError = useAppSelector(getReviewsErrorStatus);
+  const isReviewSuccess = useAppSelector(getReviewSuccessStatus);
   const allReviews = useAppSelector(getReviews);
   const productsSimilarIsError = useAppSelector(getSimilarProductErrorStatus);
-  const isReviewSuccess = useAppSelector(getReviewSuccessStatus);
+  const isFormOpened = useAppSelector(getFormOpenedStatus);
+
 
   useEffect(() => {
     let isMounted = true;
@@ -55,50 +59,54 @@ const ProductScreen = (): JSX.Element => {
   }
 
   return (
-    <div className="wrapper">
-      <Header />
-      <main>
-        <div className="page-content">
-          <Breadcrumbs />
-          <div className="page-content__section">
+    <>
+      <div className="wrapper">
+        <Header />
+        <main>
+          <div className="page-content">
+            <Breadcrumbs />
+            <div className="page-content__section">
+              {
+                productDetailed
+                  ?
+                  <ProductDetailed
+                    productDetailed={productDetailed}
+                  />
+                  : null
+              }
+            </div>
             {
-              productDetailed
-                ?
-                <ProductDetailed
-                  productDetailed={productDetailed}
+              !productsSimilarIsError && similarProducts.length === 0 ?
+                null
+                :
+                <ProductsSimilar
+                  productsSimilar={similarProducts}
                 />
-                : null
             }
+            <div className="page-content__section">
+              {
+                <ReviewsList
+                  noReviews={!isReviewError && allReviews.length === 0 }
+                />
+              }
+            </div>
           </div>
-          {
-            !productsSimilarIsError && similarProducts.length === 0 ?
-              null
-              :
-              <ProductsSimilar
-                productsSimilar={similarProducts}
-              />
+        </main>
+        <button
+          className="up-btn" type="button"
+          onClick={
+            () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
           }
-          <div className="page-content__section">
-            {
-              <ReviewsList
-                noReviews={!isReviewError && allReviews.length === 0 }
-              />
-            }
-          </div>
-        </div>
-      </main>
-      <button
-        className="up-btn" type="button"
-        onClick={
-          () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        }
-      >
-        <svg width="12" height="18" aria-hidden="true">
-          <use xlinkHref="#icon-arrow2"></use>
-        </svg>
-      </button>
-      <Footer />
-    </div>
+        >
+          <svg width="12" height="18" aria-hidden="true">
+            <use xlinkHref="#icon-arrow2"></use>
+          </svg>
+        </button>
+        <Footer />
+      </div>
+      { isFormOpened && <ReviewModal />}
+      { isReviewSuccess && <ReviewSuccess />}
+    </>
   );
 };
 
