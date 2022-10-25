@@ -1,4 +1,8 @@
+import { makeFakeReviews } from '../../helpers/mock';
+import { fetchReviewsAction } from '../api-actions';
 import { reviewData } from './review-data';
+
+const reviews = makeFakeReviews();
 
 
 describe('Reducer: productData', () => {
@@ -11,15 +15,46 @@ describe('Reducer: productData', () => {
       });
   });
 
-  // it('should update offers by load offers', () => {
-  //   const state = {offers: [], favoriteOffers: [], isDataLoaded: false, isServerError: false};
-  //   expect(offerData.reducer(state, {type: fetchOfferAction.fulfilled.type, payload: offers}))
-  //     .toEqual({offers, favoriteOffers: [], isDataLoaded: false, isServerError: false});
-  // });
+  it('should update reviews by load reviews', () => {
+    const state = {
+      reviews: [],
+      isReviewsError: false,
+      isReviewsLoaded: false,
+    };
+    expect(reviewData.reducer(state, { type: fetchReviewsAction.fulfilled.type, payload: reviews }))
+      .toEqual({
+        reviews: reviews,
+        isReviewsError: false,
+        isReviewsLoaded: false,
+      });
+  });
 
-  // it('should update favoriteOffers by load favoriteOffers', () => {
-  //   const state = {offers: [], favoriteOffers: [], isDataLoaded: false, isServerError: false};
-  //   expect(offerData.reducer(state, {type: fetchFavoriteOffersAction.fulfilled.type, payload: favoriteOffers}))
-  //     .toEqual({offers: [], favoriteOffers, isDataLoaded: false, isServerError: false});
-  // });
+  it('should update isReviewsLoaded, isReviewsError when fetchReviewsAction.pending', () => {
+    const state = {
+      reviews: [],
+      isReviewsError: false,
+      isReviewsLoaded: false,
+    };
+    expect(reviewData.reducer(state, { type: fetchReviewsAction.pending.type}))
+      .toEqual({
+        reviews: [],
+        isReviewsError: false,
+        isReviewsLoaded: true,
+      });
+  });
+
+  it('should update isReviewsLoaded, isReviewsError when fetchReviewsAction.rejected', () => {
+    const state = {
+      reviews: [],
+      isReviewsError: false,
+      isReviewsLoaded: false,
+    };
+    expect(reviewData.reducer(state, { type: fetchReviewsAction.rejected.type}))
+      .toEqual({
+        reviews: [],
+        isReviewsError: true,
+        isReviewsLoaded: false,
+      });
+  });
+
 });
