@@ -8,13 +8,13 @@ const Header = (): JSX.Element => (
       <Logo/>
       <nav className="main-nav header__main-nav">
         <ul className="main-nav__list">
-          <li className="main-nav__item"><a className="main-nav__link" href="catalog.html">Каталог</a>
+          <li className="main-nav__item"><Link className="main-nav__link" to={AppRoute.Main}>Каталог</Link>
           </li>
-          <li className="main-nav__item"><a className="main-nav__link" href="/#">Гарантии</a>
+          <li className="main-nav__item"><Link className="main-nav__link" to="#">Гарантии</Link>
           </li>
-          <li className="main-nav__item"><a className="main-nav__link" href="/#">Доставка</a>
+          <li className="main-nav__item"><Link className="main-nav__link" to="#">Доставка</Link>
           </li>
-          <li className="main-nav__item"><a className="main-nav__link" href="/#">О компании</a>
+          <li className="main-nav__item"><Link className="main-nav__link"to="#">О компании</Link>
           </li>
         </ul>
       </nav>
