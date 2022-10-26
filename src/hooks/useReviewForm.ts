@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useAppDispatch } from '.';
-import { sendReview } from '../store/api-actions';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '.';
+import { fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview } from '../store/api-actions';
+import { getReviewErrorStatus } from '../store/user-process/selectors';
 import { ReviewPost } from '../types/review-post';
 
 type ResultUseReviewForm = [
@@ -16,11 +18,22 @@ type ResultUseReviewForm = [
 export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewForm => {
 
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const ProductId = Number(id);
+
+  const isReviewError = useAppSelector(getReviewErrorStatus);
 
   const [formData, setFormData] = useState(formContentDefault);
 
   const sendUserReview = () => {
-    dispatch(sendReview(formData));
+    dispatch(sendReview(formData)).finally(()=> {
+      if(!isReviewError)
+      {
+        dispatch(fetchSelectedProductAction(ProductId));
+        dispatch(fetchSimilarProductsAction(ProductId));
+        dispatch(fetchReviewsAction(ProductId));
+      }
+    });
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {

@@ -37,10 +37,8 @@ export const fetchSelectedProductAction = createAsyncThunk<Product, number, {
   extra: AxiosInstance;
 }>(
   'data/fetchSelectedProduct',
-  async (productId: number, { dispatch, extra: api }) => {
+  async (productId: number, { extra: api }) => {
     const { data } = await api.get<Product>(`${APIRoute.Products}/${productId}`);
-    dispatch(fetchSimilarProductsAction(productId));
-    dispatch(fetchReviewsAction(productId));
     return data;
   }
 );

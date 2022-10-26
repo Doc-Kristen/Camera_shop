@@ -30,7 +30,7 @@ const ProductsSimilar = ({productsSimilar} : ProductsSimilarProps): JSX.Element 
       <section className="product-similar">
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>
-          <p>Ошибка загрузки информации о похожих товарах. Пожалуйста, попробуйте позже</p>
+          <p>Ошибка при загрузке информации о похожих товарах. Пожалуйста, попробуйте позже</p>
         </div>
       </section>
     );

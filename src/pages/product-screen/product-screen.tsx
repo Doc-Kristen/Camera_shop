@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getDataLoadedStatus, getSelectedProduct, getSelectedProductErrorStatus, getSimilarProductErrorStatus, getSimilarProducts } from '../../store/product-data/selectors';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchSelectedProductAction } from '../../store/api-actions';
+import { fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Loading from '../../components/loading/loading';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
@@ -33,12 +33,17 @@ const ProductScreen = (): JSX.Element => {
   const productsSimilarIsError = useAppSelector(getSimilarProductErrorStatus);
   const isFormOpened = useAppSelector(getFormOpenedStatus);
 
-
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       const fetchData = () => {
         dispatch(fetchSelectedProductAction(ProductId));
+        if(!productIsError)
+        {
+          dispatch(fetchSimilarProductsAction(ProductId));
+          dispatch(fetchReviewsAction(ProductId));
+        }
+
         window.scroll(0, 0);
       };
       fetchData();
@@ -46,7 +51,7 @@ const ProductScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch, isReviewSuccess]);
+  }, [ProductId, dispatch, productIsError]);
 
   if (productIsLoaded) {
     return (<Loading />);
