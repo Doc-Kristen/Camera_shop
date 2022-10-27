@@ -36,22 +36,30 @@ const ProductScreen = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
+      if(!productIsError)
+      {
+        dispatch(fetchSimilarProductsAction(ProductId));
+        dispatch(fetchReviewsAction(ProductId));
+      }
+      if(isFormOpened || isReviewSuccess) {
+        const posTop = window.pageYOffset;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${posTop}px`;
+      } else {
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      }
       const fetchData = () => {
         dispatch(fetchSelectedProductAction(ProductId));
-        if(!productIsError)
-        {
-          dispatch(fetchSimilarProductsAction(ProductId));
-          dispatch(fetchReviewsAction(ProductId));
-        }
-
-        window.scroll(0, 0);
       };
       fetchData();
     }
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch, productIsError]);
+  }, [ProductId, dispatch, isFormOpened, isReviewSuccess, productIsError]);
 
   if (productIsLoaded) {
     return (<Loading />);

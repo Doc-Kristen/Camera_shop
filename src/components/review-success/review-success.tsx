@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { isEscapeKeyPressed } from '../../helpers/utils';
+import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch } from '../../hooks';
 import { setSuccessOpeningStatus } from '../../store/action';
 
@@ -8,8 +8,19 @@ const ReviewSuccess = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+
+    const succesButton = document.getElementById('succes-modal-button');
+    succesButton && succesButton.focus();
+    const buttonCloseModal = document.getElementById('close-succes-modal-button');
+
+    buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
+      if(isKeyPressed(evt, 'Tab')) {
+        evt.preventDefault();
+        succesButton && succesButton.focus();
+      }
+    });
     const keyCloseHandler = (evt: KeyboardEvent) => {
-      if (isEscapeKeyPressed(evt)) {
+      if (isKeyPressed(evt, 'Escape')) {
         dispatch(setSuccessOpeningStatus(false));
       }
     };
@@ -35,12 +46,14 @@ const ReviewSuccess = (): JSX.Element => {
           <div className="modal__buttons">
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
+              id='succes-modal-button'
               type="button"
               onClick={() => dispatch(setSuccessOpeningStatus(false))}
             >Вернуться к покупкам
             </button>
           </div>
           <button
+            id='close-succes-modal-button'
             className="cross-btn" type="button"
             aria-label="Закрыть попап"
             onClick={() => dispatch(setSuccessOpeningStatus(false))}

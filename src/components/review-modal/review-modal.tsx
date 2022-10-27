@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ERROR_MESSAGE_TIME, MIN_COMMENT_LENGTH } from '../../helpers/const';
-import { isEscapeKeyPressed } from '../../helpers/utils';
+import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useReviewForm } from '../../hooks/useReviewForm';
 import { setModalOpeningStatus, setReviewErrorStatus } from '../../store/action';
@@ -55,8 +55,17 @@ const ReviewModal = (): JSX.Element => {
   };
 
   useEffect(() => {
+    const modal = document.getElementById('star-1');
+
+    const buttonCloseModal = document.getElementById('modal-close-review');
+    buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
+      if(isKeyPressed(evt, 'Tab')) {
+        evt.preventDefault();
+        modal && modal.focus();
+      }
+    });
     const keyCloseHandler = (evt: KeyboardEvent) => {
-      if (isEscapeKeyPressed(evt)) {
+      if (isKeyPressed(evt, 'Escape')) {
         dispatch(setModalOpeningStatus(false));
       }
     };
@@ -101,12 +110,14 @@ const ReviewModal = (): JSX.Element => {
                     </span>
                     <input
                       data-testid="name"
+                      tabIndex={6}
                       type="text"
                       name="user-name"
                       placeholder="Введите ваше имя"
                       value={formData.userName}
                       onChange={handleRadioUserNameChange}
                       disabled={isFormDisabled}
+                      id='modal-review'
                       required
                     />
                   </label>
@@ -121,6 +132,7 @@ const ReviewModal = (): JSX.Element => {
                     </span>
                     <input
                       data-testid="advantage"
+                      tabIndex={7}
                       type="text"
                       name="user-plus"
                       placeholder="Основные преимущества товара"
@@ -141,6 +153,7 @@ const ReviewModal = (): JSX.Element => {
                     </span>
                     <input
                       data-testid="disadvantage"
+                      tabIndex={8}
                       type="text"
                       name="user-minus"
                       placeholder="Главные недостатки товара"
@@ -161,6 +174,7 @@ const ReviewModal = (): JSX.Element => {
                     </span>
                     <textarea
                       data-testid="comment"
+                      tabIndex={9}
                       name="user-comment"
                       placeholder="Поделитесь своим опытом покупки"
                       onChange={handleTextAreaChange}
@@ -175,6 +189,7 @@ const ReviewModal = (): JSX.Element => {
               </div>
               {isReviewError ? <ReviewError /> : null}
               <button
+                tabIndex={10}
                 className="btn btn--purple form-review__btn"
                 type="submit"
                 data-testid="submit-review"
@@ -185,6 +200,8 @@ const ReviewModal = (): JSX.Element => {
             </form>
           </div>
           <button
+            tabIndex={11}
+            id='modal-close-review'
             onClick={() => dispatch(setModalOpeningStatus(false))}
             className="cross-btn" type="button" aria-label="Закрыть попап"
           >

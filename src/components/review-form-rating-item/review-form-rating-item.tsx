@@ -12,11 +12,13 @@ const ReviewFormRatingItem = ({ starValue, currentRating, radioChangeHandle, isF
       name="rate"
       value={starValue}
       id={`star-${starValue}`}
+      tabIndex={starValue}
       data-testid='rating-star-item'
       type='radio'
       checked={currentRating === starValue}
       onChange={radioChangeHandle}
       disabled={isFormDisabled}
+      autoFocus={starValue === 1}
     />
     <label htmlFor={`star-${starValue}`} className="rate__label" title={titleRating}>
     </label>
