@@ -22,13 +22,11 @@ export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewFo
 
   const [formData, setFormData] = useState(formContentDefault);
 
-  const Props = {
-    id: productId,
-    review: formData,
-  };
-
   const sendUserReview = () => {
-    dispatch(sendReview(Props));
+    dispatch(sendReview({
+      id: productId,
+      review: formData,
+    }));
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {

@@ -15,6 +15,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -40,6 +41,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: true,
         isSelectedProductError: true,
@@ -65,6 +67,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -91,6 +94,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           promo: promo,
           products: [],
+          selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
           isProductsError: false,
@@ -117,6 +121,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           products: [],
           isPromoError: true,
+          selectedProduct: {} as Product,
           isDataLoaded: false,
           isProductsError: false,
           isSimilarProductError: false,
@@ -195,6 +200,7 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSelectedProductAction.rejected.type }))
         .toEqual({
           products: [],
+          selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
           isProductsError: false,
@@ -223,6 +229,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           products: products,
           isPromoError: false,
+          selectedProduct: {} as Product,
           isDataLoaded: false,
           isProductsError: false,
           isSimilarProductError: false,
@@ -248,6 +255,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: false,
@@ -273,6 +281,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,
+          selectedProduct: {} as Product,
           isProductsError: true,
           isSimilarProductError: false,
           isSelectedProductError: false,
@@ -300,6 +309,7 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.fulfilled.type, payload: products }))
         .toEqual({
           products: [],
+          selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
           isProductsError: false,
@@ -325,6 +335,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: false,
@@ -349,6 +360,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,
+          selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: true,
           isSelectedProductError: false,

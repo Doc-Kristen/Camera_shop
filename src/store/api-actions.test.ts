@@ -70,6 +70,8 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       fetchSelectedProductAction.pending.type,
+      fetchSimilarProductsAction.pending.type,
+      fetchReviewsAction.pending.type,
       fetchSelectedProductAction.fulfilled.type,
     ]);
   });
@@ -121,7 +123,7 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(sendReview(mockId, mockPostedReview));
+    await store.dispatch(sendReview({ id: mockId, review: mockPostedReview}));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 
