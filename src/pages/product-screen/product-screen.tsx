@@ -8,13 +8,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getDataLoadedStatus, getSelectedProduct, getSelectedProductErrorStatus, getSimilarProductErrorStatus, getSimilarProducts } from '../../store/product-data/selectors';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../../store/api-actions';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { fetchSelectedProductAction} from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
 import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
-import { AppRoute } from '../../helpers/const';
-import { redirectToRoute, setSelectedProductErrorStatus } from '../../store/action';
 import ReviewModal from '../../components/review-modal/review-modal';
 import ReviewSuccess from '../../components/review-success/review-success';
 
@@ -36,20 +33,6 @@ const ProductScreen = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      if (!productIsError) {
-        dispatch(fetchSimilarProductsAction(ProductId));
-        dispatch(fetchReviewsAction(ProductId));
-      }
-      if (isFormOpened || isReviewSuccess) {
-        const posTop = window.pageYOffset;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${posTop}px`;
-      } else {
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      }
       const fetchData = () => {
         dispatch(fetchSelectedProductAction(ProductId));
       };
@@ -58,16 +41,21 @@ const ProductScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch, isFormOpened, isReviewSuccess, productIsError]);
+  }, [ProductId, dispatch, productIsError]);
+
+  if (isFormOpened || isReviewSuccess) {
+    const positionTop = window.pageYOffset;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${positionTop}px`;
+  } else {
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+  }
 
   if (productIsLoaded) {
     return (<Loading />);
-  }
-
-  if (productIsError) {
-    dispatch(setSelectedProductErrorStatus(true));
-    dispatch(redirectToRoute(AppRoute.NotFound));
-    return (<NotFoundScreen />);
   }
 
   return (

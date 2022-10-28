@@ -8,25 +8,30 @@ const ReviewSuccess = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      const succesButton = document.getElementById('succes-modal-button');
+      succesButton && succesButton.focus();
+      const buttonCloseModal = document.getElementById('close-succes-modal-button');
 
-    const succesButton = document.getElementById('succes-modal-button');
-    succesButton && succesButton.focus();
-    const buttonCloseModal = document.getElementById('close-succes-modal-button');
-
-    buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
-      if (isKeyPressed(evt, 'Tab')) {
-        evt.preventDefault();
-        succesButton && succesButton.focus();
-      }
-    });
-    const keyCloseHandler = (evt: KeyboardEvent) => {
-      if (isKeyPressed(evt, 'Escape')) {
-        dispatch(setSuccessOpeningStatus(false));
-      }
-    };
-    document.addEventListener('keydown', keyCloseHandler);
+      buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
+        if (isKeyPressed(evt, 'Tab')) {
+          evt.preventDefault();
+          succesButton && succesButton.focus();
+        }
+      });
+      const keyCloseHandler = (evt: KeyboardEvent) => {
+        if (isKeyPressed(evt, 'Escape')) {
+          dispatch(setSuccessOpeningStatus(false));
+        }
+      };
+      document.addEventListener('keydown', keyCloseHandler);
+      return () => {
+        document.removeEventListener('keydown', keyCloseHandler);
+      };
+    }
     return () => {
-      document.removeEventListener('keydown', keyCloseHandler);
+      isMounted = false;
     };
   }, [dispatch]);
 

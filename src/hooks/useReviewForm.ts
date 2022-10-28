@@ -1,38 +1,26 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '.';
-import { fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview } from '../store/api-actions';
-import { getReviewErrorStatus } from '../store/user-process/selectors';
+import { useAppDispatch } from '.';
+import { sendReview } from '../store/api-actions';
 import { ReviewPost } from '../types/review-post';
 
 type ResultUseReviewForm = [
-  ReviewPost,
-  (evt: React.MouseEvent<HTMLFormElement>) => void,
-  (evt: React.ChangeEvent<HTMLInputElement>) => void,
-  (evt: React.ChangeEvent<HTMLInputElement>) => void,
-  (evt: React.ChangeEvent<HTMLInputElement>) => void,
-  (evt: React.ChangeEvent<HTMLInputElement>) => void,
-  (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
-];
+    ReviewPost,
+    (evt: React.MouseEvent<HTMLFormElement>) => void,
+    (evt: React.ChangeEvent<HTMLInputElement>) => void,
+    (evt: React.ChangeEvent<HTMLInputElement>) => void,
+    (evt: React.ChangeEvent<HTMLInputElement>) => void,
+    (evt: React.ChangeEvent<HTMLInputElement>) => void,
+    (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
+  ];
 
 export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewForm => {
 
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const ProductId = Number(id);
-
-  const isReviewError = useAppSelector(getReviewErrorStatus);
 
   const [formData, setFormData] = useState(formContentDefault);
 
   const sendUserReview = () => {
-    dispatch(sendReview(formData)).finally(() => {
-      if (!isReviewError) {
-        dispatch(fetchSelectedProductAction(ProductId));
-        dispatch(fetchSimilarProductsAction(ProductId));
-        dispatch(fetchReviewsAction(ProductId));
-      }
-    });
+    dispatch(sendReview(formData));
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {
@@ -40,7 +28,7 @@ export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewFo
     sendUserReview();
   };
 
-  const handleRadioRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, rating: Number(evt.target.value) });
   };
 
@@ -63,10 +51,11 @@ export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewFo
   return [
     formData,
     handleFormSubmit,
-    handleRadioRatingChange,
+    handleRadioChange,
     handleRadioUserNameChange,
     handleRadioAdvantageChange,
     handleRadioDisdvantageChange,
     handleTextAreaChange,
   ];
 };
+

@@ -55,23 +55,31 @@ const ReviewModal = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const modal = document.getElementById('star-1');
+    let isMounted = true;
+    if (isMounted) {
+      const modal = document.getElementById('star-1');
+      const buttonCloseModal = document.getElementById('modal-close-review');
 
-    const buttonCloseModal = document.getElementById('modal-close-review');
-    buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
-      if(isKeyPressed(evt, 'Tab')) {
-        evt.preventDefault();
-        modal && modal.focus();
-      }
-    });
-    const keyCloseHandler = (evt: KeyboardEvent) => {
-      if (isKeyPressed(evt, 'Escape')) {
-        dispatch(setModalOpeningStatus(false));
-      }
-    };
-    document.addEventListener('keydown', keyCloseHandler);
+      modal?.focus();
+
+      buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
+        if(isKeyPressed(evt, 'Tab')) {
+          evt.preventDefault();
+          modal && modal.focus();
+        }
+      });
+      const keyCloseHandler = (evt: KeyboardEvent) => {
+        if (isKeyPressed(evt, 'Escape')) {
+          dispatch(setModalOpeningStatus(false));
+        }
+      };
+      document.addEventListener('keydown', keyCloseHandler);
+      return () => {
+        document.removeEventListener('keydown', keyCloseHandler);
+      };
+    }
     return () => {
-      document.removeEventListener('keydown', keyCloseHandler);
+      isMounted = false;
     };
   }, [dispatch]);
 
