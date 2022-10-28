@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 
 type PrivateLoginScreenRouteProps = {
-    mainPageIsDeveloped: boolean;
-    children: JSX.Element;
+  mainPageIsDeveloped: boolean;
+  children: JSX.Element;
 }
 
 const MainScreenRoute = (props: PrivateLoginScreenRouteProps): JSX.Element => {

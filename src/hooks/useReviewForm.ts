@@ -6,14 +6,14 @@ import { getReviewErrorStatus } from '../store/user-process/selectors';
 import { ReviewPost } from '../types/review-post';
 
 type ResultUseReviewForm = [
-    ReviewPost,
-    (evt: React.MouseEvent<HTMLFormElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
-  ];
+  ReviewPost,
+  (evt: React.MouseEvent<HTMLFormElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
+];
 
 export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewForm => {
 
@@ -26,9 +26,8 @@ export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewFo
   const [formData, setFormData] = useState(formContentDefault);
 
   const sendUserReview = () => {
-    dispatch(sendReview(formData)).finally(()=> {
-      if(!isReviewError)
-      {
+    dispatch(sendReview(formData)).finally(() => {
+      if (!isReviewError) {
         dispatch(fetchSelectedProductAction(ProductId));
         dispatch(fetchSimilarProductsAction(ProductId));
         dispatch(fetchReviewsAction(ProductId));

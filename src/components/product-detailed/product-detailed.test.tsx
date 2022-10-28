@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import {makeFakeProduct, makeFakePromo } from '../../helpers/mock';
+import { makeFakeProduct, makeFakePromo } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import ProductDetailed from './product-detailed';

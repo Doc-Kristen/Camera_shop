@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRoute from '../../components/history-route/history-route';
 import MainScreen from './main-screen';

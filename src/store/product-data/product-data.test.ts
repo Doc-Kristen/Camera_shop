@@ -233,7 +233,7 @@ describe('Reducer: productData', () => {
         similarProducts: [],
         ProductDetails: ProductDetailsType.Description
       };
-      expect(productData.reducer(state, { type: fetchProductsAction.pending.type}))
+      expect(productData.reducer(state, { type: fetchProductsAction.pending.type }))
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
@@ -257,7 +257,7 @@ describe('Reducer: productData', () => {
         similarProducts: [],
         ProductDetails: ProductDetailsType.Description
       };
-      expect(productData.reducer(state, { type: fetchProductsAction.rejected.type}))
+      expect(productData.reducer(state, { type: fetchProductsAction.rejected.type }))
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,
@@ -307,7 +307,7 @@ describe('Reducer: productData', () => {
         similarProducts: [],
         ProductDetails: ProductDetailsType.Description
       };
-      expect(productData.reducer(state, { type: fetchSimilarProductsAction.pending.type}))
+      expect(productData.reducer(state, { type: fetchSimilarProductsAction.pending.type }))
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
@@ -330,7 +330,7 @@ describe('Reducer: productData', () => {
         similarProducts: [],
         ProductDetails: ProductDetailsType.Description
       };
-      expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type}))
+      expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type }))
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,

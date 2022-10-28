@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { RatingValues } from '../../helpers/const';
+import { ratingValues } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import ReviewFormRatingItem from './review-form-rating-item';
 
@@ -27,11 +27,11 @@ describe('Component: ReviewFormRatingItem', () => {
       >
         <HistoryRoute history={history}>
           <ReviewFormRatingItem
-            starValue={RatingValues[0].Value}
+            starValue={ratingValues[0].Value}
             currentRating={mockCurrentRating}
             radioChangeHandle={radioChangeHandle}
             isFormDisabled={false}
-            titleRating={RatingValues[0].Title}
+            titleRating={ratingValues[0].Title}
           />
         </HistoryRoute>
       </Provider>,

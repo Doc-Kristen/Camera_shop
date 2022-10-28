@@ -1,4 +1,7 @@
 import { store } from '../store/index';
+import { Product, Products } from './product';
+import { Promo } from './promo';
+import { Reviews } from './review';
 
 type State = ReturnType<typeof store.getState>;
 
@@ -12,4 +15,23 @@ type UserProcess = {
     isReviewSuccess: boolean;
 };
 
-export type { State, AppDispatch, UserProcess };
+type ReviewData = {
+    reviews: Reviews;
+    isReviewsError: boolean;
+    isReviewsLoaded: boolean;
+}
+
+type ProductData = {
+    promo?: Promo;
+    isPromoError: boolean;
+    isDataLoaded: boolean;
+    isProductsError: boolean;
+    isSimilarProductError: boolean;
+    isSelectedProductError: boolean;
+    products: Products;
+    selectedProduct?: Product;
+    similarProducts: Products;
+    ProductDetails: string;
+  }
+
+export type { State, AppDispatch, UserProcess, ReviewData, ProductData };

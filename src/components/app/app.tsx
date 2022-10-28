@@ -12,7 +12,7 @@ const App = (): JSX.Element => (
     <Route path={AppRoute.Main}
       element={
         <MainScreenRoute
-          mainPageIsDeveloped = {false}
+          mainPageIsDeveloped={false}
         >
           <MainScreen />
         </MainScreenRoute>

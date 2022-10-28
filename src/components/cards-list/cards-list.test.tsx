@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { makeFakeProducts } from '../../helpers/mock';
 import thunk from 'redux-thunk';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CardsList from './cards-list';
 
 const mockProducts = makeFakeProducts();
@@ -35,7 +35,7 @@ describe('Component: CardsList', () => {
           <Routes>
             <Route
               path='/catalog/pages/1'
-              element={<CardsList/>}
+              element={<CardsList />}
             />
           </Routes>
 

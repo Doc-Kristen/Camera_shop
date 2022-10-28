@@ -1,15 +1,9 @@
-import { Reviews } from '../../types/review';
 import { fetchReviewsAction } from '../api-actions';
 import { NameSpace } from '../../helpers/const';
 import { createSlice } from '@reduxjs/toolkit';
+import { ReviewData } from '../../types/state';
 
-type InitalState = {
-    reviews: Reviews;
-    isReviewsError: boolean;
-    isReviewsLoaded: boolean;
-}
-
-const initialState: InitalState = {
+const initialState: ReviewData = {
   reviews: [],
   isReviewsError: false,
   isReviewsLoaded: false,

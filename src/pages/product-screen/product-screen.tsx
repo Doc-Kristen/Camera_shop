@@ -36,12 +36,11 @@ const ProductScreen = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      if(!productIsError)
-      {
+      if (!productIsError) {
         dispatch(fetchSimilarProductsAction(ProductId));
         dispatch(fetchReviewsAction(ProductId));
       }
-      if(isFormOpened || isReviewSuccess) {
+      if (isFormOpened || isReviewSuccess) {
         const posTop = window.pageYOffset;
         document.body.style.position = 'fixed';
         document.body.style.top = `-${posTop}px`;
@@ -99,7 +98,7 @@ const ProductScreen = (): JSX.Element => {
             <div className="page-content__section">
               {
                 <ReviewsList
-                  noReviews={!isReviewError && allReviews.length === 0 }
+                  noReviews={!isReviewError && allReviews.length === 0}
                 />
               }
             </div>
@@ -117,8 +116,8 @@ const ProductScreen = (): JSX.Element => {
         </button>
         <Footer />
       </div>
-      { isFormOpened && <ReviewModal />}
-      { isReviewSuccess && <ReviewSuccess />}
+      {isFormOpened && <ReviewModal />}
+      {isReviewSuccess && <ReviewSuccess />}
     </>
   );
 };

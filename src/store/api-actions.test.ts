@@ -1,8 +1,8 @@
-import {Action} from 'redux';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import { Action } from 'redux';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import {createAPI} from '../services/api';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { makeFakePostedReview, makeFakeProducts, makeFakePromo, makeFakeReviews } from '../helpers/mock';
 import { APIRoute } from '../helpers/const';
@@ -14,10 +14,10 @@ describe('Async actions', () => {
   const middlewares = [thunk.withExtraArgument(api)];
 
   const mockStore = configureMockStore<
-      State,
-      Action,
-      ThunkDispatch<State, typeof api, Action>
-    >(middlewares);
+    State,
+    Action,
+    ThunkDispatch<State, typeof api, Action>
+  >(middlewares);
 
   it('should dispatch data/fetchPromo when GET /promo', async () => {
     const mockPromo = makeFakePromo();
@@ -29,7 +29,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchPromoAction());
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchPromoAction.pending.type,
@@ -47,7 +47,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchProductsAction());
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchProductsAction.pending.type,
@@ -66,7 +66,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchSelectedProductAction(mockId));
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchSelectedProductAction.pending.type,
@@ -85,7 +85,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchSimilarProductsAction(mockId));
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchSimilarProductsAction.pending.type,
@@ -104,7 +104,7 @@ describe('Async actions', () => {
 
     await store.dispatch(fetchReviewsAction(mockId));
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchReviewsAction.pending.type,
@@ -116,14 +116,14 @@ describe('Async actions', () => {
     const mockPostedReview = makeFakePostedReview();
 
     mockAPI
-      .onPost(APIRoute.Reviews, mockPostedReview )
+      .onPost(APIRoute.Reviews, mockPostedReview)
       .reply(201, mockPostedReview);
 
     const store = mockStore();
 
     await store.dispatch(sendReview(mockPostedReview));
 
-    const actions = store.getActions().map(({type} : Action<string>) => type);
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       sendReview.pending.type,

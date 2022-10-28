@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
@@ -42,7 +42,7 @@ describe('Component: NotFoundSceen', () => {
             />
             <Route
               path='*'
-              element={<NotFoundScreen/>}
+              element={<NotFoundScreen />}
             />
           </Routes>
         </HistoryRoute>

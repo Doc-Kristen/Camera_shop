@@ -1,4 +1,4 @@
-import { MAX_REVIEWS_COUNT_PER_PAGE, MonthsDictionary, ratingLevels } from '../../helpers/const';
+import { MonthsDictionary, Pagination, ratingLevels } from '../../helpers/const';
 import { getRussifiedDate, sortReviewsDayDown } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
@@ -26,7 +26,7 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
     lastReviewIndex,
     setLastReviewIndex
   } = usePagination({
-    contentPerPage: MAX_REVIEWS_COUNT_PER_PAGE,
+    contentPerPage: Pagination.CountReviews,
     count: allReviews.length,
   });
 
@@ -83,7 +83,7 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
                           &&
                           lastReviewsPerPage.length !== allReviews.length
                         ) {
-                          setLastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
+                          setLastReviewIndex(lastReviewIndex + Pagination.CountReviews);
                         }
                       }
                     }
@@ -127,7 +127,7 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
               :
               <button className="btn btn--purple btn--review" type="button" onClick={
                 () => {
-                  setLastReviewIndex(lastReviewIndex + MAX_REVIEWS_COUNT_PER_PAGE);
+                  setLastReviewIndex(lastReviewIndex + Pagination.CountReviews);
                 }
               }
               >

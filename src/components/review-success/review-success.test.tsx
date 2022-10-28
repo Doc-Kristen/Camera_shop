@@ -33,7 +33,7 @@ describe('Component: ReviewSuccess', () => {
               element={
                 <div>
                   <h1>This is component ReviewsList</h1>
-                  { true && <ReviewSuccess />}
+                  {true && <ReviewSuccess />}
                 </div>
               }
 
@@ -62,7 +62,7 @@ describe('Component: ReviewSuccess', () => {
               element={
                 <div>
                   <h1>This is component ReviewsList</h1>
-                  { false && <ReviewSuccess />}
+                  {false && <ReviewSuccess />}
                 </div>
               }
 

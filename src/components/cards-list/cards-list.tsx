@@ -5,7 +5,7 @@ import ProductCard from '../product-card/product-card';
 import usePagination from '../../hooks/usePagination';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AppRoute, COUNT_CARDS_PER_PAGE } from '../../helpers/const';
+import { AppRoute, Pagination } from '../../helpers/const';
 import { redirectToRoute } from '../../store/action';
 
 const CardsList = (): JSX.Element => {
@@ -24,7 +24,7 @@ const CardsList = (): JSX.Element => {
     setPage,
     totalPages,
   } = usePagination({
-    contentPerPage: COUNT_CARDS_PER_PAGE,
+    contentPerPage: Pagination.CountCards,
     count: allProducts.length,
   });
 

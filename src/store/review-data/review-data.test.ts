@@ -7,7 +7,7 @@ const reviews = makeFakeReviews();
 
 describe('Reducer: productData', () => {
   it('without additional parameters should return initial state', () => {
-    expect(reviewData.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(reviewData.reducer(void 0, { type: 'UNKNOWN_ACTION' }))
       .toEqual({
         reviews: [],
         isReviewsError: false,
@@ -35,7 +35,7 @@ describe('Reducer: productData', () => {
       isReviewsError: false,
       isReviewsLoaded: false,
     };
-    expect(reviewData.reducer(state, { type: fetchReviewsAction.pending.type}))
+    expect(reviewData.reducer(state, { type: fetchReviewsAction.pending.type }))
       .toEqual({
         reviews: [],
         isReviewsError: false,
@@ -49,7 +49,7 @@ describe('Reducer: productData', () => {
       isReviewsError: false,
       isReviewsLoaded: false,
     };
-    expect(reviewData.reducer(state, { type: fetchReviewsAction.rejected.type}))
+    expect(reviewData.reducer(state, { type: fetchReviewsAction.rejected.type }))
       .toEqual({
         reviews: [],
         isReviewsError: true,

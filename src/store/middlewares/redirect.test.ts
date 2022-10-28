@@ -1,11 +1,11 @@
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import {AnyAction} from 'redux';
-import {redirect} from './redirect';
-import {redirectToRoute} from '../action';
-import {State} from '../../types/state';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { AnyAction } from 'redux';
+import { redirect } from './redirect';
+import { redirectToRoute } from '../action';
+import { State } from '../../types/state';
 
 const fakeHistory = {
-  location: {pathname: ''},
+  location: { pathname: '' },
   push(path: string) {
     this.location.pathname = path;
   },
@@ -31,7 +31,7 @@ describe('Middleware: redirect', () => {
   });
 
   it('should not to be redirect /catalog/pages/1/1', () => {
-    store.dispatch({type: 'UNKNOWN_ACTION', payload: 'catalog/pages/1/1'});
+    store.dispatch({ type: 'UNKNOWN_ACTION', payload: 'catalog/pages/1/1' });
     expect(fakeHistory.location.pathname).not.toBe('/catalog/pages/1/1');
   });
 });

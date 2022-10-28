@@ -3,16 +3,16 @@ import { Product } from '../../types/product';
 import RatingStars from '../rating-stars/rating-stars';
 
 type RatingProps = {
-    productCard: Product;
-  }
+  productCard: Product;
+}
 
-const Rating = ({productCard} : RatingProps): JSX.Element => {
+const Rating = ({ productCard }: RatingProps): JSX.Element => {
   const {
     rating,
     reviewCount
 
   } = productCard;
-  return(
+  return (
     <div className="rate product-card__rate">
       {
         ratingLevels.map((level) => (

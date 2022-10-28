@@ -31,7 +31,7 @@ const usePagination: UsePagination = ({ contentPerPage, count }) => {
 
   const firstContentIndex = lastContentIndex - contentPerPage;
 
-  const [ lastReviewIndex, setLastReviewIndex] = useState(lastContentIndex);
+  const [lastReviewIndex, setLastReviewIndex] = useState(lastContentIndex);
 
   const changePage = (direction: boolean) => {
     setPage((state) => {

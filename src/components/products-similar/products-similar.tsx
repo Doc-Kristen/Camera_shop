@@ -1,4 +1,4 @@
-import { COUNT_SIMILAR_CARDS_PER_PAGE } from '../../helpers/const';
+import { Pagination } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
 import usePagination from '../../hooks/usePagination';
 import { getSimilarProductErrorStatus } from '../../store/product-data/selectors';
@@ -21,7 +21,7 @@ const ProductsSimilar = ({productsSimilar} : ProductsSimilarProps): JSX.Element 
     prevPage,
     page
   } = usePagination({
-    contentPerPage: COUNT_SIMILAR_CARDS_PER_PAGE,
+    contentPerPage: Pagination.CountSimilarCards,
     count: productsSimilar.length,
   });
 

@@ -1,24 +1,10 @@
-import { Product, Products } from '../../types/product';
-import { Promo } from '../../types/promo';
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, ProductDetailsType } from '../../helpers/const';
 import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
+import { ProductData } from '../../types/state';
 
-type InitalState = {
-  promo?: Promo;
-  isPromoError: boolean;
-  isDataLoaded: boolean;
-  isProductsError: boolean;
-  isSimilarProductError: boolean;
-  isSelectedProductError: boolean;
-  products: Products;
-  selectedProduct?: Product;
-  similarProducts: Products;
-  ProductDetails:string;
-}
-
-const initialState: InitalState = {
+const initialState: ProductData = {
   isPromoError: false,
   isDataLoaded: false,
   isProductsError: false,

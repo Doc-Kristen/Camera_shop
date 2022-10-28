@@ -18,7 +18,6 @@ const ReviewFormRatingItem = ({ starValue, currentRating, radioChangeHandle, isF
       checked={currentRating === starValue}
       onChange={radioChangeHandle}
       disabled={isFormDisabled}
-      autoFocus={starValue === 1}
     />
     <label htmlFor={`star-${starValue}`} className="rate__label" title={titleRating}>
     </label>

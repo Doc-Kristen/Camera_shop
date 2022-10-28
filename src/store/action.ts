@@ -9,32 +9,32 @@ const Action = {
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
 };
 
-const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value : string) => (
+const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
   {
     payload: value,
   }));
 
-const setModalOpeningStatus = createAction(Action.SET_REVIEW_MODAL_OPENING_STATUS, (value : boolean) => (
+const setModalOpeningStatus = createAction(Action.SET_REVIEW_MODAL_OPENING_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
 
-const setReviewErrorStatus = createAction(Action.SET_REVIEW_ERROR_STATUS, (value : boolean) => (
+const setReviewErrorStatus = createAction(Action.SET_REVIEW_ERROR_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
 
-const setSuccessOpeningStatus = createAction(Action.SET_REVIEW_SUCCESS_OPENING_STATUS, (value : boolean) => (
+const setSuccessOpeningStatus = createAction(Action.SET_REVIEW_SUCCESS_OPENING_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
 
-const setSelectedProductErrorStatus = createAction(Action.SET_SELECTED_PRODUCT_ERROR_STATUS, (value : boolean) => (
+const setSelectedProductErrorStatus = createAction(Action.SET_SELECTED_PRODUCT_ERROR_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
 
-const setProductDetailsShown = createAction(Action.PRODUCT_DETAILS_SHOWN, (value : string) => (
+const setProductDetailsShown = createAction(Action.PRODUCT_DETAILS_SHOWN, (value: string) => (
   {
     payload: value,
   }));

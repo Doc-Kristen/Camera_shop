@@ -14,7 +14,7 @@ const ReviewSuccess = (): JSX.Element => {
     const buttonCloseModal = document.getElementById('close-succes-modal-button');
 
     buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
-      if(isKeyPressed(evt, 'Tab')) {
+      if (isKeyPressed(evt, 'Tab')) {
         evt.preventDefault();
         succesButton && succesButton.focus();
       }
@@ -30,7 +30,7 @@ const ReviewSuccess = (): JSX.Element => {
     };
   }, [dispatch]);
 
-  return(
+  return (
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">
         <div

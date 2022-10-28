@@ -2,8 +2,8 @@ import { Product } from '../../types/product';
 import { Review } from '../../types/review';
 
 type RatingStarsProps = {
-    productCard: Product | Review;
-    ratingLevel: number;
+  productCard: Product | Review;
+  ratingLevel: number;
 };
 
 const RatingStars = ({ productCard, ratingLevel }: RatingStarsProps): JSX.Element =>

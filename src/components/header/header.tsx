@@ -5,7 +5,7 @@ import Logo from '../logo/logo';
 const Header = (): JSX.Element => (
   <header className="header" id="header">
     <div className="container">
-      <Logo/>
+      <Logo />
       <nav className="main-nav header__main-nav">
         <ul className="main-nav__list">
           <li className="main-nav__item"><Link className="main-nav__link" to={AppRoute.Main}>Каталог</Link>
@@ -14,7 +14,7 @@ const Header = (): JSX.Element => (
           </li>
           <li className="main-nav__item"><Link className="main-nav__link" to="#">Доставка</Link>
           </li>
-          <li className="main-nav__item"><Link className="main-nav__link"to="#">О компании</Link>
+          <li className="main-nav__item"><Link className="main-nav__link" to="#">О компании</Link>
           </li>
         </ul>
       </nav>

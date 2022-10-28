@@ -6,7 +6,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { makeFakePromo } from '../../helpers/mock';
 import { AppRoute, ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import MainScreenRoute from './main-screen-route';
 
 const mockPromo = makeFakePromo();
@@ -33,7 +33,7 @@ describe('Component: Banner', () => {
             <Route path={AppRoute.Main}
               element={
                 <MainScreenRoute
-                  mainPageIsDeveloped = {false}
+                  mainPageIsDeveloped={false}
                 >
                   <h1>This is MainScreenRout</h1>
                 </MainScreenRoute>
