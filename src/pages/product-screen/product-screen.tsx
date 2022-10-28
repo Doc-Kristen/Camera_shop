@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getDataLoadedStatus, getSelectedProduct, getSelectedProductErrorStatus, getSimilarProductErrorStatus, getSimilarProducts } from '../../store/product-data/selectors';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchSelectedProductAction} from '../../store/api-actions';
+import { fetchSelectedProductAction } from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
 import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
@@ -41,7 +41,7 @@ const ProductScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch, productIsError, isReviewSuccess]);
+  }, [ProductId, dispatch, productIsError]);
 
   if (isFormOpened || isReviewSuccess) {
     const positionTop = window.pageYOffset;

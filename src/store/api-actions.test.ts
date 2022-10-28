@@ -129,6 +129,9 @@ describe('Async actions', () => {
 
     expect(actions).toEqual([
       sendReview.pending.type,
+      fetchSelectedProductAction.pending.type,
+      fetchSimilarProductsAction.pending.type,
+      fetchReviewsAction.pending.type,
       sendReview.fulfilled.type
     ]);
   });

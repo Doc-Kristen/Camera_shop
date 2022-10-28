@@ -32,7 +32,7 @@ export const fetchProductsAction = createAsyncThunk<Products, void, {
   },
 );
 
-export const fetchSelectedProductAction = createAsyncThunk<Product, number,{
+export const fetchSelectedProductAction = createAsyncThunk<Product, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -44,10 +44,11 @@ export const fetchSelectedProductAction = createAsyncThunk<Product, number,{
       dispatch(fetchSimilarProductsAction(productId));
       dispatch(fetchReviewsAction(productId));
       return data;
-    } catch(e) {
+    } catch (e) {
       dispatch(redirectToRoute(AppRoute.NotFound));
       throw e;
-    }});
+    }
+  });
 
 export const fetchSimilarProductsAction = createAsyncThunk<Products, number, {
   dispatch: AppDispatch;
@@ -86,12 +87,12 @@ export const sendReview = createAsyncThunk<Review, reviewType, {
   extra: AxiosInstance;
 }>(
   'user/postReview',
-  async ({id, review}, { dispatch, extra: api }) => {
+  async ({ id, review }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post<Review>(APIRoute.Reviews, review);
-      fetchSelectedProductAction(id);
+      dispatch(fetchSelectedProductAction(id));
       return data;
-    } catch(e) {
+    } catch (e) {
       dispatch(setReviewErrorStatus(true));
       throw e;
     }
