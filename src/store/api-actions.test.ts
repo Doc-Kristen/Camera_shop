@@ -123,7 +123,7 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(sendReview({ id: mockId, review: mockPostedReview}));
+    await store.dispatch(sendReview({ id: mockId, review: mockPostedReview }));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 
@@ -135,6 +135,5 @@ describe('Async actions', () => {
       sendReview.fulfilled.type
     ]);
   });
-
 
 });
