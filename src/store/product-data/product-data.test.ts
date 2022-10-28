@@ -1,5 +1,6 @@
 import { ProductDetailsType } from '../../helpers/const';
 import { makeFakeProduct, makeFakeProducts, makeFakePromo } from '../../helpers/mock';
+import { Product } from '../../types/product';
 import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
 import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { productData } from './product-data';
@@ -27,6 +28,7 @@ describe('Reducer: productData', () => {
     const state = {
       isPromoError: false,
       isDataLoaded: false,
+      selectedProduct: {} as Product,
       isProductsError: false,
       isSimilarProductError: true,
       isSelectedProductError: false,
@@ -51,6 +53,7 @@ describe('Reducer: productData', () => {
     const state = {
       isPromoError: false,
       isDataLoaded: false,
+      selectedProduct: {} as Product,
       isProductsError: false,
       isSimilarProductError: false,
       isSelectedProductError: false,
@@ -76,6 +79,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -101,6 +105,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -127,6 +132,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -152,6 +158,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -163,6 +170,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           products: [],
           isPromoError: false,
+          selectedProduct: {} as Product,
           isDataLoaded: true,
           isProductsError: false,
           isSimilarProductError: false,
@@ -176,6 +184,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: true,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -202,6 +211,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -225,6 +235,7 @@ describe('Reducer: productData', () => {
     it('should update isDataLoaded when fetchProductsAction.pending', () => {
       const state = {
         isPromoError: false,
+        selectedProduct: {} as Product,
         isDataLoaded: false,
         isProductsError: false,
         isSimilarProductError: false,
@@ -250,6 +261,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: true,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -276,6 +288,7 @@ describe('Reducer: productData', () => {
     it('should update similarProducts by load similarProducts', () => {
       const state = {
         isPromoError: false,
+        selectedProduct: {} as Product,
         isDataLoaded: false,
         isProductsError: false,
         isSimilarProductError: false,
@@ -300,6 +313,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -323,6 +337,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: true,
         isSelectedProductError: false,

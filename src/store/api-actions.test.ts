@@ -114,14 +114,14 @@ describe('Async actions', () => {
 
   it('should dispatch user/postReview when POST /reviews', async () => {
     const mockPostedReview = makeFakePostedReview();
-
+    const mockId = 1;
     mockAPI
       .onPost(APIRoute.Reviews, mockPostedReview)
       .reply(201, mockPostedReview);
 
     const store = mockStore();
 
-    await store.dispatch(sendReview(mockPostedReview));
+    await store.dispatch(sendReview(mockId, mockPostedReview));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 

@@ -41,7 +41,7 @@ const ProductScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [ProductId, dispatch, productIsError]);
+  }, [ProductId, dispatch, productIsError, isReviewSuccess]);
 
   if (isFormOpened || isReviewSuccess) {
     const positionTop = window.pageYOffset;

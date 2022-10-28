@@ -3,6 +3,7 @@ import { NameSpace, ProductDetailsType } from '../../helpers/const';
 import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
 import { ProductData } from '../../types/state';
+import { Product } from '../../types/product';
 
 const initialState: ProductData = {
   isPromoError: false,
@@ -10,6 +11,7 @@ const initialState: ProductData = {
   isProductsError: false,
   isSimilarProductError: false,
   isSelectedProductError: false,
+  selectedProduct: {} as Product,
   products: [],
   similarProducts: [],
   ProductDetails: ProductDetailsType.Description

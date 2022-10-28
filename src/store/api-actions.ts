@@ -6,7 +6,7 @@ import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
 import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
-import { redirectToRoute } from './action';
+import { redirectToRoute, setReviewErrorStatus } from './action';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -32,23 +32,22 @@ export const fetchProductsAction = createAsyncThunk<Products, void, {
   },
 );
 
-export const fetchSelectedProductAction = createAsyncThunk<Product, number, {
+export const fetchSelectedProductAction = createAsyncThunk<Product, number,{
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchSelectedProduct',
-  async (productId: number, { dispatch, extra: api }) => {
+  async (productId, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<Product>(`${APIRoute.Products}/${productId}`);
       dispatch(fetchSimilarProductsAction(productId));
       dispatch(fetchReviewsAction(productId));
       return data;
-    } catch {
+    } catch(e) {
       dispatch(redirectToRoute(AppRoute.NotFound));
-    }
-  }
-);
+      throw e;
+    }});
 
 export const fetchSimilarProductsAction = createAsyncThunk<Products, number, {
   dispatch: AppDispatch;
@@ -76,14 +75,25 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, number, {
   },
 );
 
-export const sendReview = createAsyncThunk<Review, ReviewPost, {
+type reviewType = {
+  id: number;
+  review: ReviewPost;
+};
+
+export const sendReview = createAsyncThunk<Review, reviewType, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/postReview',
-  async (review: ReviewPost, { extra: api }) => {
-    const { data } = await api.post<Review>(APIRoute.Reviews, review);
-    return data;
-  }
-);
+  async ({id, review}, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.post<Review>(APIRoute.Reviews, review);
+      fetchSelectedProductAction(id);
+      return data;
+    } catch(e) {
+      dispatch(setReviewErrorStatus(true));
+      throw e;
+    }
+  });
+

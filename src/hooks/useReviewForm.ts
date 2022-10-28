@@ -1,26 +1,34 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '.';
 import { sendReview } from '../store/api-actions';
 import { ReviewPost } from '../types/review-post';
 
 type ResultUseReviewForm = [
-    ReviewPost,
-    (evt: React.MouseEvent<HTMLFormElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLInputElement>) => void,
-    (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
-  ];
+  ReviewPost,
+  (evt: React.MouseEvent<HTMLFormElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLInputElement>) => void,
+  (evt: React.ChangeEvent<HTMLTextAreaElement>) => void,
+];
 
 export const useReviewForm = (formContentDefault: ReviewPost): ResultUseReviewForm => {
 
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const productId = Number(id);
 
   const [formData, setFormData] = useState(formContentDefault);
 
+  const Props = {
+    id: productId,
+    review: formData,
+  };
+
   const sendUserReview = () => {
-    dispatch(sendReview(formData));
+    dispatch(sendReview(Props));
   };
 
   const handleFormSubmit = (evt: React.MouseEvent<HTMLFormElement>) => {
