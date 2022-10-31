@@ -1,7 +1,7 @@
 import { MonthsDictionary, Pagination, ratingLevels } from '../../helpers/const';
 import { getRussifiedDate, sortReviewsDayDown } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import usePagination from '../../hooks/usePagination';
+import usePagination from '../../hooks/use-pagination';
 import { setModalOpeningStatus } from '../../store/action';
 import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selectors';
 import RatingStars from '../rating-stars/rating-stars';

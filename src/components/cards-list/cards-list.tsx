@@ -2,7 +2,7 @@ import { Product } from '../../types/product';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProducts, getProductsErrorStatus } from '../../store/product-data/selectors';
 import ProductCard from '../product-card/product-card';
-import usePagination from '../../hooks/usePagination';
+import usePagination from '../../hooks/use-pagination';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AppRoute, Pagination } from '../../helpers/const';

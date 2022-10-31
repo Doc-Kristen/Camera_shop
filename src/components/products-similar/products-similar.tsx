@@ -1,6 +1,6 @@
 import { Pagination } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
-import usePagination from '../../hooks/usePagination';
+import usePagination from '../../hooks/use-pagination';
 import { getSimilarProductErrorStatus } from '../../store/product-data/selectors';
 import { Product, Products } from '../../types/product';
 import ProductCard from '../product-card/product-card';
