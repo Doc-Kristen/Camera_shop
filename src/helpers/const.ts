@@ -6,6 +6,8 @@ const enum Pagination {
 
 const MIN_COMMENT_LENGTH = 5;
 
+const DEFAULT_PAGE_NUMBER = 1;
+
 const ERROR_MESSAGE_TIME = 2000;
 
 const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
@@ -13,9 +15,9 @@ const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
 enum AppRoute {
   Main = '/',
   Catalog = '/catalog/',
-  Products = '/catalog/pages/:pageNumber',
-  DescriptionProductById = '/catalog/pages/:pageNumber/:id/description',
-  SpecificationProductById = '/catalog/pages/:pageNumber/:id/specification',
+  Products = '/catalog/page_:pageNumber',
+  DescriptionProductById = '/catalog/:id/description',
+  SpecificationProductById = '/catalog/:id/specification',
   Basket = '/basket',
   NotFound = '*',
 }
@@ -82,6 +84,7 @@ export {
   MIN_COMMENT_LENGTH,
   ERROR_MESSAGE_TIME,
   DEFAULT_PRODUCT_DETAILS_SHOWN,
+  DEFAULT_PAGE_NUMBER,
   ratingLevels,
   MonthsDictionary,
   ratingValues,

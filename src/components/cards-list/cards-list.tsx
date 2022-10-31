@@ -38,7 +38,7 @@ const CardsList = (): JSX.Element => {
         return;
       }
       if (Number(pageNumber) >= 1 && Number(pageNumber) <= totalPages) {
-        window.history.replaceState(null, '', `/catalog/pages/${page}`);
+        window.history.replaceState(null, '', `/catalog/page_${page}`);
         window.scrollTo(0, 0);
         return;
       }
@@ -69,19 +69,19 @@ const CardsList = (): JSX.Element => {
         <ul className="pagination__list">
           {firstContentIndex > page ?
             <li className="pagination__item">
-              <Link onClick={prevPage} className="pagination__link pagination__link--text" to={`/catalog/pages/${page}`}>Назад</Link>
+              <Link onClick={prevPage} className="pagination__link pagination__link--text" to={`/catalog/page_${page}`}>Назад</Link>
             </li> : null}
           {[...Array(totalPages).keys()].map((el) => (
             <li className="pagination__item"
               onClick={() => setPage(el + 1)}
               key={el}
             >
-              <Link className={`pagination__link ${page === el + 1 ? 'pagination__link--active' : ''}`} to={`/catalog/pages/${page}`}>{el + 1}</Link>
+              <Link className={`pagination__link ${page === el + 1 ? 'pagination__link--active' : ''}`} to={`/catalog/page_${page}`}>{el + 1}</Link>
             </li>
           ))}
           {page !== totalPages ?
             <li className="pagination__item">
-              <Link onClick={nextPage} className="pagination__link pagination__link--text" to={`/catalog/pages/${page}`}>Далее</Link>
+              <Link onClick={nextPage} className="pagination__link pagination__link--text" to={`/catalog/page_${page}`}>Далее</Link>
             </li> : null}
         </ul>
       </div>

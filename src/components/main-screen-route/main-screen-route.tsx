@@ -11,7 +11,7 @@ const MainScreenRoute = (props: PrivateLoginScreenRouteProps): JSX.Element => {
   return (
     mainPageIsDeveloped
       ? children
-      : <Navigate to={'/catalog/pages/1'} />
+      : <Navigate to={'/catalog/page_1'} />
   );
 };
 

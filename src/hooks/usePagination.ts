@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { DEFAULT_PAGE_NUMBER } from '../helpers/const';
 
 interface UsePaginationProps {
   contentPerPage: number;
@@ -21,7 +22,7 @@ type UsePagination = (arg0: UsePaginationProps) => (UsePaginationReturn);
 const usePagination: UsePagination = ({ contentPerPage, count }) => {
 
   const { pageNumber } = useParams();
-  const actualpageNumber = pageNumber?.match(/\d+/);
+  const actualpageNumber = pageNumber ? pageNumber.match(/\d+/) : DEFAULT_PAGE_NUMBER;
 
   const [page, setPage] = useState(Number(actualpageNumber));
 

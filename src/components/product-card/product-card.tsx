@@ -43,7 +43,7 @@ const ProductCard = ({ productCard, pageNumber, isActive }: ProductCardProps): J
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={`/catalog/pages/${pageNumber}/${id}/${productDetails}`}>Подробнее
+        <Link className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}>Подробнее
         </Link>
       </div>
     </div>

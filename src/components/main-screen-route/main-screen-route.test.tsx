@@ -40,7 +40,7 @@ describe('Component: Banner', () => {
               }
             />
             <Route
-              path='/catalog/pages/1'
+              path='/catalog/page_1'
               element={<h1>This is catalog page</h1>}
             />
           </Routes>
