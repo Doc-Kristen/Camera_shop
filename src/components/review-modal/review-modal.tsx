@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ERROR_MESSAGE_TIME, MIN_COMMENT_LENGTH } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useReviewForm } from '../../hooks/use-peview-form';
+import { useReviewForm } from '../../hooks/use-review-form';
 import { setModalOpeningStatus, setReviewErrorStatus } from '../../store/action';
 import { getFormBlockedStatus, getReviewErrorStatus } from '../../store/user-process/selectors';
 import ReviewError from '../review-error/review-error';
