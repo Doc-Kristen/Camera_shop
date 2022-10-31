@@ -39,7 +39,7 @@ const store = mockStore(
 
 describe('Component: ProductScreen', () => {
   it('should render correctly', () => {
-    history.push('/catalog/pages/1/4/description');
+    history.push('/catalog/4/description');
     render(
       <Provider
         store={store}
@@ -50,7 +50,6 @@ describe('Component: ProductScreen', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(/Тестовое название камеры/i)).toBeInTheDocument();
     expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
     expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
 

@@ -64,7 +64,9 @@ const ProductScreen = (): JSX.Element => {
         <Header />
         <main>
           <div className="page-content">
-            <Breadcrumbs />
+            <Breadcrumbs
+              productName={productDetailed?.name}
+            />
             <div className="page-content__section">
               {
                 productDetailed

@@ -74,19 +74,6 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
                   <li
                     key={review.id}
                     className="review-card"
-                    onWheel={
-                      (evt) => {
-                        if (
-                          evt.deltaY >= 0
-                          &&
-                          lastReviewsPerPage.length - 1 === index
-                          &&
-                          lastReviewsPerPage.length !== allReviews.length
-                        ) {
-                          setLastReviewIndex(lastReviewIndex + Pagination.CountReviews);
-                        }
-                      }
-                    }
                   >
                     <div className="review-card__head">
                       <p className="title title--h4">{review.userName}</p>

@@ -40,14 +40,14 @@ describe('Component: Banner', () => {
   });
 
   it('should redirect to ProductScreen url when user clicked to link', async () => {
-    history.push('/catalog/pages/1');
+    history.push('/fake');
 
     render(
       <Provider store={store}>
         <HistoryRoute history={history}>
           <Routes>
             <Route
-              path='/catalog/pages/1/4/description'
+              path='/catalog/4/description'
               element={<h1>This is product page</h1>}
             />
             <Route

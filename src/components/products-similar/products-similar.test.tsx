@@ -37,7 +37,6 @@ describe('Component: ProductsSimilar', () => {
     );
 
     expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
 });
