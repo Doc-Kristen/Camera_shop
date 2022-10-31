@@ -57,15 +57,22 @@ const ReviewModal = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      const modal = document.getElementById('star-1');
+      const inputStar = document.getElementById('star-1');
       const buttonCloseModal = document.getElementById('modal-close-review');
 
-      modal?.focus();
+      const focusOnElement = (evt : KeyboardEvent) => {
+        if(isKeyPressed(evt, 'Tab')) {
+          evt.preventDefault();
+          inputStar && inputStar.focus();
+          document.removeEventListener('keydown', focusOnElement);
+        }
+      };
+      document.addEventListener('keydown', focusOnElement);
 
       buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
         if(isKeyPressed(evt, 'Tab')) {
           evt.preventDefault();
-          modal && modal.focus();
+          inputStar && inputStar.focus();
         }
       });
       const keyCloseHandler = (evt: KeyboardEvent) => {

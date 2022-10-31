@@ -13,7 +13,7 @@ const ReviewSuccess = (): JSX.Element => {
       const succesButton = document.getElementById('succes-modal-button');
       const buttonCloseModal = document.getElementById('close-succes-modal-button');
 
-      succesButton && succesButton.focus();
+      buttonCloseModal && buttonCloseModal.focus();
 
       buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
         if (isKeyPressed(evt, 'Tab')) {
