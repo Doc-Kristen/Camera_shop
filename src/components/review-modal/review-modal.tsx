@@ -60,15 +60,6 @@ const ReviewModal = (): JSX.Element => {
       const inputStar = document.getElementById('star-1');
       const buttonCloseModal = document.getElementById('modal-close-review');
 
-      const focusOnElement = (evt : KeyboardEvent) => {
-        if(isKeyPressed(evt, 'Tab')) {
-          evt.preventDefault();
-          inputStar && inputStar.focus();
-          document.removeEventListener('keydown', focusOnElement);
-        }
-      };
-      document.addEventListener('keydown', focusOnElement);
-
       buttonCloseModal && buttonCloseModal.addEventListener('keydown', (evt) => {
         if(isKeyPressed(evt, 'Tab')) {
           evt.preventDefault();
@@ -133,6 +124,7 @@ const ReviewModal = (): JSX.Element => {
                       onChange={handleRadioUserNameChange}
                       disabled={isFormDisabled}
                       id='modal-review'
+                      autoFocus
                       required
                     />
                   </label>
