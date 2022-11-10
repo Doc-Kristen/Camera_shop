@@ -31,7 +31,8 @@ enum APIRoute {
 enum NameSpace {
   Data = 'DATA',
   Review = 'REVIEW',
-  User = 'USER'
+  User = 'USER',
+  Search = 'SEARCH'
 }
 
 enum ProductDetailsType {

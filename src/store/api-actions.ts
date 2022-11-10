@@ -97,3 +97,14 @@ export const sendReview = createAsyncThunk<Review, reviewType, {
       throw e;
     }
   });
+
+export const fetchSearchQueryAction = createAsyncThunk<Products, string, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'data/fetchSearchQueryAction',
+    async (searchQuery, { extra: api }) => {
+      const { data } = await api.get<Products>(`${APIRoute.Products}/?name_like=${searchQuery}`);
+      return data;
+    });
