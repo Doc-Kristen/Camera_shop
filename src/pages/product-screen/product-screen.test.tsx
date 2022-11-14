@@ -33,6 +33,9 @@ const store = mockStore(
     USER: {
       isReviewSuccess: false,
       isFormOpened: false
+    },
+    SEARCH: {
+      searchedProducts: mockProducts
     }
   }
 );
@@ -45,7 +48,7 @@ describe('Component: ProductScreen', () => {
         store={store}
       >
         <HistoryRoute history={history}>
-          <ProductScreen/>
+          <ProductScreen />
         </HistoryRoute>
       </Provider>,
     );

@@ -5,7 +5,7 @@ import { setModalOpeningStatus, setReviewErrorStatus, setSuccessOpeningStatus } 
 import { sendReview } from '../api-actions';
 
 const initialState: UserProcess = {
-  searchedProducts: false,
+  isFormOpened: false,
   isFormBlocked: false,
   isReviewPosted: false,
   isErrorSendingReview: false,
@@ -19,7 +19,7 @@ export const userProcess = createSlice({
   extraReducers(builder) {
     builder
       .addCase(setModalOpeningStatus, (state, action) => {
-        state.searchedProducts = action.payload;
+        state.isFormOpened = action.payload;
       })
       .addCase(sendReview.pending, (state) => {
         state.isFormBlocked = true;
@@ -27,7 +27,7 @@ export const userProcess = createSlice({
       })
       .addCase(sendReview.fulfilled, (state) => {
         state.isFormBlocked = false;
-        state.searchedProducts = false;
+        state.isFormOpened = false;
         state.isReviewPosted = false;
         state.isErrorSendingReview = false;
         state.isReviewSuccess = true;

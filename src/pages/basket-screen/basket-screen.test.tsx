@@ -12,8 +12,9 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    REVIEW: { isReviewsError: true }
-  }
+    REVIEW: { isReviewsError: true },
+    SEARCH: {}
+  },
 );
 
 describe('Component: BasketScreen', () => {

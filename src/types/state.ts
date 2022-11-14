@@ -8,7 +8,7 @@ type State = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 
 type UserProcess = {
-    searchedProducts: boolean;
+    isFormOpened: boolean;
     isFormBlocked: boolean;
     isReviewPosted: boolean;
     isErrorSendingReview: boolean;
@@ -32,11 +32,10 @@ type ProductData = {
     selectedProduct: Product;
     similarProducts: Products;
     ProductDetails: string;
-  }
-
-  type SearchData = {
-    searchedProducts: Products;
 }
 
+type SearchData = {
+    searchedProducts?: Products;
+}
 
 export type { State, AppDispatch, UserProcess, ReviewData, ProductData, SearchData };

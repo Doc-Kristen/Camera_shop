@@ -7,6 +7,7 @@ const Action = {
   SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
+  REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -39,6 +40,11 @@ const setProductDetailsShown = createAction(Action.PRODUCT_DETAILS_SHOWN, (value
     payload: value,
   }));
 
+const removeSearchedProducts = createAction(Action.REMOVE_SEARCHED_PRODUCTS, (value: undefined) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -46,5 +52,6 @@ export {
   setReviewErrorStatus,
   setSuccessOpeningStatus,
   setSelectedProductErrorStatus,
-  setProductDetailsShown
+  setProductDetailsShown,
+  removeSearchedProducts
 };

@@ -12,8 +12,9 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    DATA: { isDataLoaded: true }
-  }
+    DATA: { isDataLoaded: true },
+    SEARCH: {}
+  },
 );
 
 describe('Component: CatalogScreen', () => {
