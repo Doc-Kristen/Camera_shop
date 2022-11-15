@@ -5,8 +5,8 @@ import ProductCard from '../product-card/product-card';
 import usePagination from '../../hooks/use-pagination';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AppRoute, Pagination } from '../../helpers/const';
-import { redirectToRoute } from '../../store/action';
+import { Pagination } from '../../helpers/const';
+// import { redirectToRoute } from '../../store/action';
 
 const CardsList = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -39,10 +39,11 @@ const CardsList = (): JSX.Element => {
       }
       if (Number(pageNumber) >= 1 && Number(pageNumber) <= totalPages) {
         window.history.replaceState(null, '', `/catalog/page_${page}`);
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         return;
+      } else {
+        // dispatch(redirectToRoute(AppRoute.NotFound));
       }
-      dispatch(redirectToRoute(AppRoute.NotFound));
     }
     return () => {
       isMounted = false;
@@ -61,7 +62,6 @@ const CardsList = (): JSX.Element => {
             <ProductCard
               key={productCard.id}
               productCard={productCard}
-              pageNumber={page}
             />
           ))}
       </div>

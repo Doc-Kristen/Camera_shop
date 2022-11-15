@@ -51,7 +51,6 @@ const ProductsSimilar = ({productsSimilar} : ProductsSimilarProps): JSX.Element 
                       key={item.id}
                       isActive
                       productCard={item}
-                      pageNumber={page}
                     />
                   )
                 )}

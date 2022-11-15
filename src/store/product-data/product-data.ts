@@ -14,7 +14,7 @@ const initialState: ProductData = {
   selectedProduct: {} as Product,
   products: [],
   similarProducts: [],
-  ProductDetails: ProductDetailsType.Description
+  productDetails: ProductDetailsType.Description
 };
 
 export const productData = createSlice({
@@ -69,7 +69,7 @@ export const productData = createSlice({
         state.isSelectedProductError = action.payload;
       })
       .addCase(setProductDetailsShown, (state, action) => {
-        state.ProductDetails = action.payload;
+        state.productDetails = action.payload;
       });
   }
 });

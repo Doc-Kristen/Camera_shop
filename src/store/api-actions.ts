@@ -1,12 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { APIRoute, AppRoute } from '../helpers/const';
+import { APIRoute, AppRoute, QueryParameterType } from '../helpers/const';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
 import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute, setReviewErrorStatus } from './action';
+import { QueryParameters } from '../types/query-parameters';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -20,14 +21,22 @@ export const fetchPromoAction = createAsyncThunk<Promo, void, {
   },
 );
 
-export const fetchProductsAction = createAsyncThunk<Products, void, {
+export const fetchProductsAction = createAsyncThunk<Products, QueryParameters, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchProducts',
-  async (_arg, { extra: api }) => {
-    const { data } = await api.get<Products>(APIRoute.Products);
+  async (params, { extra: api }) => {
+
+    const {
+      sortType,
+      orderType,
+    } = params;
+    const { data } = await api.get<Products>(APIRoute.Products, { params : {
+      [QueryParameterType.Sort]: sortType,
+      [QueryParameterType.Order]: orderType
+    }});
     return data;
   },
 );
@@ -99,12 +108,12 @@ export const sendReview = createAsyncThunk<Review, reviewType, {
   });
 
 export const fetchSearchQueryAction = createAsyncThunk<Products, string, {
-    dispatch: AppDispatch;
-    state: State;
-    extra: AxiosInstance;
-  }>(
-    'data/fetchSearchQueryAction',
-    async (searchQuery, { extra: api }) => {
-      const { data } = await api.get<Products>(`${APIRoute.Products}/?name_like=${searchQuery}`);
-      return data;
-    });
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSearchQueryAction',
+  async (searchQuery, { extra: api }) => {
+    const { data } = await api.get<Products>(`${APIRoute.Products}/?name_like=${searchQuery}`);
+    return data;
+  });

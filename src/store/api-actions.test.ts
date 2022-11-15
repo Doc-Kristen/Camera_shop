@@ -45,7 +45,7 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchProductsAction());
+    await store.dispatch(fetchProductsAction({ sortType: 'rating', orderType: 'asc' }));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 

@@ -21,4 +21,4 @@ export const getSimilarProductErrorStatus = (state: State): boolean => state[Nam
 
 export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
 
-export const getProductDetails = (state: State): string => state[NameSpace.Data].ProductDetails;
+export const getProductDetails = (state: State): string => state[NameSpace.Data].productDetails;

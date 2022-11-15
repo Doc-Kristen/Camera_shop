@@ -6,11 +6,10 @@ import { getProductDetails } from '../../store/product-data/selectors';
 
 type ProductCardProps = {
   productCard: Product;
-  pageNumber: number;
   isActive?: boolean;
 }
 
-const ProductCard = ({ productCard, pageNumber, isActive }: ProductCardProps): JSX.Element => {
+const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element => {
 
   const productDetails = useAppSelector(getProductDetails);
 

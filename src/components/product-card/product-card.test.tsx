@@ -3,10 +3,10 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { makeFakeProduct, mockPageNumber } from '../../helpers/mock';
+import { makeFakeProduct } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import ProductCard from './product-card';
 
@@ -32,7 +32,6 @@ describe('Component: ProductCard', () => {
       >
         <HistoryRoute history={history}>
           <ProductCard
-            pageNumber={mockPageNumber}
             productCard={mockSelectedProduct}
           />
         </HistoryRoute>
@@ -58,7 +57,6 @@ describe('Component: ProductCard', () => {
               path='*'
               element={
                 <ProductCard
-                  pageNumber={mockPageNumber}
                   productCard={mockSelectedProduct}
                 />
               }

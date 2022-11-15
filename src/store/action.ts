@@ -8,6 +8,8 @@ const Action = {
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
+  SET_SORTING_TYPE: 'SET_SORTING_TYPE',
+  SET_ORDER_SORTING_TYPE: 'SET_ORDER_SORTING_TYPE'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -45,6 +47,16 @@ const removeSearchedProducts = createAction(Action.REMOVE_SEARCHED_PRODUCTS, (va
     payload: value,
   }));
 
+const setSortingType = createAction(Action.SET_SORTING_TYPE, (value: string) => (
+  {
+    payload: value,
+  }));
+
+const setOrderSortingType = createAction(Action.SET_ORDER_SORTING_TYPE, (value: string) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -53,5 +65,7 @@ export {
   setSuccessOpeningStatus,
   setSelectedProductErrorStatus,
   setProductDetailsShown,
-  removeSearchedProducts
+  removeSearchedProducts,
+  setSortingType,
+  setOrderSortingType
 };

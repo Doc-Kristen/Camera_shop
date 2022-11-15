@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { fetchProductsAction } from './store/api-actions';
+// import { fetchProductsAction } from './store/api-actions';
 import browserHistory from './browser-history';
 import HistoryRoute from './components/history-route/history-route';
 
-store.dispatch(fetchProductsAction());
+// store.dispatch(fetchProductsAction({ sortType: 'price', orderType: 'asc' }));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

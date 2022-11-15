@@ -35,7 +35,7 @@ describe('Reducer: productData', () => {
       isSelectedProductError: false,
       products: [],
       similarProducts: [],
-      ProductDetails: ProductDetailsType.Description
+      productDetails: ProductDetailsType.Description
     };
     expect(productData.reducer(state, setSelectedProductErrorStatus(true)))
       .toEqual({
@@ -47,7 +47,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: true,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       });
   });
 
@@ -61,7 +61,7 @@ describe('Reducer: productData', () => {
       isSelectedProductError: false,
       products: [],
       similarProducts: [],
-      ProductDetails: ProductDetailsType.Description
+      productDetails: ProductDetailsType.Description
     };
     expect(productData.reducer(state, setProductDetailsShown(ProductDetailsType.Specification)))
       .toEqual({
@@ -73,7 +73,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Specification
+        productDetails: ProductDetailsType.Specification
       });
   });
 
@@ -88,7 +88,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchPromoAction.fulfilled.type, payload: promo }))
         .toEqual({
@@ -101,7 +101,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description,
+          productDetails: ProductDetailsType.Description,
         });
     });
 
@@ -115,7 +115,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchPromoAction.rejected.type }))
         .toEqual({
@@ -127,7 +127,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description,
+          productDetails: ProductDetailsType.Description,
         });
     });
   });
@@ -143,7 +143,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.fulfilled.type, payload: selectedProduct }))
         .toEqual({
@@ -169,7 +169,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.pending.type, payload: selectedProduct }))
         .toEqual({
@@ -181,7 +181,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
 
@@ -195,7 +195,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.rejected.type }))
         .toEqual({
@@ -207,7 +207,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: true,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
   });
@@ -223,7 +223,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchProductsAction.fulfilled.type, payload: products }))
         .toEqual({
@@ -235,7 +235,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
 
@@ -249,7 +249,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchProductsAction.pending.type }))
         .toEqual({
@@ -275,7 +275,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchProductsAction.rejected.type }))
         .toEqual({
@@ -287,7 +287,7 @@ describe('Reducer: productData', () => {
           isSelectedProductError: false,
           products: [],
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
   });
@@ -304,7 +304,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.fulfilled.type, payload: products }))
         .toEqual({
@@ -316,7 +316,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: products,
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
     it('should update isDataLoaded when fetchSimilarProductsAction.pending', () => {
@@ -329,7 +329,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.pending.type }))
         .toEqual({
@@ -341,7 +341,7 @@ describe('Reducer: productData', () => {
           isSelectedProductError: false,
           products: [],
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
     it('should update isDataLoaded, isSimilarProductError when fetchSimilarProductsAction.rejected', () => {
@@ -354,7 +354,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type }))
         .toEqual({
@@ -366,7 +366,7 @@ describe('Reducer: productData', () => {
           isSelectedProductError: false,
           products: [],
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
   });

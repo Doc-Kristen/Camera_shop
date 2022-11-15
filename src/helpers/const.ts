@@ -32,13 +32,30 @@ enum NameSpace {
   Data = 'DATA',
   Review = 'REVIEW',
   User = 'USER',
-  Search = 'SEARCH'
+  Search = 'SEARCH',
+  Sorting = 'SORTING'
 }
 
 enum ProductDetailsType {
   Description = 'description',
   Specification = 'specification',
 }
+
+enum QueryParameterType {
+  Sort = '_sort',
+  Order = '_order'
+}
+
+enum SortingType {
+  Price = 'price',
+  Rating = 'rating'
+}
+
+enum OrderType {
+  Desc = 'desc',
+  Asc = 'asc'
+}
+
 
 const ratingLevels = [1, 2, 3, 4, 5];
 
@@ -93,5 +110,8 @@ export {
   APIRoute,
   NameSpace,
   ProductDetailsType,
-  Pagination
+  QueryParameterType,
+  Pagination,
+  SortingType,
+  OrderType,
 };

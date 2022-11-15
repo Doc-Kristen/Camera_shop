@@ -31,11 +31,24 @@ type ProductData = {
     products: Products;
     selectedProduct: Product;
     similarProducts: Products;
-    ProductDetails: string;
+    productDetails: string;
 }
 
 type SearchData = {
     searchedProducts?: Products;
 }
 
-export type { State, AppDispatch, UserProcess, ReviewData, ProductData, SearchData };
+type SortingProcess = {
+    sortingType: string;
+    orderType: string;
+}
+
+export type {
+  State,
+  AppDispatch,
+  UserProcess,
+  ReviewData,
+  ProductData,
+  SearchData,
+  SortingProcess
+};
