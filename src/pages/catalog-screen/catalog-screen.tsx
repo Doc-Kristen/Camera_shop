@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProductsAction } from '../../store/api-actions';
 import { setCurrentCatalogPath } from '../../store/path-process/path-process';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
-import { getOrderType, getSortingType } from '../../store/sorting-process/selectors';
 
 const CatalogScreen = (): JSX.Element => {
 
@@ -24,8 +23,6 @@ const CatalogScreen = (): JSX.Element => {
 
   const products = useAppSelector(getProducts);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
-  const selectedSorting = useAppSelector(getSortingType);
-  const selectedOrder = useAppSelector(getOrderType);
   const currentPage = Number(pageNumber);
   const totalPagesCount = useAppSelector(getPagesCount);
 
@@ -46,7 +43,7 @@ const CatalogScreen = (): JSX.Element => {
         if (currentPage) {
           dispatch(setCurrentCatalogPath({
             currentPage,
-            search: decodeURI(useSearchParams.toString())
+            search: decodeURI(searchParams.toString())
           }));
           dispatch(fetchProductsAction({
             currentPage,
@@ -61,7 +58,7 @@ const CatalogScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [currentPage, dispatch, location.pathname, selectedOrder, selectedSorting, sortParams]);
+  }, [currentPage, dispatch, location.pathname, searchParams, sortParams]);
 
   return (
     <div className="wrapper">
@@ -78,12 +75,14 @@ const CatalogScreen = (): JSX.Element => {
                   <CatalogFilter />
                 </div>
                 <div className="catalog__content">
-                  <CatalogSort />
                   {
                     isProductsLoaded ? <p>Загрузка данных...</p> :
-                      <CardsList
-                        products={products}
-                      />
+                      <>
+                        <CatalogSort />
+                        <CardsList
+                          products={products}
+                        />
+                      </>
                   }
                   <Pagination
                     pagesCount={pagesCount}

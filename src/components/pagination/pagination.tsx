@@ -1,14 +1,14 @@
 import { useAppSelector } from '../../hooks';
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { DEFAULT_PAGE, DEFAULT_STEP_PAGINATION } from '../../helpers/const';
+import { AppRoute, DEFAULT_PAGE, DEFAULT_STEP_PAGINATION } from '../../helpers/const';
 
 type PaginationProps = {
   pagesCount: number;
 }
 
 const Pagination = ({ pagesCount }: PaginationProps): JSX.Element => {
-  const { currentPage } = useAppSelector(getCurrentCatalogPath);
+  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
 
   return (
 
@@ -17,9 +17,10 @@ const Pagination = ({ pagesCount }: PaginationProps): JSX.Element => {
         {currentPage !== DEFAULT_PAGE &&
           <li className="pagination__item">
             <Link className="pagination__link pagination__link--text"
-              to={
-                `/catalog/page_${currentPage - DEFAULT_STEP_PAGINATION}`
-              }
+              to={{
+                pathname: generatePath(AppRoute.Products, { pageNumber: String(currentPage - DEFAULT_STEP_PAGINATION) }),
+                search
+              }}
             >Назад
             </Link>
           </li>}
@@ -28,7 +29,10 @@ const Pagination = ({ pagesCount }: PaginationProps): JSX.Element => {
             key={page}
           >
             <Link className={`pagination__link ${currentPage === page + 1 ? 'pagination__link--active' : ''}`}
-              to={`/catalog/page_${page + 1}`}
+              to={{
+                pathname: generatePath(AppRoute.Products, { pageNumber: String(page + 1) }),
+                search
+              }}
             >{page + 1}
             </Link>
           </li>
@@ -37,9 +41,10 @@ const Pagination = ({ pagesCount }: PaginationProps): JSX.Element => {
         {currentPage !== pagesCount ?
           <li className="pagination__item">
             <Link className="pagination__link pagination__link--text"
-              to={
-                `/catalog/page_${currentPage + DEFAULT_STEP_PAGINATION}`
-              }
+              to={{
+                pathname: generatePath(AppRoute.Products, { pageNumber: String(currentPage + DEFAULT_STEP_PAGINATION) }),
+                search
+              }}
             >Далее
             </Link>
           </li> : null}

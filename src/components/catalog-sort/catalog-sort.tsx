@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { OrderType, QueryParameterType, SortingType } from '../../helpers/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setOrderSortingType, setSortingType } from '../../store/action';
-import { getOrderType, getSortingType } from '../../store/sorting-process/selectors';
+import { useAppSelector } from '../../hooks';
+import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 
 const CatalogSort = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+
+  const {search} = useAppSelector(getCurrentCatalogPath);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const selectedSorting = useAppSelector(getSortingType);
-  const selectedOrder = useAppSelector(getOrderType);
-
   useEffect(() => {
     if (searchParams.has(QueryParameterType.Sort) && !searchParams.has(QueryParameterType.Order)) {
       searchParams.set(QueryParameterType.Order, OrderType.Asc);
@@ -24,6 +20,21 @@ const CatalogSort = (): JSX.Element => {
     }
   }, [searchParams, setSearchParams]);
 
+  const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const {name} = target;
+    const value = target.getAttribute('data-value');
+
+    switch (name) {
+      case QueryParameterType.Sort:
+        searchParams.set(QueryParameterType.Sort, String(value));
+        break;
+      case QueryParameterType.Order:
+        searchParams.set(QueryParameterType.Order, String(value));
+    }
+
+    setSearchParams(searchParams);
+  };
+
   return (
     <div className="catalog-sort">
       <form action="#">
@@ -34,19 +45,10 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="sortPrice"
-                name="sort"
-                onChange={() => {
-                  if (selectedOrder === '') {
-                    dispatch(setSortingType(SortingType.Price));
-                    searchParams.set(QueryParameterType.Sort, SortingType.Price);
-                    dispatch(setOrderSortingType(OrderType.Asc));
-                    setSearchParams(searchParams);
-                  }
-
-                  dispatch(setSortingType(SortingType.Price));
-                  setSearchParams(searchParams);
-                }}
-                checked={selectedSorting === SortingType.Price}
+                name="_sort"
+                data-value="price"
+                onChange={handleInputChange}
+                checked={search?.includes(SortingType.Price) || false}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -54,19 +56,10 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="sortPopular"
-                name="sort"
-                checked={selectedSorting === SortingType.Rating}
-                onChange={() => {
-                  if (selectedOrder === '') {
-                    dispatch(setSortingType(SortingType.Rating));
-                    searchParams.set(QueryParameterType.Sort, SortingType.Rating);
-                    dispatch(setOrderSortingType(OrderType.Asc));
-                    setSearchParams(searchParams);
-                  }
-
-                  dispatch(setSortingType(SortingType.Rating));
-                  setSearchParams(searchParams);
-                }}
+                data-value="rating"
+                name="_sort"
+                checked={search?.includes(SortingType.Rating) || false}
+                onChange={handleInputChange}
               />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
@@ -76,19 +69,10 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="up"
-                name="sort-icon"
-                checked={selectedOrder === OrderType.Asc}
-                onChange={() => {
-                  if (selectedSorting === '') {
-                    dispatch(setSortingType(SortingType.Price));
-                    dispatch(setOrderSortingType(OrderType.Asc));
-                    searchParams.set(QueryParameterType.Order, OrderType.Asc);
-                    setSearchParams(searchParams);
-                  }
-
-                  dispatch(setOrderSortingType(OrderType.Asc));
-                  setSearchParams(searchParams);
-                }}
+                name="_order"
+                data-value="asc"
+                checked={search?.includes(OrderType.Asc) || false}
+                onChange={handleInputChange}
                 aria-label="По возрастанию"
               />
               <label htmlFor="up">
@@ -101,20 +85,11 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="down"
-                name="sort-icon"
+                data-value="desc"
+                name="_order"
                 aria-label="По убыванию"
-                checked={selectedOrder === OrderType.Desc}
-                onChange={() => {
-                  if (selectedSorting === '') {
-                    dispatch(setSortingType(SortingType.Price));
-                    dispatch(setOrderSortingType(OrderType.Desc));
-                    searchParams.set(QueryParameterType.Order, OrderType.Desc);
-                    setSearchParams(searchParams);
-                  }
-
-                  dispatch(setOrderSortingType(OrderType.Desc));
-                  setSearchParams(searchParams);
-                }}
+                checked={search?.includes(OrderType.Desc) || false}
+                onChange={handleInputChange}
               />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">
