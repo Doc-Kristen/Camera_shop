@@ -29,6 +29,7 @@ type ProductData = {
     isSimilarProductError: boolean;
     isSelectedProductError: boolean;
     products: Products;
+    pagesCount: number;
     selectedProduct: Product;
     similarProducts: Products;
     productDetails: string;

@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { DEFAULT_PAGE_NUMBER } from '../../helpers/const';
+import { DEFAULT_PAGE } from '../../helpers/const';
 
 type BreadcrumbsProps = {
   productName?: string;
@@ -40,7 +40,7 @@ const Breadcrumbs = ({ productName }: BreadcrumbsProps): JSX.Element => {
             </Link>
           </li>
           <li className="breadcrumbs__item">
-            <Link className={`breadcrumbs__link${pageNumber ? '--active' : ''}`} to={`/catalog/page_${pageNumber ? pageNumber : DEFAULT_PAGE_NUMBER}`}>Каталог
+            <Link className={`breadcrumbs__link${pageNumber ? '--active' : ''}`} to={`/catalog/page_${pageNumber ? pageNumber : DEFAULT_PAGE}`}>Каталог
               {pageNumber ? null :
                 <svg width="5" height="8" aria-hidden="true">
                   <use xlinkHref="#icon-arrow-mini"></use>

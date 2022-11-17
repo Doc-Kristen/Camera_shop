@@ -45,13 +45,14 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchProductsAction({ sortType: 'rating', orderType: 'asc' }));
+    await store.dispatch(fetchProductsAction({ currentPage: 1, params: {sortType: 'rating', orderType: 'asc' }}));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchProductsAction.pending.type,
-      fetchProductsAction.fulfilled.type
+      fetchProductsAction.fulfilled.type,
+      fetchProductsAction.rejected.type
     ]);
   });
 

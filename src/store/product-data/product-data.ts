@@ -13,6 +13,7 @@ const initialState: ProductData = {
   isSelectedProductError: false,
   selectedProduct: {} as Product,
   products: [],
+  pagesCount: 0,
   similarProducts: [],
   productDetails: ProductDetailsType.Description
 };
@@ -35,7 +36,8 @@ export const productData = createSlice({
       .addCase(fetchProductsAction.fulfilled, (state, action) => {
         state.isDataLoaded = false;
         state.isProductsError = false;
-        state.products = action.payload;
+        state.products = action.payload.data;
+        state.pagesCount = action.payload.productsTotalCount;
       })
       .addCase(fetchProductsAction.rejected, (state) => {
         state.isDataLoaded = false;

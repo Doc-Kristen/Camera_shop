@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace, OrderType, SortingType } from '../../helpers/const';
+import { NameSpace } from '../../helpers/const';
 import { SortingProcess } from '../../types/state';
 import { setOrderSortingType, setSortingType } from '../action';
 
 const initialState: SortingProcess = {
-  sortingType: SortingType.Price,
-  orderType: OrderType.Asc
+  sortingType: '',
+  orderType: ''
 };
 
 export const sortingProcess = createSlice({

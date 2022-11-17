@@ -22,3 +22,5 @@ export const getSimilarProductErrorStatus = (state: State): boolean => state[Nam
 export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
 
 export const getProductDetails = (state: State): string => state[NameSpace.Data].productDetails;
+
+export const getPagesCount = (state: State): number => state[NameSpace.Data].pagesCount;

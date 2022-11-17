@@ -1,16 +1,20 @@
+const MIN_COMMENT_LENGTH = 5;
+
+const DEFAULT_PAGE = 1;
+
+const ERROR_MESSAGE_TIME = 2000;
+
+const DEFAULT_PRODUCTS_COUNT_PER_PAGE = 9;
+
+const DEFAULT_STEP_PAGINATION = 1;
+
+const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
+
 const enum Pagination {
   CountCards = 9,
   CountSimilarCards = 3,
   CountReviews = 3
 }
-
-const MIN_COMMENT_LENGTH = 5;
-
-const DEFAULT_PAGE_NUMBER = 1;
-
-const ERROR_MESSAGE_TIME = 2000;
-
-const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
 
 enum AppRoute {
   Main = '/',
@@ -33,7 +37,8 @@ enum NameSpace {
   Review = 'REVIEW',
   User = 'USER',
   Search = 'SEARCH',
-  Sorting = 'SORTING'
+  Sorting = 'SORTING',
+  Path = 'PATH'
 }
 
 enum ProductDetailsType {
@@ -43,7 +48,9 @@ enum ProductDetailsType {
 
 enum QueryParameterType {
   Sort = '_sort',
-  Order = '_order'
+  Order = '_order',
+  Page = '_page',
+  Limit = '_limit',
 }
 
 enum SortingType {
@@ -102,10 +109,12 @@ export {
   MIN_COMMENT_LENGTH,
   ERROR_MESSAGE_TIME,
   DEFAULT_PRODUCT_DETAILS_SHOWN,
-  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PAGE,
   ratingLevels,
   MonthsDictionary,
   ratingValues,
+  DEFAULT_PRODUCTS_COUNT_PER_PAGE,
+  DEFAULT_STEP_PAGINATION,
   AppRoute,
   APIRoute,
   NameSpace,

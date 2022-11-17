@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CardsList from '../../components/cards-list/cards-list';
@@ -6,31 +7,61 @@ import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import Pagination from '../../components/pagination/pagination';
+import { DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProductsAction } from '../../store/api-actions';
-import { getDataLoadedStatus } from '../../store/product-data/selectors';
+import { setCurrentCatalogPath } from '../../store/path-process/path-process';
+import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
 import { getOrderType, getSortingType } from '../../store/sorting-process/selectors';
 
 const CatalogScreen = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const { pageNumber = 1 } = useParams();
+  const [searchParams] = useSearchParams();
 
+  const products = useAppSelector(getProducts);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const selectedSorting = useAppSelector(getSortingType);
   const selectedOrder = useAppSelector(getOrderType);
+  const currentPage = Number(pageNumber);
+  const totalPagesCount = useAppSelector(getPagesCount);
+
+  const pagesCount = useMemo(() => (
+    Math.ceil(totalPagesCount / DEFAULT_PRODUCTS_COUNT_PER_PAGE)
+  ), [totalPagesCount]);
+
+
+  const sortParams = useMemo(() => ({
+    sortType: searchParams.get(QueryParameterType.Sort),
+    orderType: searchParams.get(QueryParameterType.Order),
+  }), [searchParams]);
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       const fetchData = () => {
-        dispatch(fetchProductsAction({ sortType: selectedSorting, orderType: selectedOrder }));
+        if (currentPage) {
+          dispatch(setCurrentCatalogPath({
+            currentPage,
+            search: decodeURI(useSearchParams.toString())
+          }));
+          dispatch(fetchProductsAction({
+            currentPage,
+            params: {
+              ...sortParams,
+            },
+          }));
+        }
       };
       fetchData();
     }
     return () => {
       isMounted = false;
     };
-  }, [dispatch, selectedOrder, selectedSorting]);
+  }, [currentPage, dispatch, location.pathname, selectedOrder, selectedSorting, sortParams]);
 
   return (
     <div className="wrapper">
@@ -47,10 +78,16 @@ const CatalogScreen = (): JSX.Element => {
                   <CatalogFilter />
                 </div>
                 <div className="catalog__content">
+                  <CatalogSort />
                   {
                     isProductsLoaded ? <p>Загрузка данных...</p> :
-                      <><CatalogSort /><CardsList /></>
+                      <CardsList
+                        products={products}
+                      />
                   }
+                  <Pagination
+                    pagesCount={pagesCount}
+                  />
                 </div>
               </div>
             </div>

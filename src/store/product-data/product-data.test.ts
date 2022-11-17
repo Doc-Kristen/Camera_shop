@@ -34,6 +34,7 @@ describe('Reducer: productData', () => {
       isSimilarProductError: true,
       isSelectedProductError: false,
       products: [],
+      pagesCount: 0,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
     };
@@ -46,6 +47,7 @@ describe('Reducer: productData', () => {
         isSimilarProductError: true,
         isSelectedProductError: true,
         products: [],
+        pagesCount: 0,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       });
@@ -60,6 +62,7 @@ describe('Reducer: productData', () => {
       isSimilarProductError: false,
       isSelectedProductError: false,
       products: [],
+      pagesCount: 0,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
     };
@@ -67,6 +70,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        pagesCount: 0,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
