@@ -75,18 +75,18 @@ const CatalogScreen = (): JSX.Element => {
                   <CatalogFilter />
                 </div>
                 <div className="catalog__content">
+                  <CatalogSort />
                   {
                     isProductsLoaded ? <p>Загрузка данных...</p> :
                       <>
-                        <CatalogSort />
                         <CardsList
                           products={products}
                         />
+                        <Pagination
+                          pagesCount={pagesCount}
+                        />
                       </>
                   }
-                  <Pagination
-                    pagesCount={pagesCount}
-                  />
                 </div>
               </div>
             </div>
