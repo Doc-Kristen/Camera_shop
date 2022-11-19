@@ -10,8 +10,8 @@ import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
 import { DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentCatalogPath } from '../../store/action';
 import { fetchProductsAction } from '../../store/api-actions';
-import { setCurrentCatalogPath } from '../../store/path-process/path-process';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
 
 const CatalogScreen = (): JSX.Element => {

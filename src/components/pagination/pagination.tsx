@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { generatePath, Link } from 'react-router-dom';
-import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 import { AppRoute, DEFAULT_PAGE, DEFAULT_STEP_PAGINATION } from '../../helpers/const';
+import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 
 type PaginationProps = {
   pagesCount: number;

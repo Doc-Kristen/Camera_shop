@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { CurrentCatalogPathType } from '../types/query-parameters';
 
 const Action = {
   SET_REVIEW_MODAL_OPENING_STATUS: 'SET_REVIEW_MODAL_OPENING_STATUS',
@@ -9,7 +10,8 @@ const Action = {
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
   SET_SORTING_TYPE: 'SET_SORTING_TYPE',
-  SET_ORDER_SORTING_TYPE: 'SET_ORDER_SORTING_TYPE'
+  SET_ORDER_SORTING_TYPE: 'SET_ORDER_SORTING_TYPE',
+  SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -57,6 +59,11 @@ const setOrderSortingType = createAction(Action.SET_ORDER_SORTING_TYPE, (value: 
     payload: value,
   }));
 
+const setCurrentCatalogPath = createAction(Action.SET_CURRENT_CATALOG_PATH, (value: CurrentCatalogPathType) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -67,5 +74,6 @@ export {
   setProductDetailsShown,
   removeSearchedProducts,
   setSortingType,
-  setOrderSortingType
+  setOrderSortingType,
+  setCurrentCatalogPath
 };
