@@ -8,6 +8,9 @@ import { makeFakePostedReview, makeFakeProducts, makeFakePromo, makeFakeReviews 
 import { APIRoute } from '../helpers/const';
 import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview } from './api-actions';
 
+const fakePageNumber = 1;
+const fakeParams = { sortType: 'rating', orderType: 'asc' };
+
 describe('Async actions', () => {
   const api = createAPI();
   const mockAPI = new MockAdapter(api);
@@ -45,13 +48,13 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchProductsAction({ currentPage: 1, params: {sortType: 'rating', orderType: 'asc' }}));
+    await store.dispatch(fetchProductsAction({ currentPage: fakePageNumber, params: fakeParams }));
 
     const actions = store.getActions().map(({ type }: Action<string>) => type);
 
     expect(actions).toEqual([
       fetchProductsAction.pending.type,
-      fetchProductsAction.fulfilled.type,
+
       fetchProductsAction.rejected.type
     ]);
   });

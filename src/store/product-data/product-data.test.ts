@@ -6,6 +6,11 @@ import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetc
 import { productData } from './product-data';
 
 const products = makeFakeProducts();
+const fakePagesCount = 0;
+const fakeProductsActionPayload = {
+  data: products,
+  productsTotalCount: fakePagesCount,
+};
 const selectedProduct = makeFakeProduct();
 const promo = makeFakePromo();
 
@@ -20,8 +25,9 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
-        ProductDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description
       });
   });
 
@@ -34,7 +40,7 @@ describe('Reducer: productData', () => {
       isSimilarProductError: true,
       isSelectedProductError: false,
       products: [],
-      pagesCount: 0,
+      pagesCount: fakePagesCount,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
     };
@@ -47,7 +53,7 @@ describe('Reducer: productData', () => {
         isSimilarProductError: true,
         isSelectedProductError: true,
         products: [],
-        pagesCount: 0,
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       });
@@ -62,7 +68,7 @@ describe('Reducer: productData', () => {
       isSimilarProductError: false,
       isSelectedProductError: false,
       products: [],
-      pagesCount: 0,
+      pagesCount: fakePagesCount,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
     };
@@ -70,7 +76,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
-        pagesCount: 0,
+        pagesCount: fakePagesCount,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -92,6 +98,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
+        pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchPromoAction.fulfilled.type, payload: promo }))
@@ -105,6 +112,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
+          pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description,
         });
     });
@@ -119,6 +127,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
+        pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchPromoAction.rejected.type }))
@@ -131,6 +140,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
+          pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description,
         });
     });
@@ -147,6 +157,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
+        pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.fulfilled.type, payload: selectedProduct }))
@@ -159,7 +170,8 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          pagesCount: fakePagesCount,
+          productDetails: ProductDetailsType.Description
         });
     });
 
@@ -173,6 +185,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
+        pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.pending.type, payload: selectedProduct }))
@@ -185,6 +198,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: [],
+          pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description
         });
     });
@@ -199,6 +213,7 @@ describe('Reducer: productData', () => {
         isSelectedProductError: false,
         products: [],
         similarProducts: [],
+        pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
       };
       expect(productData.reducer(state, { type: fetchSelectedProductAction.rejected.type }))
@@ -210,6 +225,7 @@ describe('Reducer: productData', () => {
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: true,
+          pagesCount: fakePagesCount,
           similarProducts: [],
           productDetails: ProductDetailsType.Description
         });
@@ -226,18 +242,20 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       };
-      expect(productData.reducer(state, { type: fetchProductsAction.fulfilled.type, payload: products }))
+      expect(productData.reducer(state, { type: fetchProductsAction.fulfilled.type, payload: fakeProductsActionPayload }))
         .toEqual({
-          products: products,
+          products: fakeProductsActionPayload.data,
           isPromoError: false,
           selectedProduct: {} as Product,
           isDataLoaded: false,
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: false,
+          pagesCount: fakeProductsActionPayload.productsTotalCount,
           similarProducts: [],
           productDetails: ProductDetailsType.Description
         });
@@ -247,6 +265,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         selectedProduct: {} as Product,
+        pagesCount: fakePagesCount,
         isDataLoaded: false,
         isProductsError: false,
         isSimilarProductError: false,
@@ -259,13 +278,14 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          pagesCount: fakePagesCount,
           selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: false,
           products: [],
           similarProducts: [],
-          ProductDetails: ProductDetailsType.Description
+          productDetails: ProductDetailsType.Description
         });
     });
 
@@ -278,6 +298,7 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       };
@@ -291,6 +312,7 @@ describe('Reducer: productData', () => {
           isSelectedProductError: false,
           products: [],
           similarProducts: [],
+          pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description
         });
     });
@@ -307,6 +329,7 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       };
@@ -320,6 +343,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           similarProducts: products,
+          pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description
         });
     });
@@ -332,6 +356,7 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       };
@@ -344,6 +369,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: false,
           isSelectedProductError: false,
           products: [],
+          pagesCount: fakePagesCount,
           similarProducts: [],
           productDetails: ProductDetailsType.Description
         });
@@ -354,9 +380,10 @@ describe('Reducer: productData', () => {
         isDataLoaded: false,
         selectedProduct: {} as Product,
         isProductsError: false,
-        isSimilarProductError: true,
+        isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
       };
@@ -369,6 +396,7 @@ describe('Reducer: productData', () => {
           isSimilarProductError: true,
           isSelectedProductError: false,
           products: [],
+          pagesCount: fakePagesCount,
           similarProducts: [],
           productDetails: ProductDetailsType.Description
         });

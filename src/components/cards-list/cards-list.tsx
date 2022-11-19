@@ -16,7 +16,10 @@ const CardsList = ({ products }: CardsListProps): JSX.Element => {
   }
 
   return (
-    <div className="cards catalog__cards">
+    <div
+      className="cards catalog__cards"
+      data-testid="catalog-cards-list"
+    >
       {products
         .map((productCard: Product) => (
           <ProductCard

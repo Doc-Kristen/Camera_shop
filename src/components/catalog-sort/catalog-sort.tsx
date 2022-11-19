@@ -5,9 +5,10 @@ import { useAppSelector } from '../../hooks';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 
 const CatalogSort = (): JSX.Element => {
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const {search} = useAppSelector(getCurrentCatalogPath);
-  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     if (searchParams.has(QueryParameterType.Sort) && !searchParams.has(QueryParameterType.Order)) {
       searchParams.set(QueryParameterType.Order, OrderType.Asc);

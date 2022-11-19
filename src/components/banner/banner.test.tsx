@@ -7,7 +7,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { makeFakePromo } from '../../helpers/mock';
 import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 const mockPromo = makeFakePromo();
@@ -18,11 +18,16 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    DATA: { promo: mockPromo, isPromoError: false, ProductDetails: ProductDetailsType.Description }
+    DATA: {
+      promo: mockPromo,
+      isPromoError: false,
+      productDetails: ProductDetailsType.Description
+    }
   }
 );
 
 describe('Component: Banner', () => {
+
   it('should render correctly', () => {
 
     render(
@@ -52,7 +57,7 @@ describe('Component: Banner', () => {
             />
             <Route
               path='*'
-              element={<Banner/>}
+              element={<Banner />}
             />
           </Routes>
         </HistoryRoute>

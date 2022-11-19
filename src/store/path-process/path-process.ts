@@ -22,7 +22,3 @@ export const pathProcess = createSlice({
       });
   }
 });
-
-// export const {
-//   setCurrentCatalogPath,
-// } = pathProcess.actions;

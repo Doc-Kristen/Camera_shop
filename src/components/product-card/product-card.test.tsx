@@ -18,7 +18,7 @@ const mockSelectedProduct = makeFakeProduct();
 const store = mockStore(
   {
     DATA: {
-      ProductDetails: ProductDetailsType.Description,
+      productDetails: ProductDetailsType.Description,
     }
   }
 );

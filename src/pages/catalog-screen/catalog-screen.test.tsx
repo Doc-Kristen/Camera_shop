@@ -5,6 +5,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import HistoryRoute from '../../components/history-route/history-route';
 import CatalogScreen from './catalog-screen';
+import { CurrentCatalogPathType } from '../../types/query-parameters';
+
+const fakePagesCount = 0;
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -12,8 +15,11 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    DATA: { isDataLoaded: true },
-    SEARCH: {}
+    DATA: { isDataLoaded: true, pagesCount: fakePagesCount },
+    SEARCH: {},
+    PATH: {
+      currentCatalogPath: {} as CurrentCatalogPathType
+    }
   },
 );
 

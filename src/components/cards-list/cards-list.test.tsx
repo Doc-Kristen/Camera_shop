@@ -14,17 +14,18 @@ const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const store = mockStore(
-  {
-    DATA: {
-      isProductsError: true,
-      products: mockProducts
-    }
-  }
-);
-
 describe('Component: CardsList', () => {
-  it('should render correctly if server error', () => {
+
+  it('should render correctly', () => {
+    const store = mockStore(
+      {
+        DATA: {
+          isProductsError: false,
+          products: mockProducts
+        }
+      }
+    );
+
     history.push('/catalog/pages/1');
 
     render(
@@ -35,7 +36,48 @@ describe('Component: CardsList', () => {
           <Routes>
             <Route
               path='/catalog/pages/1'
-              element={<CardsList />}
+              element={
+                <CardsList
+                  products={mockProducts}
+                />
+              }
+            />
+          </Routes>
+
+        </HistoryRoute>
+      </Provider>,
+    );
+
+    expect(screen.getByTestId('catalog-cards-list')).toBeInTheDocument();
+
+  });
+
+  it('should render correctly if server error', () => {
+
+    const store = mockStore(
+      {
+        DATA: {
+          isProductsError: true,
+          products: mockProducts
+        }
+      }
+    );
+
+    history.push('/catalog/pages/1');
+
+    render(
+      <Provider
+        store={store}
+      >
+        <HistoryRoute history={history}>
+          <Routes>
+            <Route
+              path='/catalog/pages/1'
+              element={
+                <CardsList
+                  products={mockProducts}
+                />
+              }
             />
           </Routes>
 
