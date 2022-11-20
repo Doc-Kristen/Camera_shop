@@ -1,11 +1,13 @@
 import { ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { productFilterByCategoryType } from '../../helpers/const';
-import { useAppSelector } from '../../hooks';
+import { DEFAULT_PAGE, productFilterType } from '../../helpers/const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentCatalogPath } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 
 const CatalogFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
 
   const { search } = useAppSelector(getCurrentCatalogPath);
 
@@ -47,7 +49,7 @@ const CatalogFilter = (): JSX.Element => {
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           {
-            productFilterByCategoryType.category.map((item) =>
+            productFilterType.category.map((item) =>
               (
                 <div
                   key={item.Name}
@@ -73,7 +75,7 @@ const CatalogFilter = (): JSX.Element => {
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Тип камеры</legend>
           {
-            productFilterByCategoryType.type.map((item) =>
+            productFilterType.type.map((item) =>
               (
                 <div
                   key={item.Name}
@@ -98,7 +100,7 @@ const CatalogFilter = (): JSX.Element => {
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Уровень</legend>
           {
-            productFilterByCategoryType.level.map((item) =>
+            productFilterType.level.map((item) =>
               (
                 <div
                   key={item.Name}
@@ -119,7 +121,16 @@ const CatalogFilter = (): JSX.Element => {
               ))
           }
         </fieldset>
-        <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры
+        <button
+          className="btn catalog-filter__reset-btn" type="reset"
+          onClick={() => {
+            setSearchParams(undefined);
+            dispatch(setCurrentCatalogPath({
+              currentPage: DEFAULT_PAGE,
+              search: undefined
+            }));
+          }}
+        >Сбросить фильтры
         </button>
       </form>
     </div>

@@ -85,9 +85,14 @@ const CatalogScreen = (): JSX.Element => {
                         <CardsList
                           products={products}
                         />
-                        <Pagination
-                          pagesCount={pagesCount}
-                        />
+                        {
+                          products.length > 0 ?
+                            <Pagination
+                              pagesCount={pagesCount}
+                            />
+                            : null
+                        }
+
                       </>
                   }
                 </div>

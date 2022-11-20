@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import ProductScreen from './product-screen';
 import HistoryRoute from '../../components/history-route/history-route';
 import { makeFakeProduct, makeFakeProducts, makeFakeReviews } from '../../helpers/mock';
+import { CurrentCatalogPathType } from '../../types/query-parameters';
 
 const mockSelectedProduct = makeFakeProduct();
 const mockReviews = makeFakeReviews();
@@ -36,6 +37,9 @@ const store = mockStore(
     },
     SEARCH: {
       searchedProducts: mockProducts
+    },
+    PATH: {
+      currentCatalogPath: {} as CurrentCatalogPathType
     }
   }
 );

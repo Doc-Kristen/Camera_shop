@@ -9,7 +9,13 @@ import { APIRoute } from '../helpers/const';
 import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview } from './api-actions';
 
 const fakePageNumber = 1;
-const fakeParams = { sortType: 'rating', orderType: 'asc' };
+const fakeParams = {
+  sortType: 'rating',
+  orderType: 'asc',
+  categoryType: 'Фотоаппарат',
+  productType: 'Цифровая',
+  levelType: 'Нулевой'
+};
 
 describe('Async actions', () => {
   const api = createAPI();

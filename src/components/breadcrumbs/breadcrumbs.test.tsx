@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import { makeFakeProduct } from '../../helpers/mock';
 import { Provider } from 'react-redux';
 import {Routes, Route} from 'react-router-dom';
+import { CurrentCatalogPathType } from '../../types/query-parameters';
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -18,6 +19,9 @@ const store = mockStore(
   {
     DATA: {
       selectedProduct: mockSelectedProduct,
+    },
+    PATH: {
+      currentCatalogPath: {} as CurrentCatalogPathType
     }
   }
 );

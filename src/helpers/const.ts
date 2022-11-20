@@ -164,7 +164,7 @@ export {
   ratingValues,
   DEFAULT_PRODUCTS_COUNT_PER_PAGE,
   DEFAULT_STEP_PAGINATION,
-  productFilterType as productFilterByCategoryType,
+  productFilterType,
   AppRoute,
   APIRoute,
   NameSpace,
