@@ -37,7 +37,6 @@ enum NameSpace {
   Review = 'REVIEW',
   User = 'USER',
   Search = 'SEARCH',
-  Sorting = 'SORTING',
   Path = 'PATH'
 }
 
@@ -51,6 +50,9 @@ enum QueryParameterType {
   Order = '_order',
   Page = '_page',
   Limit = '_limit',
+  Type = 'type',
+  Category = 'category',
+  Level = 'level'
 }
 
 enum SortingType {
@@ -63,6 +65,53 @@ enum OrderType {
   Asc = 'asc'
 }
 
+const productFilterType = {
+  productFilterByCategory: [
+    {
+      Name: 'photocamera',
+      Label: 'Фотокамера'
+    },
+    {
+      Name: 'videocamera',
+      Label: 'Видеокамера'
+    }
+  ],
+  productFilterByType:
+    [
+      {
+        Name: 'digital',
+        Label: 'Цифровая'
+      },
+      {
+        Name: 'film',
+        Label: 'Плёночная'
+      },
+      {
+        Name: 'snapshot',
+        Label: 'Моментальная'
+      },
+      {
+        Name: 'collection',
+        Label: 'Коллекционная'
+      }
+    ],
+  productFilterByLevel:
+    [
+      {
+        Name: 'zero',
+        Label: 'Нулевой'
+      },
+      {
+        Name: 'non-professional',
+        Label: 'Любительский'
+      },
+      {
+        Name: 'professional',
+        Label: 'Профессиональный'
+      }
+    ],
+
+} as const;
 
 const ratingLevels = [1, 2, 3, 4, 5];
 
@@ -115,6 +164,7 @@ export {
   ratingValues,
   DEFAULT_PRODUCTS_COUNT_PER_PAGE,
   DEFAULT_STEP_PAGINATION,
+  productFilterType as productFilterByCategoryType,
   AppRoute,
   APIRoute,
   NameSpace,
