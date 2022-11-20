@@ -66,17 +66,17 @@ enum OrderType {
 }
 
 const productFilterType = {
-  productFilterByCategory: [
+  'category': [
     {
       Name: 'photocamera',
-      Label: 'Фотокамера'
+      Label: 'Фотоаппарат'
     },
     {
       Name: 'videocamera',
       Label: 'Видеокамера'
     }
   ],
-  productFilterByType:
+  'type':
     [
       {
         Name: 'digital',
@@ -95,7 +95,7 @@ const productFilterType = {
         Label: 'Коллекционная'
       }
     ],
-  productFilterByLevel:
+  'level':
     [
       {
         Name: 'zero',

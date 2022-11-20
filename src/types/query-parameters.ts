@@ -3,6 +3,9 @@ import { Products } from './product';
 type QueryParameters = {
     sortType: string | null;
     orderType: string | null;
+    categoryType: string | null;
+    productType: string | null;
+    levelType: string | null;
   }
 
 type CurrentCatalogPathType = {

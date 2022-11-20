@@ -32,6 +32,9 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
     const {
       sortType,
       orderType,
+      categoryType,
+      productType,
+      levelType,
     } = params;
 
     const { data, headers } = await api.get<Products>(APIRoute.Products, {
@@ -39,7 +42,10 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
         [QueryParameterType.Limit]: Pagination.CountCards,
         [QueryParameterType.Page]: currentPage,
         [QueryParameterType.Sort]: sortType,
-        [QueryParameterType.Order]: orderType
+        [QueryParameterType.Order]: orderType,
+        [QueryParameterType.Category]: categoryType,
+        [QueryParameterType.Type]: productType,
+        [QueryParameterType.Level]: levelType
       }
     });
     return {

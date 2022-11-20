@@ -34,6 +34,9 @@ const CatalogScreen = (): JSX.Element => {
   const sortParams = useMemo(() => ({
     sortType: searchParams.get(QueryParameterType.Sort),
     orderType: searchParams.get(QueryParameterType.Order),
+    categoryType: searchParams.get(QueryParameterType.Category),
+    productType: searchParams.get(QueryParameterType.Type),
+    levelType: searchParams.get(QueryParameterType.Level),
   }), [searchParams]);
 
   useEffect(() => {
