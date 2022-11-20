@@ -65,7 +65,7 @@ const CatalogFilter = (): JSX.Element => {
                       name={item.Name}
                       onChange={handleInputChange}
                       disabled={(item.Label === 'Видеокамера' && (search?.includes('Моментальная') || search?.includes('Плёночная'))) || isProductsLoaded}
-                      defaultChecked={search?.includes(item.Label) || false}
+                      checked={search?.includes(item.Label) || false}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
                   </label>
@@ -90,7 +90,7 @@ const CatalogFilter = (): JSX.Element => {
                       data-value={item.Label}
                       name={item.Name}
                       onChange={handleInputChange}
-                      defaultChecked={search?.includes(item.Label) || false}
+                      checked={search?.includes(item.Label) || false}
                       disabled={(search?.includes('Видеокамера') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')) || isProductsLoaded}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
@@ -116,7 +116,7 @@ const CatalogFilter = (): JSX.Element => {
                       name={item.Name}
                       onChange={handleInputChange}
                       disabled={isProductsLoaded}
-                      defaultChecked={search?.includes(item.Label) || false}
+                      checked={search?.includes(item.Label) || false}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
                   </label>
