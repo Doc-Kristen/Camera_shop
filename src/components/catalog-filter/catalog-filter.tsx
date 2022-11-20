@@ -4,12 +4,14 @@ import { DEFAULT_PAGE, productFilterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
+import { getDataLoadedStatus } from '../../store/product-data/selectors';
 
 const CatalogFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 
   const { search } = useAppSelector(getCurrentCatalogPath);
+  const isProductsLoaded = useAppSelector(getDataLoadedStatus);
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const categoryFilter = target.getAttribute('data-filter-type');
@@ -62,7 +64,7 @@ const CatalogFilter = (): JSX.Element => {
                       data-value={item.Label}
                       name={item.Name}
                       onChange={handleInputChange}
-                      disabled={item.Label === 'Видеокамера' && (search?.includes('Моментальная') || search?.includes('Плёночная'))}
+                      disabled={(item.Label === 'Видеокамера' && (search?.includes('Моментальная') || search?.includes('Плёночная'))) || isProductsLoaded}
                       defaultChecked={search?.includes(item.Label) || false}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
@@ -89,7 +91,7 @@ const CatalogFilter = (): JSX.Element => {
                       name={item.Name}
                       onChange={handleInputChange}
                       defaultChecked={search?.includes(item.Label) || false}
-                      disabled={search?.includes('Видеокамера') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')}
+                      disabled={(search?.includes('Видеокамера') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')) || isProductsLoaded}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
                   </label>
@@ -113,6 +115,7 @@ const CatalogFilter = (): JSX.Element => {
                       data-value={item.Label}
                       name={item.Name}
                       onChange={handleInputChange}
+                      disabled={isProductsLoaded}
                       defaultChecked={search?.includes(item.Label) || false}
                     />
                     <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
@@ -130,6 +133,7 @@ const CatalogFilter = (): JSX.Element => {
               search: undefined
             }));
           }}
+          disabled={search === '' || isProductsLoaded}
         >Сбросить фильтры
         </button>
       </form>

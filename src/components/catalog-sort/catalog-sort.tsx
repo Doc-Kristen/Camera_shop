@@ -3,11 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 import { OrderType, QueryParameterType, SortingType } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
+import { getDataLoadedStatus, getProducts } from '../../store/product-data/selectors';
 
 const CatalogSort = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const {search} = useAppSelector(getCurrentCatalogPath);
+  const { search } = useAppSelector(getCurrentCatalogPath);
+  const isProductsLoaded = useAppSelector(getDataLoadedStatus);
+  const products = useAppSelector(getProducts);
 
   useEffect(() => {
     if (searchParams.has(QueryParameterType.Sort) && !searchParams.has(QueryParameterType.Order)) {
@@ -21,8 +24,8 @@ const CatalogSort = (): JSX.Element => {
     }
   }, [searchParams, setSearchParams]);
 
-  const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const {name} = target;
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { name } = target;
     const value = target.getAttribute('data-value');
 
     switch (name) {
@@ -50,6 +53,7 @@ const CatalogSort = (): JSX.Element => {
                 data-value="price"
                 onChange={handleInputChange}
                 checked={search?.includes(SortingType.Price) || false}
+                disabled={isProductsLoaded || products.length === 0}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -61,6 +65,7 @@ const CatalogSort = (): JSX.Element => {
                 name="_sort"
                 checked={search?.includes(SortingType.Rating) || false}
                 onChange={handleInputChange}
+                disabled={isProductsLoaded || products.length === 0}
               />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
@@ -74,6 +79,7 @@ const CatalogSort = (): JSX.Element => {
                 data-value="asc"
                 checked={search?.includes(OrderType.Asc) || false}
                 onChange={handleInputChange}
+                disabled={isProductsLoaded || products.length === 0}
                 aria-label="По возрастанию"
               />
               <label htmlFor="up">
@@ -90,6 +96,7 @@ const CatalogSort = (): JSX.Element => {
                 name="_order"
                 aria-label="По убыванию"
                 checked={search?.includes(OrderType.Desc) || false}
+                disabled={isProductsLoaded || products.length === 0}
                 onChange={handleInputChange}
               />
               <label htmlFor="down">
