@@ -14,7 +14,9 @@ const fakeParams = {
   orderType: 'asc',
   categoryType: 'Фотоаппарат',
   productType: 'Цифровая',
-  levelType: 'Нулевой'
+  levelType: 'Нулевой',
+  priceMinimum: '1000',
+  priceMaximum: '20000'
 };
 
 describe('Async actions', () => {

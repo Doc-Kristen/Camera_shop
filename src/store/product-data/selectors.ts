@@ -24,3 +24,7 @@ export const getDataLoadedStatus = (state: State): boolean => state[NameSpace.Da
 export const getProductDetails = (state: State): string => state[NameSpace.Data].productDetails;
 
 export const getPagesCount = (state: State): number => state[NameSpace.Data].pagesCount;
+
+export const getMinProductPrice = (state: State): number | string => state[NameSpace.Data].minProductPrice;
+
+export const getMaxProductPrice = (state: State): number | string => state[NameSpace.Data].maxProductPrice;

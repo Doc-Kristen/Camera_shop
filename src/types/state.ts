@@ -33,6 +33,8 @@ type ProductData = {
     selectedProduct: Product;
     similarProducts: Products;
     productDetails: string;
+    minProductPrice: string | number;
+    maxProductPrice: string | number;
 }
 
 type SearchData = {

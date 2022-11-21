@@ -99,7 +99,8 @@ describe('Reducer: productData', () => {
         products: [],
         similarProducts: [],
         pagesCount: fakePagesCount,
-        productDetails: ProductDetailsType.Description
+        productDetails: ProductDetailsType.Description,
+        productsByPrice: []
       };
       expect(productData.reducer(state, { type: fetchPromoAction.fulfilled.type, payload: promo }))
         .toEqual({
@@ -114,6 +115,7 @@ describe('Reducer: productData', () => {
           similarProducts: [],
           pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description,
+          productsByPrice: []
         });
     });
 

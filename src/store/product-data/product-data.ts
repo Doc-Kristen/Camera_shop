@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, ProductDetailsType } from '../../helpers/const';
-import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
+import { fetchProductsAction, fetchProductsByPriceAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
 import { ProductData } from '../../types/state';
 import { Product } from '../../types/product';
@@ -13,6 +13,8 @@ const initialState: ProductData = {
   isSelectedProductError: false,
   selectedProduct: {} as Product,
   products: [],
+  minProductPrice: 'от',
+  maxProductPrice: 'до',
   pagesCount: 0,
   similarProducts: [],
   productDetails: ProductDetailsType.Description
@@ -69,6 +71,10 @@ export const productData = createSlice({
       })
       .addCase(setSelectedProductErrorStatus, (state, action) => {
         state.isSelectedProductError = action.payload;
+      })
+      .addCase(fetchProductsByPriceAction.fulfilled, (state, action) => {
+        state.minProductPrice = action.payload.minProductPrice;
+        state.maxProductPrice = action.payload.maxProductPrice;
       })
       .addCase(setProductDetailsShown, (state, action) => {
         state.productDetails = action.payload;

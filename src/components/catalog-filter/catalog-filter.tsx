@@ -4,7 +4,7 @@ import { DEFAULT_PAGE, productFilterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { getDataLoadedStatus } from '../../store/product-data/selectors';
+import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
 
 const CatalogFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,6 +12,8 @@ const CatalogFilter = (): JSX.Element => {
 
   const { search } = useAppSelector(getCurrentCatalogPath);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
+  const minProductPrice = useAppSelector(getMinProductPrice);
+  const maxProductPrice = useAppSelector(getMaxProductPrice);
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const categoryFilter = target.getAttribute('data-filter-type');
@@ -29,6 +31,19 @@ const CatalogFilter = (): JSX.Element => {
 
   };
 
+  const handleInputPriceChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    let validity = '';
+
+    switch (true) {
+      case !/^\d+$/.test(target.value):
+        validity = 'Ведите цифры. Значение не может быть меньше нуля';
+        break;
+    }
+
+    target.setCustomValidity(validity);
+    target.reportValidity();
+  };
+
   return (
     <div className="catalog-filter">
       <form action="#">
@@ -38,12 +53,24 @@ const CatalogFilter = (): JSX.Element => {
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder="от" />
+                <input
+                  type="number"
+                  name="price"
+                  data-filter-type='price_gte'
+                  placeholder={String(minProductPrice)}
+                  onChange={handleInputPriceChange}
+                />
               </label>
             </div>
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder="до" />
+                <input
+                  type="number"
+                  name="priceUp"
+                  data-filter-type='price_lte'
+                  placeholder={String(maxProductPrice)}
+                  onChange={handleInputPriceChange}
+                />
               </label>
             </div>
           </div>

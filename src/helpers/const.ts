@@ -52,7 +52,9 @@ enum QueryParameterType {
   Limit = '_limit',
   Type = 'type',
   Category = 'category',
-  Level = 'level'
+  Level = 'level',
+  PriceMinimum = 'price_gte',
+  PriceMaximum = 'price_lte',
 }
 
 enum SortingType {

@@ -11,7 +11,7 @@ import Pagination from '../../components/pagination/pagination';
 import { DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
-import { fetchProductsAction } from '../../store/api-actions';
+import { fetchProductsAction, fetchProductsByPriceAction } from '../../store/api-actions';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
 
 const CatalogScreen = (): JSX.Element => {
@@ -37,6 +37,8 @@ const CatalogScreen = (): JSX.Element => {
     categoryType: searchParams.get(QueryParameterType.Category),
     productType: searchParams.get(QueryParameterType.Type),
     levelType: searchParams.get(QueryParameterType.Level),
+    priceMinimum: searchParams.get(QueryParameterType.PriceMinimum),
+    priceMaximum: searchParams.get(QueryParameterType.PriceMaximum),
   }), [searchParams]);
 
   useEffect(() => {
@@ -50,6 +52,11 @@ const CatalogScreen = (): JSX.Element => {
           }));
           dispatch(fetchProductsAction({
             currentPage,
+            params: {
+              ...sortParams,
+            },
+          }));
+          dispatch(fetchProductsByPriceAction({
             params: {
               ...sortParams,
             },

@@ -1,13 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { APIRoute, AppRoute, Pagination, QueryParameterType } from '../helpers/const';
+import { APIRoute, AppRoute, OrderType, Pagination, QueryParameterType, SortingType } from '../helpers/const';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
 import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute, setReviewErrorStatus } from './action';
-import { FetchProductPayloadType, FetchProductsType } from '../types/query-parameters';
+import { FetchProductByPricePayloadType, FetchProductPayloadType, FetchProductsByPriceType, FetchProductsType } from '../types/query-parameters';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -51,6 +51,36 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
     return {
       data,
       productsTotalCount: Number(headers['x-total-count'])
+    };
+  },
+);
+
+export const fetchProductsByPriceAction = createAsyncThunk<FetchProductsByPriceType, FetchProductByPricePayloadType, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchProductsByPrice',
+  async ({ params }, { extra: api }) => {
+
+    const {
+      categoryType,
+      productType,
+      levelType,
+    } = params;
+
+    const { data } = await api.get<Products>(APIRoute.Products, {
+      params: {
+        [QueryParameterType.Sort]: SortingType.Price,
+        [QueryParameterType.Order]: OrderType.Asc,
+        [QueryParameterType.Category]: categoryType,
+        [QueryParameterType.Type]: productType,
+        [QueryParameterType.Level]: levelType
+      }
+    });
+    return {
+      minProductPrice: data[0].price,
+      maxProductPrice: data[data.length - 1].price
     };
   },
 );
