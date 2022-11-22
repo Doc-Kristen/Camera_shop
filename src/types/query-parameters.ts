@@ -6,8 +6,8 @@ type QueryParameters = {
   categoryType: string | null;
   productType: string | null;
   levelType: string | null;
-  priceMinimum: string | null;
-  priceMaximum: string | null;
+  priceMinimum?: string | null;
+  priceMaximum?: string | null;
 }
 
 type CurrentCatalogPathType = {
@@ -41,4 +41,9 @@ type FetchProductsByPriceType = {
   maxProductPrice: number;
 }
 
-export type { QueryParameters, CurrentCatalogPathType, FetchProductPayloadType, FetchProductsType, FetchProductByPricePayloadType, FetchProductsByPriceType };
+type PriceRangeType = {
+  minProductPrice: number | string;
+  maxProductPrice: number | string;
+};
+
+export type { QueryParameters, CurrentCatalogPathType, FetchProductPayloadType, FetchProductsType, FetchProductByPricePayloadType, FetchProductsByPriceType, PriceRangeType };

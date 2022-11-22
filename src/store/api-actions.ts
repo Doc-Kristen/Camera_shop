@@ -35,6 +35,8 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
       categoryType,
       productType,
       levelType,
+      priceMinimum,
+      priceMaximum
     } = params;
 
     const { data, headers } = await api.get<Products>(APIRoute.Products, {
@@ -45,7 +47,9 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
         [QueryParameterType.Order]: orderType,
         [QueryParameterType.Category]: categoryType,
         [QueryParameterType.Type]: productType,
-        [QueryParameterType.Level]: levelType
+        [QueryParameterType.Level]: levelType,
+        [QueryParameterType.PriceMinimum]: priceMinimum,
+        [QueryParameterType.PriceMaximum]: priceMaximum,
       }
     });
     return {

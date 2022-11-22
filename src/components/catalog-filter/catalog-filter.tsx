@@ -1,7 +1,9 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_PAGE, productFilterType } from '../../helpers/const';
+import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { UsePriceFilter } from '../../hooks/use-price-filter';
 import { setCurrentCatalogPath } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
@@ -14,6 +16,16 @@ const CatalogFilter = (): JSX.Element => {
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
+  const priceRangeValueDefault = {
+    minProductPrice: '',
+    maxProductPrice: ''
+  };
+
+  const [
+    formData,
+    handleInputChangePrice,
+    validatePriceValue
+  ] = UsePriceFilter(priceRangeValueDefault);
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const categoryFilter = target.getAttribute('data-filter-type');
@@ -31,18 +43,23 @@ const CatalogFilter = (): JSX.Element => {
 
   };
 
-  const handleInputPriceChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    let validity = '';
-
-    switch (true) {
-      case !/^\d+$/.test(target.value):
-        validity = 'Ведите цифры. Значение не может быть меньше нуля';
-        break;
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      const keyCloseHandler = (evt: KeyboardEvent) => {
+        if (isKeyPressed(evt, 'Enter')) {
+          validatePriceValue();
+        }
+      };
+      document.addEventListener('keydown', keyCloseHandler);
+      return () => {
+        document.removeEventListener('keydown', keyCloseHandler);
+      };
     }
-
-    target.setCustomValidity(validity);
-    target.reportValidity();
-  };
+    return () => {
+      isMounted = false;
+    };
+  }, [searchParams, setSearchParams, validatePriceValue]);
 
   return (
     <div className="catalog-filter">
@@ -56,9 +73,11 @@ const CatalogFilter = (): JSX.Element => {
                 <input
                   type="number"
                   name="price"
-                  data-filter-type='price_gte'
+                  id='price_gte'
                   placeholder={String(minProductPrice)}
-                  onChange={handleInputPriceChange}
+                  onChange={handleInputChangePrice}
+                  value={formData.minProductPrice}
+                  disabled={isProductsLoaded}
                 />
               </label>
             </div>
@@ -67,9 +86,11 @@ const CatalogFilter = (): JSX.Element => {
                 <input
                   type="number"
                   name="priceUp"
-                  data-filter-type='price_lte'
+                  id='price_lte'
                   placeholder={String(maxProductPrice)}
-                  onChange={handleInputPriceChange}
+                  onChange={handleInputChangePrice}
+                  value={formData.maxProductPrice}
+                  disabled={isProductsLoaded}
                 />
               </label>
             </div>
