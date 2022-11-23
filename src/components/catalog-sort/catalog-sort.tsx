@@ -47,6 +47,7 @@ const CatalogSort = (): JSX.Element => {
           <div className="catalog-sort__type">
             <div className="catalog-sort__btn-text">
               <input
+                data-testid="sort-price-input"
                 type="radio"
                 id="sortPrice"
                 name="_sort"
@@ -61,6 +62,7 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="sortPopular"
+                data-testid="sort-popular-input"
                 data-value="rating"
                 name="_sort"
                 checked={search?.includes(SortingType.Rating) || false}
@@ -76,6 +78,7 @@ const CatalogSort = (): JSX.Element => {
                 type="radio"
                 id="up"
                 name="_order"
+                data-testid="order-up"
                 data-value="asc"
                 checked={search?.includes(OrderType.Asc) || false}
                 onChange={handleInputChange}
@@ -92,6 +95,7 @@ const CatalogSort = (): JSX.Element => {
               <input
                 type="radio"
                 id="down"
+                data-testid="order-down"
                 data-value="desc"
                 name="_order"
                 aria-label="По убыванию"

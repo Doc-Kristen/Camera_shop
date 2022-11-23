@@ -6,7 +6,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import { CurrentCatalogPathType } from '../../types/query-parameters';
 import { Provider } from 'react-redux';
+import { makeFakeProducts } from '../../helpers/mock';
 
+const mockProducts = makeFakeProducts();
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -15,6 +17,12 @@ const store = mockStore(
   {
     PATH: {
       currentCatalogPath: {} as CurrentCatalogPathType
+    },
+    DATA: {
+      minProductPrice: 'от',
+      maxProductPrice: 'до',
+      products: mockProducts,
+      isDataLoaded: false,
     }
   }
 );
@@ -33,5 +41,9 @@ describe('Component: CatalogSort', () => {
     );
 
     expect(screen.getByText(/Сортировать/i)).toBeInTheDocument();
+    expect(screen.getByTestId('sort-price-input')).toBeInTheDocument();
+    expect(screen.getByTestId('sort-popular-input')).toBeInTheDocument();
+    expect(screen.getByTestId('order-up')).toBeInTheDocument();
+    expect(screen.getByTestId('order-down')).toBeInTheDocument();
   });
 });

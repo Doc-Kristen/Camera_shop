@@ -2,7 +2,7 @@ import { ProductDetailsType } from '../../helpers/const';
 import { makeFakeProduct, makeFakeProducts, makeFakePromo } from '../../helpers/mock';
 import { Product } from '../../types/product';
 import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
-import { fetchProductsAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
+import { fetchProductsAction, fetchProductsByPriceAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { productData } from './product-data';
 
 const products = makeFakeProducts();
@@ -10,6 +10,11 @@ const fakePagesCount = 0;
 const fakeProductsActionPayload = {
   data: products,
   productsTotalCount: fakePagesCount,
+};
+
+const fakePriceRangeActionPayload = {
+  minProductPrice: 1999,
+  maxProductPrice: 3999,
 };
 const selectedProduct = makeFakeProduct();
 const promo = makeFakePromo();
@@ -25,6 +30,8 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
@@ -40,6 +47,8 @@ describe('Reducer: productData', () => {
       isSimilarProductError: true,
       isSelectedProductError: false,
       products: [],
+      minProductPrice: 'от',
+      maxProductPrice: 'до',
       pagesCount: fakePagesCount,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
@@ -53,6 +62,8 @@ describe('Reducer: productData', () => {
         isSimilarProductError: true,
         isSelectedProductError: true,
         products: [],
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         pagesCount: fakePagesCount,
         similarProducts: [],
         productDetails: ProductDetailsType.Description
@@ -68,6 +79,8 @@ describe('Reducer: productData', () => {
       isSimilarProductError: false,
       isSelectedProductError: false,
       products: [],
+      minProductPrice: 'от',
+      maxProductPrice: 'до',
       pagesCount: fakePagesCount,
       similarProducts: [],
       productDetails: ProductDetailsType.Description
@@ -79,6 +92,8 @@ describe('Reducer: productData', () => {
         pagesCount: fakePagesCount,
         selectedProduct: {} as Product,
         isProductsError: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
@@ -97,6 +112,8 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         similarProducts: [],
         pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description,
@@ -106,6 +123,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           promo: promo,
           products: [],
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
@@ -128,6 +147,8 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         similarProducts: [],
         pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
@@ -141,6 +162,8 @@ describe('Reducer: productData', () => {
           isProductsError: false,
           isSimilarProductError: false,
           isSelectedProductError: false,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           similarProducts: [],
           pagesCount: fakePagesCount,
           productDetails: ProductDetailsType.Description,
@@ -153,6 +176,8 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -166,6 +191,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           selectedProduct: selectedProduct,
           products: [],
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           isPromoError: false,
           isDataLoaded: false,
           isProductsError: false,
@@ -186,6 +213,8 @@ describe('Reducer: productData', () => {
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         similarProducts: [],
         pagesCount: fakePagesCount,
         productDetails: ProductDetailsType.Description
@@ -193,6 +222,8 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSelectedProductAction.pending.type, payload: selectedProduct }))
         .toEqual({
           products: [],
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           isPromoError: false,
           selectedProduct: {} as Product,
           isDataLoaded: true,
@@ -209,6 +240,8 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: true,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -221,6 +254,8 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSelectedProductAction.rejected.type }))
         .toEqual({
           products: [],
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
@@ -239,6 +274,8 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -252,6 +289,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           products: fakeProductsActionPayload.data,
           isPromoError: false,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isDataLoaded: false,
           isProductsError: false,
@@ -266,6 +305,8 @@ describe('Reducer: productData', () => {
     it('should update isDataLoaded when fetchProductsAction.pending', () => {
       const state = {
         isPromoError: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         pagesCount: fakePagesCount,
         isDataLoaded: false,
@@ -280,6 +321,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           pagesCount: fakePagesCount,
           selectedProduct: {} as Product,
           isProductsError: false,
@@ -295,6 +338,8 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: true,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -308,6 +353,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isProductsError: true,
           isSimilarProductError: false,
@@ -325,6 +372,8 @@ describe('Reducer: productData', () => {
     it('should update similarProducts by load similarProducts', () => {
       const state = {
         isPromoError: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isDataLoaded: false,
         isProductsError: false,
@@ -338,6 +387,8 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.fulfilled.type, payload: products }))
         .toEqual({
           products: [],
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
@@ -353,6 +404,8 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -366,6 +419,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: false,
@@ -379,6 +434,8 @@ describe('Reducer: productData', () => {
     it('should update isDataLoaded, isSimilarProductError when fetchSimilarProductsAction.rejected', () => {
       const state = {
         isPromoError: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
         isDataLoaded: false,
         selectedProduct: {} as Product,
         isProductsError: false,
@@ -393,6 +450,8 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: false,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isProductsError: false,
           isSimilarProductError: true,
@@ -403,6 +462,103 @@ describe('Reducer: productData', () => {
           productDetails: ProductDetailsType.Description
         });
     });
+  });
+
+  describe('fetchProductsByPriceAction', () => {
+
+    it('should update minProductPrice,maxProductPrice by load fetchProductsByPriceAction', () => {
+      const state = {
+        isPromoError: false,
+        minProductPrice: 'от',
+        maxProductPrice: 'до',
+        selectedProduct: {} as Product,
+        isDataLoaded: false,
+        isProductsError: false,
+        isSimilarProductError: false,
+        isSelectedProductError: false,
+        products: [],
+        pagesCount: fakePagesCount,
+        similarProducts: [],
+        productDetails: ProductDetailsType.Description
+      };
+      expect(productData.reducer(state, { type: fetchProductsByPriceAction.fulfilled.type, payload: fakePriceRangeActionPayload }))
+        .toEqual({
+          products: [],
+          minProductPrice: fakePriceRangeActionPayload.minProductPrice,
+          maxProductPrice: fakePriceRangeActionPayload.maxProductPrice,
+          selectedProduct: {} as Product,
+          isPromoError: false,
+          isDataLoaded: false,
+          isProductsError: false,
+          isSimilarProductError: false,
+          isSelectedProductError: false,
+          similarProducts: [],
+          pagesCount: fakePagesCount,
+          productDetails: ProductDetailsType.Description
+        });
+    });
+    // it('should update isDataLoaded when fetchSimilarProductsAction.pending', () => {
+    //   const state = {
+    //     isPromoError: false,
+    //     isDataLoaded: false,
+    //     minProductPrice: 'от',
+    //     maxProductPrice: 'до',
+    //     selectedProduct: {} as Product,
+    //     isProductsError: false,
+    //     isSimilarProductError: false,
+    //     isSelectedProductError: false,
+    //     products: [],
+    //     pagesCount: fakePagesCount,
+    //     similarProducts: [],
+    //     productDetails: ProductDetailsType.Description
+    //   };
+    //   expect(productData.reducer(state, { type: fetchSimilarProductsAction.pending.type }))
+    //     .toEqual({
+    //       isPromoError: false,
+    //       isDataLoaded: true,
+    //       minProductPrice: 'от',
+    //       maxProductPrice: 'до',
+    //       selectedProduct: {} as Product,
+    //       isProductsError: false,
+    //       isSimilarProductError: false,
+    //       isSelectedProductError: false,
+    //       products: [],
+    //       pagesCount: fakePagesCount,
+    //       similarProducts: [],
+    //       productDetails: ProductDetailsType.Description
+    //     });
+    // });
+    // it('should update isDataLoaded, isSimilarProductError when fetchSimilarProductsAction.rejected', () => {
+    //   const state = {
+    //     isPromoError: false,
+    //     minProductPrice: 'от',
+    //     maxProductPrice: 'до',
+    //     isDataLoaded: false,
+    //     selectedProduct: {} as Product,
+    //     isProductsError: false,
+    //     isSimilarProductError: false,
+    //     isSelectedProductError: false,
+    //     products: [],
+    //     pagesCount: fakePagesCount,
+    //     similarProducts: [],
+    //     productDetails: ProductDetailsType.Description
+    //   };
+    //   expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type }))
+    //     .toEqual({
+    //       isPromoError: false,
+    //       isDataLoaded: false,
+    //       minProductPrice: 'от',
+    //       maxProductPrice: 'до',
+    //       selectedProduct: {} as Product,
+    //       isProductsError: false,
+    //       isSimilarProductError: true,
+    //       isSelectedProductError: false,
+    //       products: [],
+    //       pagesCount: fakePagesCount,
+    //       similarProducts: [],
+    //       productDetails: ProductDetailsType.Description
+    //     });
+    // });
   });
 
 });

@@ -48,6 +48,7 @@ const PriceRangeFilter = (): JSX.Element => {
         <div className="custom-input">
           <label>
             <input
+              data-testid='price_gte'
               type="number"
               name="price"
               id='price_gte'
@@ -61,6 +62,7 @@ const PriceRangeFilter = (): JSX.Element => {
         <div className="custom-input">
           <label>
             <input
+              data-testid='price_lte'
               type="number"
               name="priceUp"
               id='price_lte'

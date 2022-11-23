@@ -15,6 +15,10 @@ const store = mockStore(
   {
     PATH: {
       currentCatalogPath: {} as CurrentCatalogPathType
+    },
+    DATA: {
+      minProductPrice: 'от',
+      maxProductPrice: 'до',
     }
   }
 );

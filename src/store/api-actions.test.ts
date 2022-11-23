@@ -6,11 +6,11 @@ import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { makeFakePostedReview, makeFakeProducts, makeFakePromo, makeFakeReviews } from '../helpers/mock';
 import { APIRoute } from '../helpers/const';
-import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview } from './api-actions';
+import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview, fetchProductsByPriceAction } from './api-actions';
 
 const fakePageNumber = 1;
 const fakeParams = {
-  sortType: 'rating',
+  sortType: 'price',
   orderType: 'asc',
   categoryType: 'Фотоаппарат',
   productType: 'Цифровая',
@@ -64,6 +64,25 @@ describe('Async actions', () => {
       fetchProductsAction.pending.type,
 
       fetchProductsAction.rejected.type
+    ]);
+  });
+
+  it('should dispatch data/fetchProductsByPrice when GET /cameras', async () => {
+    const mockProducts = makeFakeProducts();
+    mockAPI
+      .onGet(APIRoute.Products)
+      .reply(200, mockProducts);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchProductsByPriceAction({ params: fakeParams }));
+
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
+
+    expect(actions).toEqual([
+      fetchProductsByPriceAction.pending.type,
+
+      fetchProductsByPriceAction.fulfilled.type
     ]);
   });
 
