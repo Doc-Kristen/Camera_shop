@@ -128,7 +128,7 @@ const CatalogFilter = (): JSX.Element => {
                       disabled={(item.Label === 'Видеокамера' && (search?.includes('Моментальная') || search?.includes('Плёночная'))) || isProductsLoaded}
                       checked={search?.includes(item.Label) || false}
                     />
-                    <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
+                    <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label === 'Фотоаппарат' ? 'Фотокамера' : item.Label}</span>
                   </label>
                 </div>
               ))
