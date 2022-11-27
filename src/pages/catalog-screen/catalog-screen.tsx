@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { fetchProductsAction, fetchProductsByPriceAction } from '../../store/api-actions';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
+// import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const CatalogScreen = (): JSX.Element => {
 
@@ -24,12 +25,11 @@ const CatalogScreen = (): JSX.Element => {
   const products = useAppSelector(getProducts);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const currentPage = Number(pageNumber);
-  const totalPagesCount = useAppSelector(getPagesCount);
+  const totalProductsCount = useAppSelector(getPagesCount);
 
   const pagesCount = useMemo(() => (
-    Math.ceil(totalPagesCount / DEFAULT_PRODUCTS_COUNT_PER_PAGE)
-  ), [totalPagesCount]);
-
+    Math.ceil(totalProductsCount / DEFAULT_PRODUCTS_COUNT_PER_PAGE)
+  ), [totalProductsCount]);
 
   const sortParams = useMemo(() => ({
     sortType: searchParams.get(QueryParameterType.Sort),
@@ -70,12 +70,16 @@ const CatalogScreen = (): JSX.Element => {
     };
   }, [currentPage, dispatch, location.pathname, searchParams, sortParams]);
 
+  // if ((currentPage < DEFAULT_PAGE) || currentPage > pagesCount || isNaN(currentPage)) {
+  //   return <NotFoundScreen />;
+  // }
+
   return (
     <div className="wrapper">
       <Header />
       <main>
         <Banner />
-        <div className="page-content">
+        <div className="page-content" id='page-content'>
           <Breadcrumbs />
           <section className="catalog">
             <div className="container">

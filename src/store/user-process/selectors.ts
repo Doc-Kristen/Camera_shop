@@ -10,3 +10,5 @@ export const getReviewSuccessStatus = (state: State): boolean => state[NameSpace
 export const getReviewPostedStatus = (state: State): boolean => state[NameSpace.User].isReviewPosted;
 
 export const getReviewErrorStatus = (state: State): boolean => state[NameSpace.User].isErrorSendingReview;
+
+export const getResetFilterStatus = (state: State): boolean => state[NameSpace.User].isFilterReset;

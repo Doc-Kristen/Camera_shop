@@ -53,7 +53,7 @@ const CatalogSort = (): JSX.Element => {
                 name="_sort"
                 data-value="price"
                 onChange={handleInputChange}
-                checked={search?.includes(SortingType.Price) || false}
+                checked={search?.includes('_sort=price') || false}
                 disabled={isProductsLoaded || products.length === 0}
               />
               <label htmlFor="sortPrice">по цене</label>
@@ -65,7 +65,7 @@ const CatalogSort = (): JSX.Element => {
                 data-testid="sort-popular-input"
                 data-value="rating"
                 name="_sort"
-                checked={search?.includes(SortingType.Rating) || false}
+                checked={search?.includes('_sort=rating') || false}
                 onChange={handleInputChange}
                 disabled={isProductsLoaded || products.length === 0}
               />

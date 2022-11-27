@@ -497,68 +497,6 @@ describe('Reducer: productData', () => {
           productDetails: ProductDetailsType.Description
         });
     });
-    // it('should update isDataLoaded when fetchSimilarProductsAction.pending', () => {
-    //   const state = {
-    //     isPromoError: false,
-    //     isDataLoaded: false,
-    //     minProductPrice: 'от',
-    //     maxProductPrice: 'до',
-    //     selectedProduct: {} as Product,
-    //     isProductsError: false,
-    //     isSimilarProductError: false,
-    //     isSelectedProductError: false,
-    //     products: [],
-    //     pagesCount: fakePagesCount,
-    //     similarProducts: [],
-    //     productDetails: ProductDetailsType.Description
-    //   };
-    //   expect(productData.reducer(state, { type: fetchSimilarProductsAction.pending.type }))
-    //     .toEqual({
-    //       isPromoError: false,
-    //       isDataLoaded: true,
-    //       minProductPrice: 'от',
-    //       maxProductPrice: 'до',
-    //       selectedProduct: {} as Product,
-    //       isProductsError: false,
-    //       isSimilarProductError: false,
-    //       isSelectedProductError: false,
-    //       products: [],
-    //       pagesCount: fakePagesCount,
-    //       similarProducts: [],
-    //       productDetails: ProductDetailsType.Description
-    //     });
-    // });
-    // it('should update isDataLoaded, isSimilarProductError when fetchSimilarProductsAction.rejected', () => {
-    //   const state = {
-    //     isPromoError: false,
-    //     minProductPrice: 'от',
-    //     maxProductPrice: 'до',
-    //     isDataLoaded: false,
-    //     selectedProduct: {} as Product,
-    //     isProductsError: false,
-    //     isSimilarProductError: false,
-    //     isSelectedProductError: false,
-    //     products: [],
-    //     pagesCount: fakePagesCount,
-    //     similarProducts: [],
-    //     productDetails: ProductDetailsType.Description
-    //   };
-    //   expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type }))
-    //     .toEqual({
-    //       isPromoError: false,
-    //       isDataLoaded: false,
-    //       minProductPrice: 'от',
-    //       maxProductPrice: 'до',
-    //       selectedProduct: {} as Product,
-    //       isProductsError: false,
-    //       isSimilarProductError: true,
-    //       isSelectedProductError: false,
-    //       products: [],
-    //       pagesCount: fakePagesCount,
-    //       similarProducts: [],
-    //       productDetails: ProductDetailsType.Description
-    //     });
-    // });
   });
 
 });

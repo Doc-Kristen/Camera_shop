@@ -42,8 +42,8 @@ type FetchProductsByPriceType = {
 }
 
 type PriceRangeType = {
-  minProductPrice: number | string;
-  maxProductPrice: number | string;
+  minProductPrice: number | string | null;
+  maxProductPrice:number | string | null;
 };
 
 export type { QueryParameters, CurrentCatalogPathType, FetchProductPayloadType, FetchProductsType, FetchProductByPricePayloadType, FetchProductsByPriceType, PriceRangeType };

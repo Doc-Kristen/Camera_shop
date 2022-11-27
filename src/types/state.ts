@@ -13,6 +13,7 @@ type UserProcess = {
     isReviewPosted: boolean;
     isErrorSendingReview: boolean;
     isReviewSuccess: boolean;
+    isFilterReset: boolean;
 };
 
 type ReviewData = {
@@ -38,7 +39,7 @@ type ProductData = {
 }
 
 type SearchData = {
-    searchedProducts?: Products;
+    searchedProducts?: Products | null;
 }
 
 type SortingProcess = {

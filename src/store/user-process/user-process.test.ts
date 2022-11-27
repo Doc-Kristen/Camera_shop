@@ -12,6 +12,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: false,
         isReviewSuccess: false,
+        isFilterReset: false,
       });
   });
 
@@ -22,6 +23,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: false,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, { type: sendReview.fulfilled.type}))
       .toEqual({
@@ -30,6 +32,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: false,
         isReviewSuccess: true,
+        isFilterReset: false,
       });
   });
 
@@ -40,6 +43,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: false,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, { type: sendReview.pending.type}))
       .toEqual({
@@ -48,6 +52,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: true,
         isErrorSendingReview: false,
         isReviewSuccess: false,
+        isFilterReset: false,
       });
   });
 
@@ -58,6 +63,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: true,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, { type: sendReview.rejected.type}))
       .toEqual({
@@ -66,6 +72,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: true,
         isReviewSuccess: false,
+        isFilterReset: false,
       });
   });
 
@@ -76,6 +83,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: false,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, setModalOpeningStatus(true)))
       .toEqual({
@@ -84,6 +92,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: false,
         isReviewSuccess: false,
+        isFilterReset: false,
       });
   });
 
@@ -94,6 +103,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: false,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, setReviewErrorStatus(true)))
       .toEqual({
@@ -102,6 +112,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: true,
         isReviewSuccess: false,
+        isFilterReset: false,
       });
   });
 
@@ -112,6 +123,7 @@ describe('Reducer: productData', () => {
       isReviewPosted: false,
       isErrorSendingReview: false,
       isReviewSuccess: false,
+      isFilterReset: false,
     };
     expect(userProcess.reducer(state, setSuccessOpeningStatus(true)))
       .toEqual({
@@ -120,6 +132,7 @@ describe('Reducer: productData', () => {
         isReviewPosted: false,
         isErrorSendingReview: false,
         isReviewSuccess: true,
+        isFilterReset: false,
       });
   });
 });

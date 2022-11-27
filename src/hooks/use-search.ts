@@ -29,7 +29,7 @@ export const useSearch = (formSearchDefault: SearchQuery): ResultUseSearch => {
   const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     setFormData({...formData, searchQuery: ''});
-    dispatch(removeSearchedProducts(undefined));
+    dispatch(removeSearchedProducts(null));
 
   };
 

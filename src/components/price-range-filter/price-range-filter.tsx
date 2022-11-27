@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
-import { UsePriceFilter } from '../../hooks/use-price-filter';
+import { usePriceFilter } from '../../hooks/use-price-filter';
 import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
+import { getResetFilterStatus } from '../../store/user-process/selectors';
 
 const PriceRangeFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -11,6 +12,8 @@ const PriceRangeFilter = (): JSX.Element => {
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
+  const isFilterReset = useAppSelector(getResetFilterStatus);
+
   const priceRangeValueDefault = {
     minProductPrice: '',
     maxProductPrice: ''
@@ -19,8 +22,11 @@ const PriceRangeFilter = (): JSX.Element => {
   const [
     formData,
     handleInputChange,
-    validatePriceValue
-  ] = UsePriceFilter(priceRangeValueDefault);
+    validatePriceValue,
+  ] = usePriceFilter(priceRangeValueDefault);
+
+  const minPriceValue = formData.minProductPrice ? formData.minProductPrice : '';
+  const maxPriceValue = formData.maxProductPrice ? formData.maxProductPrice : '';
 
   useEffect(() => {
     let isMounted = true;
@@ -39,7 +45,7 @@ const PriceRangeFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue]);
+  }, [searchParams, setSearchParams, validatePriceValue, isFilterReset]);
 
   return (
     <fieldset className="catalog-filter__block">
@@ -54,7 +60,8 @@ const PriceRangeFilter = (): JSX.Element => {
               id='price_gte'
               placeholder={String(minProductPrice)}
               onChange={handleInputChange}
-              value={formData.minProductPrice}
+              value={isFilterReset ? '' : minPriceValue}
+              autoComplete='off'
               disabled={isProductsLoaded}
             />
           </label>
@@ -68,7 +75,8 @@ const PriceRangeFilter = (): JSX.Element => {
               id='price_lte'
               placeholder={String(maxProductPrice)}
               onChange={handleInputChange}
-              value={formData.maxProductPrice}
+              value={isFilterReset ? '' : maxPriceValue}
+              autoComplete='off'
               disabled={isProductsLoaded}
             />
           </label>

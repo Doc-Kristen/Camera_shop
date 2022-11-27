@@ -21,7 +21,7 @@ const SearchedProductsList = ({ searchedProducts }: SearchedProductsListProps): 
 
       const bodyClickHandler = (evt: MouseEvent) => {
         if(evt.target !== searchList)
-        {dispatch(removeSearchedProducts(undefined));}
+        {dispatch(removeSearchedProducts(null));}
         document.body.removeEventListener('click', bodyClickHandler);
       };
       document.body.addEventListener('click', bodyClickHandler);
@@ -43,7 +43,7 @@ const SearchedProductsList = ({ searchedProducts }: SearchedProductsListProps): 
             <Link
               onClick={
                 () => {
-                  dispatch(removeSearchedProducts(undefined));
+                  dispatch(removeSearchedProducts(null));
                 }
               }
               key={searchedProduct.id}
