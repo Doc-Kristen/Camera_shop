@@ -19,6 +19,7 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
 
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [
@@ -52,16 +53,29 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
 
   const [formData, setFormData] = useState(updateSearchParams());
 
+  const minProductPriceCurrent = Number(formData.minProductPrice);
+  const maxProductPriceCurrent = Number(formData.maxProductPrice);
+
   const deleteRepeatedSearch = (queryParameter: string) => {
     if (searchParams.has(queryParameter)) {
       searchParams.delete(queryParameter);
     }
   };
 
-  const validatePriceValue = () => {
+  const updatePage = () => {
+    setSearchParams(searchParams);
+    resetPageParams(searchParams);
+  };
 
-    const minProductPriceCurrent = Number(formData.minProductPrice);
-    const maxProductPriceCurrent = Number(formData.maxProductPrice);
+  const isValidMinPrice = () =>
+    minProductPriceCurrent >= minProductPrice &&
+    minProductPriceCurrent <= maxProductPrice;
+
+  const isValidMaxPrice = () =>
+    maxProductPriceCurrent <= maxProductPrice
+    && maxProductPriceCurrent >= minProductPrice;
+
+  const validatePriceValue = () => {
 
     deleteRepeatedSearch(QueryParameterType.PriceMinimum);
     deleteRepeatedSearch(QueryParameterType.PriceMaximum);
@@ -69,40 +83,89 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
     switch (true) {
       case formData.minProductPrice === '' && formData.maxProductPrice === '':
         break;
-      case (maxProductPriceCurrent) > maxProductPrice && (minProductPriceCurrent > maxProductPriceCurrent):
-        setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
-        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
-        setFormData({ ...formData, maxProductPrice: Number(maxProductPrice) });
-        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
-        break;
-      case minProductPriceCurrent < minProductPrice:
-        setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
-        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
-        break;
-      case maxProductPriceCurrent > maxProductPrice:
-        setFormData({ ...formData, maxProductPrice: Number(maxProductPrice) });
-        searchParams.append(QueryParameterType.PriceMinimum, String(maxProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
-        break;
-      case minProductPriceCurrent > maxProductPriceCurrent:
-        setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
-        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
-        searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
-        break;
-      default:
+      case isValidMinPrice() && isValidMaxPrice() &&
+       formData.minProductPrice !== formSearchDefault.minProductPrice &&
+       formData.maxProductPrice !== formSearchDefault.maxProductPrice
+        :
+        console.log('all parameter true');
         searchParams.append(QueryParameterType.PriceMinimum, String(formData.minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
-        setSearchParams(searchParams);
-        resetPageParams(searchParams);
+        updatePage();
+        break;
+      case (maxProductPriceCurrent === 0 || formData.maxProductPrice === '') &&
+      isValidMinPrice() &&
+      formData.minProductPrice !== formSearchDefault.minProductPrice:
+        console.log('not max parameter, min true');
+        setFormData({ ...formData,
+          minProductPrice: minProductPriceCurrent,
+          maxProductPrice: formSearchDefault.maxProductPrice });
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPriceCurrent));
+        searchParams.delete(QueryParameterType.PriceMaximum);
+        updatePage();
+        break;
+      case (maxProductPriceCurrent === 0 || formData.maxProductPrice === '') &&
+        !isValidMinPrice() &&
+        formData.minProductPrice !== formSearchDefault.minProductPrice:
+        console.log('not max parameter, min false');
+        setFormData({ ...formData,
+          minProductPrice: minProductPrice,
+          maxProductPrice: formSearchDefault.maxProductPrice });
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
+        searchParams.delete(QueryParameterType.PriceMaximum);
+        updatePage();
+        break;
+      case (minProductPriceCurrent === 0 || formData.minProductPrice === '') &&
+      isValidMaxPrice() &&
+      formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        console.log('not min parameter, max true');
+        setFormData({ ...formData,
+          maxProductPrice: maxProductPriceCurrent,
+          minProductPrice: formSearchDefault.minProductPrice });
+        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPriceCurrent));
+        searchParams.delete(QueryParameterType.PriceMinimum);
+        updatePage();
+        break;
+      case (minProductPriceCurrent === 0 || formData.minProductPrice === '') &&
+        !isValidMaxPrice() &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        console.log('not min parameter, max false');
+        setFormData({ ...formData,
+          maxProductPrice: maxProductPrice,
+          minProductPrice: formSearchDefault.minProductPrice });
+        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
+        searchParams.delete(QueryParameterType.PriceMinimum);
+        updatePage();
+        break;
+      case !isValidMinPrice() && isValidMaxPrice() &&
+      formData.minProductPrice !== formSearchDefault.minProductPrice &&
+      formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        console.log('not correct minPrice, max true');
+        setFormData({ ...formData,
+          maxProductPrice: maxProductPriceCurrent,
+          minProductPrice: minProductPrice });
+        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPriceCurrent));
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
+        updatePage();
+        break;
+      case !isValidMaxPrice() && isValidMinPrice() &&
+        formData.minProductPrice !== formSearchDefault.minProductPrice &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        console.log('not correct maxPrice, min true');
+        setFormData({ ...formData,
+          minProductPrice: minProductPriceCurrent,
+          maxProductPrice: maxProductPrice });
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPriceCurrent));
+        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
+        updatePage();
+        break;
+      default:
+        console.log('default');
+        setFormData({ ...formData,
+          minProductPrice: minProductPrice,
+          maxProductPrice: maxProductPrice });
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
+        searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
+        updatePage();
         break;
     }
 
@@ -121,11 +184,14 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
   const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     setSearchParams(undefined);
-    setFormData({ ...formData,
-      minProductPrice:formSearchDefault.minProductPrice,
-      maxProductPrice:formSearchDefault.maxProductPrice });
+    setFormData({
+      ...formData,
+      minProductPrice: formSearchDefault.minProductPrice,
+      maxProductPrice: formSearchDefault.maxProductPrice
+    });
+    setSearchParams(undefined);
     navigate({
-      pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
+      pathname: generatePath(AppRoute.Products, { pageNumber: String(DEFAULT_PAGE) }),
       search: decodeURI('')
     });
   };
