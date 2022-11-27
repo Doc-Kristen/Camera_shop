@@ -94,6 +94,10 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
         searchParams.append(QueryParameterType.PriceMinimum, String(formData.minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
         setSearchParams(searchParams);
+        navigate({
+          pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
+          search: decodeURI(searchParams.toString())
+        });
         break;
     }
 

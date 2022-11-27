@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { productFilterType } from '../../helpers/const';
+import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE, productFilterType } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import { usePriceFilter } from '../../hooks/use-price-filter';
@@ -9,6 +9,7 @@ import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../
 import { getResetFilterStatus } from '../../store/user-process/selectors';
 
 const CatalogFilter = (): JSX.Element => {
+  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useAppSelector(getCurrentCatalogPath);
@@ -38,13 +39,20 @@ const CatalogFilter = (): JSX.Element => {
     if (!searchParams.getAll(categoryFilter ? categoryFilter : '').includes(String(value))) {
       searchParams.append(String(categoryFilter), String(value));
       setSearchParams(searchParams);
+      navigate({
+        pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
+        search: decodeURI(searchParams.toString())
+      });
       return;
     }
     const newParams = Array.from(searchParams.entries())
       .filter(([_, currentValue]) => currentValue !== value);
     const newSearchParams = new URLSearchParams(newParams);
     setSearchParams(newSearchParams);
-
+    navigate({
+      pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
+      search: decodeURI(newSearchParams.toString())
+    });
   };
 
   useEffect(() => {
