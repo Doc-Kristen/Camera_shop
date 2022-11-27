@@ -1,20 +1,18 @@
 import { ChangeEvent, useEffect } from 'react';
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, productFilterType } from '../../helpers/const';
+import { useSearchParams } from 'react-router-dom';
+import { productFilterType } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import { usePriceFilter } from '../../hooks/use-price-filter';
+import { useResetPageParams } from '../../hooks/use-reset-page-params';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
-import { getResetFilterStatus } from '../../store/user-process/selectors';
 
 const CatalogFilter = (): JSX.Element => {
-  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useAppSelector(getCurrentCatalogPath);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
-  const isFilterReset = useAppSelector(getResetFilterStatus);
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
   const priceRangeValueDefault = {
@@ -29,6 +27,10 @@ const CatalogFilter = (): JSX.Element => {
     handleButtonClick
   ] = usePriceFilter(priceRangeValueDefault);
 
+  const [
+    resetPageParams
+  ] = useResetPageParams();
+
   const minPriceValue = formData.minProductPrice ? formData.minProductPrice : '';
   const maxPriceValue = formData.maxProductPrice ? formData.maxProductPrice : '';
 
@@ -39,20 +41,14 @@ const CatalogFilter = (): JSX.Element => {
     if (!searchParams.getAll(categoryFilter ? categoryFilter : '').includes(String(value))) {
       searchParams.append(String(categoryFilter), String(value));
       setSearchParams(searchParams);
-      navigate({
-        pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
-        search: decodeURI(searchParams.toString())
-      });
+      resetPageParams(searchParams);
       return;
     }
     const newParams = Array.from(searchParams.entries())
       .filter(([_, currentValue]) => currentValue !== value);
     const newSearchParams = new URLSearchParams(newParams);
     setSearchParams(newSearchParams);
-    navigate({
-      pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
-      search: decodeURI(newSearchParams.toString())
-    });
+    resetPageParams(newSearchParams);
   };
 
   useEffect(() => {
@@ -72,7 +68,7 @@ const CatalogFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue, isFilterReset, handleButtonClick]);
+  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick]);
 
   return (
     <div className="catalog-filter">
@@ -90,7 +86,7 @@ const CatalogFilter = (): JSX.Element => {
                   id='price_gte'
                   placeholder={String(minProductPrice)}
                   onChange={handleInputChangePrice}
-                  value={isFilterReset ? '' : minPriceValue}
+                  value={minPriceValue}
                   autoComplete='off'
                   disabled={isProductsLoaded}
                 />
@@ -105,7 +101,7 @@ const CatalogFilter = (): JSX.Element => {
                   id='price_lte'
                   placeholder={String(maxProductPrice)}
                   onChange={handleInputChangePrice}
-                  value={isFilterReset ? '' : maxPriceValue}
+                  value={maxPriceValue}
                   autoComplete='off'
                   disabled={isProductsLoaded}
                 />

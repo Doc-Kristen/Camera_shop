@@ -13,7 +13,6 @@ type UserProcess = {
     isReviewPosted: boolean;
     isErrorSendingReview: boolean;
     isReviewSuccess: boolean;
-    isFilterReset: boolean;
 };
 
 type ReviewData = {

@@ -4,7 +4,6 @@ import { isKeyPressed } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import { usePriceFilter } from '../../hooks/use-price-filter';
 import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
-import { getResetFilterStatus } from '../../store/user-process/selectors';
 
 const PriceRangeFilter = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +11,6 @@ const PriceRangeFilter = (): JSX.Element => {
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
-  const isFilterReset = useAppSelector(getResetFilterStatus);
 
   const priceRangeValueDefault = {
     minProductPrice: '',
@@ -45,7 +43,7 @@ const PriceRangeFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue, isFilterReset]);
+  }, [searchParams, setSearchParams, validatePriceValue]);
 
   return (
     <fieldset className="catalog-filter__block">
@@ -60,7 +58,7 @@ const PriceRangeFilter = (): JSX.Element => {
               id='price_gte'
               placeholder={String(minProductPrice)}
               onChange={handleInputChange}
-              value={isFilterReset ? '' : minPriceValue}
+              value={minPriceValue}
               autoComplete='off'
               disabled={isProductsLoaded}
             />
@@ -75,7 +73,7 @@ const PriceRangeFilter = (): JSX.Element => {
               id='price_lte'
               placeholder={String(maxProductPrice)}
               onChange={handleInputChange}
-              value={isFilterReset ? '' : maxPriceValue}
+              value={maxPriceValue}
               autoComplete='off'
               disabled={isProductsLoaded}
             />

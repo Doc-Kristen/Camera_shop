@@ -3,8 +3,8 @@ import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, QueryParameterType } from '../helpers/const';
 import { getMaxProductPrice, getMinProductPrice } from '../store/product-data/selectors';
 import { PriceRangeType } from '../types/query-parameters';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { resetFilter } from '../store/action';
+import { useAppSelector } from '../hooks';
+import { useResetPageParams } from './use-reset-page-params';
 
 type ResultUsePriceFilter = [
   PriceRangeType,
@@ -14,13 +14,16 @@ type ResultUsePriceFilter = [
 ];
 
 export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePriceFilter => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [
+    resetPageParams
+  ] = useResetPageParams();
 
   const updateSearchParams = () => {
 
@@ -70,34 +73,36 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
         setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         setSearchParams(searchParams);
+        resetPageParams(searchParams);
         setFormData({ ...formData, maxProductPrice: Number(maxProductPrice) });
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
         setSearchParams(searchParams);
+        resetPageParams(searchParams);
         break;
       case minProductPriceCurrent < minProductPrice:
         setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         setSearchParams(searchParams);
+        resetPageParams(searchParams);
         break;
       case maxProductPriceCurrent > maxProductPrice:
         setFormData({ ...formData, maxProductPrice: Number(maxProductPrice) });
         searchParams.append(QueryParameterType.PriceMinimum, String(maxProductPrice));
         setSearchParams(searchParams);
+        resetPageParams(searchParams);
         break;
       case minProductPriceCurrent > maxProductPriceCurrent:
         setFormData({ ...formData, minProductPrice: Number(minProductPrice) });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
         setSearchParams(searchParams);
+        resetPageParams(searchParams);
         break;
       default:
         searchParams.append(QueryParameterType.PriceMinimum, String(formData.minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
         setSearchParams(searchParams);
-        navigate({
-          pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
-          search: decodeURI(searchParams.toString())
-        });
+        resetPageParams(searchParams);
         break;
     }
 
@@ -105,7 +110,6 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
 
   const handleInputChangePrice = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
-    dispatch(resetFilter(false));
     if (evt.target.id === 'price_gte' && Number(evt.target.value) >= 0) {
       setFormData({ ...formData, minProductPrice: evt.target.value });
     }
@@ -116,15 +120,10 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
 
   const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    dispatch(resetFilter(true));
     setSearchParams(undefined);
     setFormData({ ...formData,
       minProductPrice:formSearchDefault.minProductPrice,
       maxProductPrice:formSearchDefault.maxProductPrice });
-    // dispatch(setCurrentCatalogPath({
-    //   currentPage: DEFAULT_PAGE,
-    //   search: undefined
-    // }));
     navigate({
       pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
       search: decodeURI('')
