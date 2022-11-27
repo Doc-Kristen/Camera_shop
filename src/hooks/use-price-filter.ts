@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { DEFAULT_PAGE, QueryParameterType } from '../helpers/const';
+import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE, QueryParameterType } from '../helpers/const';
 import { getMaxProductPrice, getMinProductPrice } from '../store/product-data/selectors';
 import { PriceRangeType } from '../types/query-parameters';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { resetFilter, setCurrentCatalogPath } from '../store/action';
+import { resetFilter } from '../store/action';
 
 type ResultUsePriceFilter = [
   PriceRangeType,
   (evt: React.ChangeEvent<HTMLInputElement>) => void,
   () => void,
-  (evt: React.MouseEvent<HTMLFormElement>) => void,
+  (evt: React.MouseEvent<HTMLButtonElement>) => void,
 ];
 
 export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePriceFilter => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
@@ -109,15 +110,21 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
     }
   };
 
-  const handleButtonClick = (evt: React.MouseEvent<HTMLFormElement>) => {
+  const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
     dispatch(resetFilter(true));
     setSearchParams(undefined);
-    setFormData({ ...formData, minProductPrice:'' });
-    setFormData({ ...formData, maxProductPrice:'' });
-    dispatch(setCurrentCatalogPath({
-      currentPage: DEFAULT_PAGE,
-      search: undefined
-    }));
+    setFormData({ ...formData,
+      minProductPrice:formSearchDefault.minProductPrice,
+      maxProductPrice:formSearchDefault.maxProductPrice });
+    // dispatch(setCurrentCatalogPath({
+    //   currentPage: DEFAULT_PAGE,
+    //   search: undefined
+    // }));
+    navigate({
+      pathname: generatePath(AppRoute.Products, {pageNumber: String(DEFAULT_PAGE)}),
+      search: decodeURI('')
+    });
   };
 
   return [

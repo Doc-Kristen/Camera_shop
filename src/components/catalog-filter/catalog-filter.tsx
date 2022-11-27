@@ -64,7 +64,7 @@ const CatalogFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue, isFilterReset]);
+  }, [searchParams, setSearchParams, validatePriceValue, isFilterReset, handleButtonClick]);
 
   return (
     <div className="catalog-filter">
