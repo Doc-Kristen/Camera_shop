@@ -84,21 +84,20 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
       case formData.minProductPrice === '' && formData.maxProductPrice === '':
         break;
       case isValidMinPrice() && isValidMaxPrice() &&
-       formData.minProductPrice !== formSearchDefault.minProductPrice &&
-       formData.maxProductPrice !== formSearchDefault.maxProductPrice
-        :
-        console.log('all parameter true');
+        formData.minProductPrice !== formSearchDefault.minProductPrice &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice:
         searchParams.append(QueryParameterType.PriceMinimum, String(formData.minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
         updatePage();
         break;
       case (maxProductPriceCurrent === 0 || formData.maxProductPrice === '') &&
-      isValidMinPrice() &&
-      formData.minProductPrice !== formSearchDefault.minProductPrice:
-        console.log('not max parameter, min true');
-        setFormData({ ...formData,
+        isValidMinPrice() &&
+        formData.minProductPrice !== formSearchDefault.minProductPrice:
+        setFormData({
+          ...formData,
           minProductPrice: minProductPriceCurrent,
-          maxProductPrice: formSearchDefault.maxProductPrice });
+          maxProductPrice: formSearchDefault.maxProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPriceCurrent));
         searchParams.delete(QueryParameterType.PriceMaximum);
         updatePage();
@@ -106,21 +105,23 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
       case (maxProductPriceCurrent === 0 || formData.maxProductPrice === '') &&
         !isValidMinPrice() &&
         formData.minProductPrice !== formSearchDefault.minProductPrice:
-        console.log('not max parameter, min false');
-        setFormData({ ...formData,
+        setFormData({
+          ...formData,
           minProductPrice: minProductPrice,
-          maxProductPrice: formSearchDefault.maxProductPrice });
+          maxProductPrice: formSearchDefault.maxProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         searchParams.delete(QueryParameterType.PriceMaximum);
         updatePage();
         break;
       case (minProductPriceCurrent === 0 || formData.minProductPrice === '') &&
-      isValidMaxPrice() &&
-      formData.maxProductPrice !== formSearchDefault.maxProductPrice:
-        console.log('not min parameter, max true');
-        setFormData({ ...formData,
+        isValidMaxPrice() &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        setFormData({
+          ...formData,
           maxProductPrice: maxProductPriceCurrent,
-          minProductPrice: formSearchDefault.minProductPrice });
+          minProductPrice: formSearchDefault.minProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPriceCurrent));
         searchParams.delete(QueryParameterType.PriceMinimum);
         updatePage();
@@ -128,21 +129,23 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
       case (minProductPriceCurrent === 0 || formData.minProductPrice === '') &&
         !isValidMaxPrice() &&
         formData.maxProductPrice !== formSearchDefault.maxProductPrice:
-        console.log('not min parameter, max false');
-        setFormData({ ...formData,
+        setFormData({
+          ...formData,
           maxProductPrice: maxProductPrice,
-          minProductPrice: formSearchDefault.minProductPrice });
+          minProductPrice: formSearchDefault.minProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
         searchParams.delete(QueryParameterType.PriceMinimum);
         updatePage();
         break;
       case !isValidMinPrice() && isValidMaxPrice() &&
-      formData.minProductPrice !== formSearchDefault.minProductPrice &&
-      formData.maxProductPrice !== formSearchDefault.maxProductPrice:
-        console.log('not correct minPrice, max true');
-        setFormData({ ...formData,
+        formData.minProductPrice !== formSearchDefault.minProductPrice &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice:
+        setFormData({
+          ...formData,
           maxProductPrice: maxProductPriceCurrent,
-          minProductPrice: minProductPrice });
+          minProductPrice: minProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPriceCurrent));
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         updatePage();
@@ -150,25 +153,26 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
       case !isValidMaxPrice() && isValidMinPrice() &&
         formData.minProductPrice !== formSearchDefault.minProductPrice &&
         formData.maxProductPrice !== formSearchDefault.maxProductPrice:
-        console.log('not correct maxPrice, min true');
-        setFormData({ ...formData,
+        setFormData({
+          ...formData,
           minProductPrice: minProductPriceCurrent,
-          maxProductPrice: maxProductPrice });
+          maxProductPrice: maxProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPriceCurrent));
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
         updatePage();
         break;
       default:
-        console.log('default');
-        setFormData({ ...formData,
+        setFormData({
+          ...formData,
           minProductPrice: minProductPrice,
-          maxProductPrice: maxProductPrice });
+          maxProductPrice: maxProductPrice
+        });
         searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
         searchParams.append(QueryParameterType.PriceMaximum, String(maxProductPrice));
         updatePage();
         break;
     }
-
   };
 
   const handleInputChangePrice = (evt: React.ChangeEvent<HTMLInputElement>) => {
