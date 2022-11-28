@@ -81,7 +81,10 @@ const CatalogScreen = (): JSX.Element => {
         <Banner />
         <div className="page-content" id='page-content'>
           <Breadcrumbs />
-          <section className="catalog">
+          <section
+            className="catalog"
+            id='catalog'
+          >
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
               <div className="page-content__columns">

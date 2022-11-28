@@ -5,7 +5,7 @@ import HistoryRoute from '../history-route/history-route';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import PriceRangeFilter from './price-range-filter';
+import { PriceRangeFilter } from './price-range-filter';
 
 const history = createMemoryHistory();
 const middlewares = [thunk];

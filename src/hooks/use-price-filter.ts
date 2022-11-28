@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, QueryParameterType } from '../helpers/const';
+import { useSearchParams } from 'react-router-dom';
+import { QueryParameterType } from '../helpers/const';
 import { getMaxProductPrice, getMinProductPrice } from '../store/product-data/selectors';
 import { PriceRangeType } from '../types/query-parameters';
 import { useAppSelector } from '../hooks';
@@ -10,11 +10,9 @@ type ResultUsePriceFilter = [
   PriceRangeType,
   (evt: React.ChangeEvent<HTMLInputElement>) => void,
   () => void,
-  (evt: React.MouseEvent<HTMLButtonElement>) => void,
 ];
 
 export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePriceFilter => {
-  const navigate = useNavigate();
 
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
@@ -185,25 +183,9 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
     }
   };
 
-  const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    setSearchParams(undefined);
-    setFormData({
-      ...formData,
-      minProductPrice: formSearchDefault.minProductPrice,
-      maxProductPrice: formSearchDefault.maxProductPrice
-    });
-    setSearchParams(undefined);
-    navigate({
-      pathname: generatePath(AppRoute.Products, { pageNumber: String(DEFAULT_PAGE) }),
-      search: decodeURI('')
-    });
-  };
-
   return [
     formData,
     handleInputChangePrice,
     validatePriceValue,
-    handleButtonClick
   ];
 };

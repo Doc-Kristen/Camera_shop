@@ -1,40 +1,27 @@
-import { ChangeEvent, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { productFilterType } from '../../helpers/const';
-import { isKeyPressed } from '../../helpers/utils';
-import { useAppSelector } from '../../hooks';
-import { usePriceFilter } from '../../hooks/use-price-filter';
+import { ChangeEvent } from 'react';
+import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE, productFilterType } from '../../helpers/const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useResetPageParams } from '../../hooks/use-reset-page-params';
+import { resetFilter } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
+import { getDataLoadedStatus } from '../../store/product-data/selectors';
+import { PriceRangeFilter } from '../price-range-filter/price-range-filter';
 
 const CatalogFilter = (): JSX.Element => {
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useAppSelector(getCurrentCatalogPath);
-  const isProductsLoaded = useAppSelector(getDataLoadedStatus);
-  const minProductPrice = useAppSelector(getMinProductPrice);
-  const maxProductPrice = useAppSelector(getMaxProductPrice);
-  const priceRangeValueDefault = {
-    minProductPrice: '',
-    maxProductPrice: ''
-  };
 
-  const [
-    formData,
-    handleInputChangePrice,
-    validatePriceValue,
-    handleButtonClick
-  ] = usePriceFilter(priceRangeValueDefault);
+  const isProductsLoaded = useAppSelector(getDataLoadedStatus);
 
   const [
     resetPageParams
   ] = useResetPageParams();
 
-  const minPriceValue = formData.minProductPrice ? formData.minProductPrice : '';
-  const maxPriceValue = formData.maxProductPrice ? formData.maxProductPrice : '';
-
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    dispatch(resetFilter(false));
     const categoryFilter = target.getAttribute('data-filter-type');
     const value = target.getAttribute('data-value');
 
@@ -51,64 +38,11 @@ const CatalogFilter = (): JSX.Element => {
     resetPageParams(newSearchParams);
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      const keyCloseHandler = (evt: KeyboardEvent) => {
-        if (isKeyPressed(evt, 'Enter')) {
-          setSearchParams(searchParams);
-          validatePriceValue();
-        }
-      };
-      document.addEventListener('keydown', keyCloseHandler);
-      return () => {
-        document.removeEventListener('keydown', keyCloseHandler);
-      };
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick]);
-
   return (
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <fieldset className="catalog-filter__block">
-          <legend className="title title--h5">Цена, ₽</legend>
-          <div className="catalog-filter__price-range">
-            <div className="custom-input">
-              <label>
-                <input
-                  data-testid='price_gte'
-                  type="number"
-                  name="price"
-                  id='price_gte'
-                  placeholder={String(minProductPrice)}
-                  onChange={handleInputChangePrice}
-                  value={minPriceValue}
-                  autoComplete='off'
-                  disabled={isProductsLoaded}
-                />
-              </label>
-            </div>
-            <div className="custom-input">
-              <label>
-                <input
-                  data-testid='price_lte'
-                  type="number"
-                  name="priceUp"
-                  id='price_lte'
-                  placeholder={String(maxProductPrice)}
-                  onChange={handleInputChangePrice}
-                  value={maxPriceValue}
-                  autoComplete='off'
-                  disabled={isProductsLoaded}
-                />
-              </label>
-            </div>
-          </div>
-        </fieldset>
+        <PriceRangeFilter />
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           {
@@ -186,8 +120,15 @@ const CatalogFilter = (): JSX.Element => {
           }
         </fieldset>
         <button
-          className="btn catalog-filter__reset-btn" type="button"
-          onClick={handleButtonClick}
+          className="btn catalog-filter__reset-btn" type="reset"
+          onClick={() => {
+            dispatch(resetFilter(true));
+            setSearchParams(undefined);
+            navigate({
+              pathname: generatePath(AppRoute.Products, { pageNumber: String(DEFAULT_PAGE) }),
+              search: decodeURI('')
+            });
+          }}
           disabled={search === '' || isProductsLoaded}
         >Сбросить фильтры
         </button>

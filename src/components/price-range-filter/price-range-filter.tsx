@@ -4,11 +4,16 @@ import { isKeyPressed } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
 import { usePriceFilter } from '../../hooks/use-price-filter';
 import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
+import { getFilterResetStatus } from '../../store/user-process/selectors';
 
-const PriceRangeFilter = (): JSX.Element => {
+export const PriceRangeFilter = (): JSX.Element => {
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
+  const isFilterReset = useAppSelector(getFilterResetStatus);
+
+
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
 
@@ -19,7 +24,7 @@ const PriceRangeFilter = (): JSX.Element => {
 
   const [
     formData,
-    handleInputChange,
+    handleInputChangePrice,
     validatePriceValue,
   ] = usePriceFilter(priceRangeValueDefault);
 
@@ -31,7 +36,6 @@ const PriceRangeFilter = (): JSX.Element => {
     if (isMounted) {
       const keyCloseHandler = (evt: KeyboardEvent) => {
         if (isKeyPressed(evt, 'Enter')) {
-          setSearchParams(searchParams);
           validatePriceValue();
         }
       };
@@ -57,8 +61,8 @@ const PriceRangeFilter = (): JSX.Element => {
               name="price"
               id='price_gte'
               placeholder={String(minProductPrice)}
-              onChange={handleInputChange}
-              value={minPriceValue}
+              onChange={handleInputChangePrice}
+              value={isFilterReset ? '' : minPriceValue}
               autoComplete='off'
               disabled={isProductsLoaded}
             />
@@ -72,8 +76,8 @@ const PriceRangeFilter = (): JSX.Element => {
               name="priceUp"
               id='price_lte'
               placeholder={String(maxProductPrice)}
-              onChange={handleInputChange}
-              value={maxPriceValue}
+              onChange={handleInputChangePrice}
+              value={isFilterReset ? '' : maxPriceValue}
               autoComplete='off'
               disabled={isProductsLoaded}
             />
@@ -83,5 +87,3 @@ const PriceRangeFilter = (): JSX.Element => {
     </fieldset>
   );
 };
-
-export default PriceRangeFilter;
