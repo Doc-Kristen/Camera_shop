@@ -9,7 +9,6 @@ type AppDispatch = typeof store.dispatch;
 
 type UserProcess = {
     isFormOpened: boolean;
-    isFilterReset: boolean;
     isFormBlocked: boolean;
     isReviewPosted: boolean;
     isErrorSendingReview: boolean;

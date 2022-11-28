@@ -11,7 +11,6 @@ const Action = {
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
-  RESET_FILTER: 'RESET_FILTER',
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -54,11 +53,6 @@ const setCurrentCatalogPath = createAction(Action.SET_CURRENT_CATALOG_PATH, (val
     payload: value,
   }));
 
-const resetFilter = createAction(Action.RESET_FILTER, (value : boolean) => (
-  {
-    payload: value,
-  }));
-
 export {
   Action,
   redirectToRoute,
@@ -69,5 +63,4 @@ export {
   setProductDetailsShown,
   removeSearchedProducts,
   setCurrentCatalogPath,
-  resetFilter
 };

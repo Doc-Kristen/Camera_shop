@@ -1,27 +1,45 @@
-import { ChangeEvent } from 'react';
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE, productFilterType } from '../../helpers/const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ChangeEvent, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { productFilterType } from '../../helpers/const';
+import { isKeyPressed } from '../../helpers/utils';
+import { useAppSelector } from '../../hooks';
+import { usePriceFilter } from '../../hooks/use-price-filter';
 import { useResetPageParams } from '../../hooks/use-reset-page-params';
-import { resetFilter } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { getDataLoadedStatus } from '../../store/product-data/selectors';
-import { PriceRangeFilter } from '../price-range-filter/price-range-filter';
+import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
 
 const CatalogFilter = (): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useAppSelector(getCurrentCatalogPath);
 
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
 
+  const inputMinPriceRef = useRef<HTMLInputElement>(null);
+  const inputMaxPriceRef = useRef<HTMLInputElement>(null);
+
+  const minProductPrice = useAppSelector(getMinProductPrice);
+  const maxProductPrice = useAppSelector(getMaxProductPrice);
+  const priceRangeValueDefault = {
+    minProductPrice: '',
+    maxProductPrice: ''
+  };
+
   const [
     resetPageParams
   ] = useResetPageParams();
 
+  const [
+    formData,
+    handleInputChangePrice,
+    validatePriceValue,
+    handleButtonClick
+  ] = usePriceFilter(priceRangeValueDefault);
+
+  const minPriceValue = formData.minProductPrice ? formData.minProductPrice : '';
+  const maxPriceValue = formData.maxProductPrice ? formData.maxProductPrice : '';
+
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(resetFilter(false));
     const categoryFilter = target.getAttribute('data-filter-type');
     const value = target.getAttribute('data-value');
 
@@ -38,11 +56,96 @@ const CatalogFilter = (): JSX.Element => {
     resetPageParams(newSearchParams);
   };
 
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      const keyCloseHandler = (evt: KeyboardEvent) => {
+        if (isKeyPressed(evt, 'Enter')) {
+          validatePriceValue();
+        }
+      };
+      const handleInputMinPriceRefClick = (event: Event) => {
+        const element = inputMinPriceRef?.current;
+
+        if (
+          !element || element.contains((event?.target as Node) || null) || event?.target === inputMaxPriceRef.current) {
+          return;
+        }
+        setSearchParams(searchParams);
+        validatePriceValue();
+      };
+
+      const handleInputMaxPriceRefClick = (event: Event) => {
+        const el = inputMaxPriceRef?.current;
+
+        if (!el || el.contains((event?.target as Node) || null) || event?.target === inputMinPriceRef.current) {
+          return;
+        }
+
+        setSearchParams(searchParams);
+        validatePriceValue();
+      };
+      document.addEventListener('keydown', keyCloseHandler);
+      document.addEventListener('mousedown', handleInputMinPriceRefClick);
+      document.addEventListener('touchstart', handleInputMinPriceRefClick);
+
+      document.addEventListener('mousedown', handleInputMaxPriceRefClick);
+      document.addEventListener('touchstart', handleInputMaxPriceRefClick);
+      return () => {
+        document.removeEventListener('keydown', keyCloseHandler);
+        document.removeEventListener('mousedown', handleInputMinPriceRefClick);
+        document.removeEventListener('touchstart', handleInputMinPriceRefClick);
+
+        document.removeEventListener('mousedown', handleInputMaxPriceRefClick);
+        document.removeEventListener('touchstart', handleInputMaxPriceRefClick);
+      };
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [searchParams, setSearchParams, validatePriceValue]);
+
   return (
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <PriceRangeFilter />
+        <fieldset className="catalog-filter__block">
+          <legend className="title title--h5">Цена, ₽</legend>
+          <div className="catalog-filter__price-range">
+            <div className="custom-input">
+              <label>
+                <input
+                  data-testid='price_gte'
+                  ref={inputMinPriceRef}
+                  type="number"
+                  name="price"
+                  id='price_gte'
+                  placeholder={String(minProductPrice)}
+                  onChange={handleInputChangePrice}
+                  value={minPriceValue}
+                  autoComplete='off'
+                  disabled={isProductsLoaded}
+                />
+              </label>
+            </div>
+            <div className="custom-input">
+              <label>
+                <input
+                  data-testid='price_lte'
+                  ref={inputMaxPriceRef}
+                  type="number"
+                  name="priceUp"
+                  id='price_lte'
+                  placeholder={String(maxProductPrice)}
+                  onChange={handleInputChangePrice}
+                  value={maxPriceValue}
+                  autoComplete='off'
+                  disabled={isProductsLoaded}
+                />
+              </label>
+            </div>
+          </div>
+        </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           {
@@ -120,15 +223,8 @@ const CatalogFilter = (): JSX.Element => {
           }
         </fieldset>
         <button
-          className="btn catalog-filter__reset-btn" type="reset"
-          onClick={() => {
-            dispatch(resetFilter(true));
-            setSearchParams(undefined);
-            navigate({
-              pathname: generatePath(AppRoute.Products, { pageNumber: String(DEFAULT_PAGE) }),
-              search: decodeURI('')
-            });
-          }}
+          className="btn catalog-filter__reset-btn" type="button"
+          onClick={handleButtonClick}
           disabled={search === '' || isProductsLoaded}
         >Сбросить фильтры
         </button>
