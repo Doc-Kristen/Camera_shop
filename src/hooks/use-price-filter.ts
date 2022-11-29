@@ -76,12 +76,24 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
     && maxProductPriceCurrent >= minProductPrice;
 
   const validatePriceValue = () => {
-    // console.log('Сработата валидация цены');
     deleteRepeatedSearch(QueryParameterType.PriceMinimum);
     deleteRepeatedSearch(QueryParameterType.PriceMaximum);
 
     switch (true) {
       case formData.minProductPrice === '' && formData.maxProductPrice === '':
+        break;
+
+      case isValidMinPrice() && isValidMaxPrice() &&
+        formData.minProductPrice !== formSearchDefault.minProductPrice &&
+        formData.maxProductPrice !== formSearchDefault.maxProductPrice &&
+        minProductPriceCurrent > maxProductPriceCurrent:
+        setFormData({
+          ...formData,
+          minProductPrice: minProductPrice,
+        });
+        searchParams.append(QueryParameterType.PriceMinimum, String(minProductPrice));
+        searchParams.append(QueryParameterType.PriceMaximum, String(formData.maxProductPrice));
+        updatePage();
         break;
       case isValidMinPrice() && isValidMaxPrice() &&
         formData.minProductPrice !== formSearchDefault.minProductPrice &&

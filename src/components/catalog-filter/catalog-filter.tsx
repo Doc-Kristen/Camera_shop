@@ -47,7 +47,6 @@ const CatalogFilter = (): JSX.Element => {
     const value = target.getAttribute('data-value');
 
     if (!searchParams.getAll(categoryFilter ? categoryFilter : '').includes(String(value))) {
-      // console.log('Чекбокс вкл');
       searchParams.append(String(categoryFilter), String(value));
       setSearchParams(searchParams);
       resetPageParams(searchParams);
@@ -56,7 +55,7 @@ const CatalogFilter = (): JSX.Element => {
     const newParams = Array.from(searchParams.entries())
       .filter(([_, currentValue]) => currentValue !== value);
     const newSearchParams = new URLSearchParams(newParams);
-    // console.log('Чекбокс выкл');
+    validatePriceValue();
     setSearchParams(newSearchParams);
     resetPageParams(newSearchParams);
   };
@@ -144,13 +143,11 @@ const CatalogFilter = (): JSX.Element => {
             productFilterType.category.map((item) =>
               (
                 <div
-                  id='category-filter'
                   key={item.Name}
                   className="custom-checkbox catalog-filter__item"
                 >
                   <label >
                     <input
-
                       type="checkbox"
                       data-filter-type='category'
                       data-value={item.Label}
@@ -163,9 +160,7 @@ const CatalogFilter = (): JSX.Element => {
                       className="custom-checkbox__icon"
                     >
                     </span>
-                    <span
-                      className="custom-checkbox__label"
-                    >{item.Label === 'Фотоаппарат' ? 'Фотокамера' : item.Label}
+                    <span className="custom-checkbox__label">{item.Label === 'Фотоаппарат' ? 'Фотокамера' : item.Label}
                     </span>
                   </label>
                 </div>

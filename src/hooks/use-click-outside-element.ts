@@ -5,7 +5,7 @@ type Event = MouseEvent | TouchEvent;
 export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
   inputMinPriceRef: RefObject<T>,
   inputMaxPriceRef: RefObject<T>,
-  handler: (event: MouseEvent | TouchEvent) => void,
+  handler: (event: Event) => void,
 ) => {
   useEffect(() => {
     const handleInputMinPriceRefClick = (evt: Event) => {
@@ -17,11 +17,8 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
         evt.stopPropagation();
         return;
       }
-      if((!(!el || el.contains((evt?.target as Node) || null) || evt?.target === inputMaxPriceRef.current)) && (target.id === 'reset-button' ||
-      target.id === 'category-filter' ||
-      target.id === 'type-filter' ||
-      target.id === 'level-filter')) {
-        // console.log('первый инпут стоп');
+      if (target.id === 'reset-button'
+      ) {
         evt.stopPropagation();
         return;
       }
@@ -36,12 +33,8 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
         evt.stopPropagation();
         return;
       }
-      if(!(!el || el.contains((evt?.target as Node) || null) || evt?.target === inputMinPriceRef.current) &&
-        (target.id === 'reset-button' ||
-      target.id === 'category-filter' ||
-      target.id === 'type-filter' ||
-      target.id === 'level-filter')) {
-        // console.log('второй инпут стоп');
+      if ((target.id === 'reset-button'
+      )) {
         evt.stopPropagation();
         return;
       }

@@ -12,7 +12,7 @@ const CardsList = ({ products }: CardsListProps): JSX.Element => {
   const isProductError = useAppSelector(getProductsErrorStatus);
 
   if(products.length === 0 && !isProductError) {
-    return <p>По вашему запросу ничего не найдено. Попробуйте поменять найстройки фильтра</p>;
+    return <p>По вашему запросу ничего не найдено. Попробуйте поменять настройки фильтра</p>;
   }
 
   if (isProductError) {
