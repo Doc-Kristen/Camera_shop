@@ -17,7 +17,11 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
         evt.stopPropagation();
         return;
       }
-      if(target.id === 'reset-button') {
+      if((!(!el || el.contains((evt?.target as Node) || null) || evt?.target === inputMaxPriceRef.current)) && (target.id === 'reset-button' ||
+      target.id === 'category-filter' ||
+      target.id === 'type-filter' ||
+      target.id === 'level-filter')) {
+        // console.log('первый инпут стоп');
         evt.stopPropagation();
         return;
       }
@@ -32,7 +36,12 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
         evt.stopPropagation();
         return;
       }
-      if(target.id === 'reset-button') {
+      if(!(!el || el.contains((evt?.target as Node) || null) || evt?.target === inputMinPriceRef.current) &&
+        (target.id === 'reset-button' ||
+      target.id === 'category-filter' ||
+      target.id === 'type-filter' ||
+      target.id === 'level-filter')) {
+        // console.log('второй инпут стоп');
         evt.stopPropagation();
         return;
       }

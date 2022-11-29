@@ -76,7 +76,7 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
     && maxProductPriceCurrent >= minProductPrice;
 
   const validatePriceValue = () => {
-
+    // console.log('Сработата валидация цены');
     deleteRepeatedSearch(QueryParameterType.PriceMinimum);
     deleteRepeatedSearch(QueryParameterType.PriceMaximum);
 
