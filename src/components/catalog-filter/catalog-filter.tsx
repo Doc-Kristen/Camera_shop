@@ -1,33 +1,32 @@
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { productFilterType } from '../../helpers/const';
+import { ERROR_MESSAGE_TIME, productFilterType } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useClickOutsideElement } from '../../hooks/use-click-outside-element';
 import { usePriceFilter } from '../../hooks/use-price-filter';
 import { useResetPageParams } from '../../hooks/use-reset-page-params';
+import { setPriceRangeErrorStatus } from '../../store/action';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice } from '../../store/product-data/selectors';
+import { getDataLoadedStatus, getMaxProductPrice, getMinProductPrice, getRangeByPriceErrorStatus, } from '../../store/product-data/selectors';
 
 const CatalogFilter = (): JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useAppSelector(getCurrentCatalogPath);
 
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
-
+  const isRangeByPriceError = useAppSelector(getRangeByPriceErrorStatus);
+  const minProductPrice = useAppSelector(getMinProductPrice);
+  const maxProductPrice = useAppSelector(getMaxProductPrice);
   const inputMinPriceRef = useRef<HTMLInputElement>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement>(null);
 
-  const minProductPrice = useAppSelector(getMinProductPrice);
-  const maxProductPrice = useAppSelector(getMaxProductPrice);
   const priceRangeValueDefault = {
     minProductPrice: '',
     maxProductPrice: ''
   };
-
-  const [
-    resetPageParams
-  ] = useResetPageParams();
 
   const [
     formData,
@@ -35,6 +34,10 @@ const CatalogFilter = (): JSX.Element => {
     validatePriceValue,
     handleButtonClick
   ] = usePriceFilter(priceRangeValueDefault);
+
+  const [
+    resetPageParams
+  ] = useResetPageParams();
 
   const minPriceValue = formData.minProductPrice ? formData.minProductPrice : '';
   const maxPriceValue = formData.maxProductPrice ? formData.maxProductPrice : '';
@@ -56,54 +59,35 @@ const CatalogFilter = (): JSX.Element => {
     resetPageParams(newSearchParams);
   };
 
+  useClickOutsideElement(inputMinPriceRef, inputMaxPriceRef, () => {
+    setSearchParams(searchParams);
+    validatePriceValue();
+  });
+
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       const keyCloseHandler = (evt: KeyboardEvent) => {
         if (isKeyPressed(evt, 'Enter')) {
+          setSearchParams(searchParams);
           validatePriceValue();
         }
       };
-      const handleInputMinPriceRefClick = (event: Event) => {
-        const element = inputMinPriceRef?.current;
-
-        if (
-          !element || element.contains((event?.target as Node) || null) || event?.target === inputMaxPriceRef.current) {
-          return;
-        }
-        setSearchParams(searchParams);
-        validatePriceValue();
-      };
-
-      const handleInputMaxPriceRefClick = (event: Event) => {
-        const el = inputMaxPriceRef?.current;
-
-        if (!el || el.contains((event?.target as Node) || null) || event?.target === inputMinPriceRef.current) {
-          return;
-        }
-
-        setSearchParams(searchParams);
-        validatePriceValue();
-      };
       document.addEventListener('keydown', keyCloseHandler);
-      document.addEventListener('mousedown', handleInputMinPriceRefClick);
-      document.addEventListener('touchstart', handleInputMinPriceRefClick);
-
-      document.addEventListener('mousedown', handleInputMaxPriceRefClick);
-      document.addEventListener('touchstart', handleInputMaxPriceRefClick);
       return () => {
         document.removeEventListener('keydown', keyCloseHandler);
-        document.removeEventListener('mousedown', handleInputMinPriceRefClick);
-        document.removeEventListener('touchstart', handleInputMinPriceRefClick);
-
-        document.removeEventListener('mousedown', handleInputMaxPriceRefClick);
-        document.removeEventListener('touchstart', handleInputMaxPriceRefClick);
       };
     }
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue]);
+  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick]);
+
+  if (isRangeByPriceError) {
+    setTimeout(() => {
+      dispatch(setPriceRangeErrorStatus(false));
+    }, ERROR_MESSAGE_TIME);
+  }
 
   return (
     <div className="catalog-filter">
@@ -132,8 +116,8 @@ const CatalogFilter = (): JSX.Element => {
               <label>
                 <input
                   data-testid='price_lte'
-                  ref={inputMaxPriceRef}
                   type="number"
+                  ref={inputMaxPriceRef}
                   name="priceUp"
                   id='price_lte'
                   placeholder={String(maxProductPrice)}
@@ -145,6 +129,12 @@ const CatalogFilter = (): JSX.Element => {
               </label>
             </div>
           </div>
+          {
+            isRangeByPriceError ?
+              <span>Ошибка сервера.<br/>
+            Диапазон цен не загружен.
+              </span> : null
+          }
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>

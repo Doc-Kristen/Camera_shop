@@ -15,6 +15,8 @@ export const getPromoErrorStatus = (state: State): boolean => state[NameSpace.Da
 
 export const getProductsErrorStatus = (state: State): boolean => state[NameSpace.Data].isProductsError;
 
+export const getRangeByPriceErrorStatus = (state: State): boolean => state[NameSpace.Data].isRangeByPriceError;
+
 export const getSelectedProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isSelectedProductError;
 
 export const getSimilarProductErrorStatus = (state: State): boolean => state[NameSpace.Data].isSimilarProductError;

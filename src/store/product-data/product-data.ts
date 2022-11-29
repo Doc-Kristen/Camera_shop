@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, ProductDetailsType } from '../../helpers/const';
 import { fetchProductsAction, fetchProductsByPriceAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
-import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
+import { setPriceRangeErrorStatus, setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
 import { ProductData } from '../../types/state';
 import { Product } from '../../types/product';
 
@@ -9,6 +9,7 @@ const initialState: ProductData = {
   isPromoError: false,
   isDataLoaded: false,
   isProductsError: false,
+  isRangeByPriceError: false,
   isSimilarProductError: false,
   isSelectedProductError: false,
   selectedProduct: {} as Product,
@@ -73,11 +74,18 @@ export const productData = createSlice({
         state.isSelectedProductError = action.payload;
       })
       .addCase(fetchProductsByPriceAction.fulfilled, (state, action) => {
+        state.isRangeByPriceError = false;
         state.minProductPrice = action.payload.minProductPrice;
         state.maxProductPrice = action.payload.maxProductPrice;
       })
+      .addCase(fetchProductsByPriceAction.rejected, (state) => {
+        state.isRangeByPriceError = true;
+      })
       .addCase(setProductDetailsShown, (state, action) => {
         state.productDetails = action.payload;
+      })
+      .addCase(setPriceRangeErrorStatus, (state, action) => {
+        state.isRangeByPriceError = action.payload;
       });
   }
 });

@@ -8,6 +8,7 @@ import { AppRoute, ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
 import { Routes, Route } from 'react-router-dom';
 import MainScreenRoute from './main-screen-route';
+import { CurrentCatalogPathType } from '../../types/query-parameters';
 
 const mockPromo = makeFakePromo();
 
@@ -17,7 +18,8 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    DATA: { promo: mockPromo, isPromoError: false, ProductDetails: ProductDetailsType.Description }
+    DATA: { promo: mockPromo, isPromoError: false, ProductDetails: ProductDetailsType.Description },
+    PATH: { currentCatalogPath: {} as CurrentCatalogPathType },
   }
 );
 

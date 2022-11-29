@@ -3,6 +3,7 @@ import { CurrentCatalogPathType } from '../types/query-parameters';
 
 const Action = {
   SET_REVIEW_MODAL_OPENING_STATUS: 'SET_REVIEW_MODAL_OPENING_STATUS',
+  SET_PRICE_RANGE_ERROR_STATUS: ' SET_PRICE_RANGE_ERROR_STATUS',
   SET_REVIEW_ERROR_STATUS: 'SET_REVIEW_ERROR_STATUS',
   SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS',
   SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
@@ -29,6 +30,11 @@ const setReviewErrorStatus = createAction(Action.SET_REVIEW_ERROR_STATUS, (value
   }));
 
 const setSuccessOpeningStatus = createAction(Action.SET_REVIEW_SUCCESS_OPENING_STATUS, (value: boolean) => (
+  {
+    payload: value,
+  }));
+
+const setPriceRangeErrorStatus = createAction(Action.SET_PRICE_RANGE_ERROR_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
@@ -63,4 +69,5 @@ export {
   setProductDetailsShown,
   removeSearchedProducts,
   setCurrentCatalogPath,
+  setPriceRangeErrorStatus
 };

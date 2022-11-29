@@ -41,7 +41,7 @@ export const fetchProductsAction = createAsyncThunk<FetchProductsType, FetchProd
 
     const { data, headers } = await api.get<Products>(APIRoute.Products, {
       params: {
-        [QueryParameterType.Limit]: Pagination.CountCards,
+        [QueryParameterType.Limit]: Pagination.CardsCount,
         [QueryParameterType.Page]: currentPage,
         [QueryParameterType.Sort]: sortType,
         [QueryParameterType.Order]: orderType,
@@ -64,7 +64,7 @@ export const fetchProductsByPriceAction = createAsyncThunk<FetchProductsByPriceT
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchProductsByPrice',
+  'data/fetchRangeProductsByPrice',
   async ({ params }, { extra: api }) => {
 
     const {

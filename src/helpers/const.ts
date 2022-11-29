@@ -11,9 +11,9 @@ const DEFAULT_STEP_PAGINATION = 1;
 const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
 
 const enum Pagination {
-  CountCards = 9,
-  CountSimilarCards = 3,
-  CountReviews = 3
+  CardsCount = 9,
+  SimilarCardsCount = 3,
+  ReviewsCount = 3
 }
 
 enum AppRoute {

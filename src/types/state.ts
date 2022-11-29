@@ -26,6 +26,7 @@ type ProductData = {
     isPromoError: boolean;
     isDataLoaded: boolean;
     isProductsError: boolean;
+    isRangeByPriceError: boolean;
     isSimilarProductError: boolean;
     isSelectedProductError: boolean;
     products: Products;

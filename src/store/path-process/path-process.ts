@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../helpers/const';
 import { CurrentCatalogPathType } from '../../types/query-parameters';
 import { setCurrentCatalogPath } from '../action';

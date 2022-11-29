@@ -13,10 +13,8 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
 
       if (
         !el || el.contains((event?.target as Node) || null) || event?.target === inputMaxPriceRef.current) {
-          console.log('не работает');
         return;
       }
-      console.log('работает');
       handler(event);
     };
 

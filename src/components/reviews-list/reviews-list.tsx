@@ -26,7 +26,7 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
     lastReviewIndex,
     setLastReviewIndex
   } = usePagination({
-    contentPerPage: Pagination.CountReviews,
+    contentPerPage: Pagination.ReviewsCount,
     count: allReviews.length,
   });
 
@@ -114,7 +114,7 @@ const ReviewsList = ({ noReviews }: ReviewsListProps): JSX.Element => {
               :
               <button className="btn btn--purple btn--review" type="button" onClick={
                 () => {
-                  setLastReviewIndex(lastReviewIndex + Pagination.CountReviews);
+                  setLastReviewIndex(lastReviewIndex + Pagination.ReviewsCount);
                 }
               }
               >

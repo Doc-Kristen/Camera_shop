@@ -21,7 +21,7 @@ const ProductsSimilar = ({productsSimilar} : ProductsSimilarProps): JSX.Element 
     prevPage,
     page
   } = usePagination({
-    contentPerPage: Pagination.CountSimilarCards,
+    contentPerPage: Pagination.SimilarCardsCount,
     count: productsSimilar.length,
   });
 

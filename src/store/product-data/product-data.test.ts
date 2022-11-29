@@ -26,6 +26,7 @@ describe('Reducer: productData', () => {
         isPromoError: false,
         isDataLoaded: false,
         selectedProduct: {} as Product,
+        isRangeByPriceError: false,
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
@@ -42,6 +43,7 @@ describe('Reducer: productData', () => {
     const state = {
       isPromoError: false,
       isDataLoaded: false,
+      isRangeByPriceError: false,
       selectedProduct: {} as Product,
       isProductsError: false,
       isSimilarProductError: true,
@@ -57,6 +59,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: true,
@@ -74,6 +77,7 @@ describe('Reducer: productData', () => {
     const state = {
       isPromoError: false,
       isDataLoaded: false,
+      isRangeByPriceError: false,
       selectedProduct: {} as Product,
       isProductsError: false,
       isSimilarProductError: false,
@@ -89,6 +93,7 @@ describe('Reducer: productData', () => {
       .toEqual({
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         pagesCount: fakePagesCount,
         selectedProduct: {} as Product,
         isProductsError: false,
@@ -107,6 +112,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -123,6 +129,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           promo: promo,
           products: [],
+          isRangeByPriceError: false,
           minProductPrice: 'от',
           maxProductPrice: 'до',
           selectedProduct: {} as Product,
@@ -141,6 +148,7 @@ describe('Reducer: productData', () => {
     it('should update isPromoError when fetchPromoAction.rejected', () => {
       const state = {
         isPromoError: false,
+        isRangeByPriceError: false,
         isDataLoaded: false,
         selectedProduct: {} as Product,
         isProductsError: false,
@@ -156,6 +164,7 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchPromoAction.rejected.type }))
         .toEqual({
           products: [],
+          isRangeByPriceError: false,
           isPromoError: true,
           selectedProduct: {} as Product,
           isDataLoaded: false,
@@ -176,6 +185,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
@@ -191,6 +201,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           selectedProduct: selectedProduct,
           products: [],
+          isRangeByPriceError: false,
           minProductPrice: 'от',
           maxProductPrice: 'до',
           isPromoError: false,
@@ -208,6 +219,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -224,6 +236,7 @@ describe('Reducer: productData', () => {
           products: [],
           minProductPrice: 'от',
           maxProductPrice: 'до',
+          isRangeByPriceError: false,
           isPromoError: false,
           selectedProduct: {} as Product,
           isDataLoaded: true,
@@ -240,6 +253,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: true,
+        isRangeByPriceError: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
@@ -256,6 +270,7 @@ describe('Reducer: productData', () => {
           products: [],
           minProductPrice: 'от',
           maxProductPrice: 'до',
+          isRangeByPriceError: false,
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
@@ -276,6 +291,7 @@ describe('Reducer: productData', () => {
         isDataLoaded: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
+        isRangeByPriceError: false,
         selectedProduct: {} as Product,
         isProductsError: false,
         isSimilarProductError: false,
@@ -290,6 +306,7 @@ describe('Reducer: productData', () => {
           products: fakeProductsActionPayload.data,
           isPromoError: false,
           minProductPrice: 'от',
+          isRangeByPriceError: false,
           maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isDataLoaded: false,
@@ -309,6 +326,7 @@ describe('Reducer: productData', () => {
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
         pagesCount: fakePagesCount,
+        isRangeByPriceError: false,
         isDataLoaded: false,
         isProductsError: false,
         isSimilarProductError: false,
@@ -322,6 +340,7 @@ describe('Reducer: productData', () => {
           isPromoError: false,
           isDataLoaded: true,
           minProductPrice: 'от',
+          isRangeByPriceError: false,
           maxProductPrice: 'до',
           pagesCount: fakePagesCount,
           selectedProduct: {} as Product,
@@ -342,6 +361,7 @@ describe('Reducer: productData', () => {
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isProductsError: false,
+        isRangeByPriceError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
         products: [],
@@ -352,6 +372,7 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchProductsAction.rejected.type }))
         .toEqual({
           isPromoError: false,
+          isRangeByPriceError: false,
           isDataLoaded: false,
           minProductPrice: 'от',
           maxProductPrice: 'до',
@@ -374,6 +395,7 @@ describe('Reducer: productData', () => {
         isPromoError: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
+        isRangeByPriceError: false,
         selectedProduct: {} as Product,
         isDataLoaded: false,
         isProductsError: false,
@@ -389,6 +411,7 @@ describe('Reducer: productData', () => {
           products: [],
           minProductPrice: 'от',
           maxProductPrice: 'до',
+          isRangeByPriceError: false,
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
@@ -404,6 +427,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         isDataLoaded: false,
+        isRangeByPriceError: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
@@ -419,6 +443,7 @@ describe('Reducer: productData', () => {
         .toEqual({
           isPromoError: false,
           isDataLoaded: true,
+          isRangeByPriceError: false,
           minProductPrice: 'от',
           maxProductPrice: 'до',
           selectedProduct: {} as Product,
@@ -436,6 +461,7 @@ describe('Reducer: productData', () => {
         isPromoError: false,
         minProductPrice: 'от',
         maxProductPrice: 'до',
+        isRangeByPriceError: false,
         isDataLoaded: false,
         selectedProduct: {} as Product,
         isProductsError: false,
@@ -449,6 +475,7 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchSimilarProductsAction.rejected.type }))
         .toEqual({
           isPromoError: false,
+          isRangeByPriceError: false,
           isDataLoaded: false,
           minProductPrice: 'от',
           maxProductPrice: 'до',
@@ -470,6 +497,7 @@ describe('Reducer: productData', () => {
       const state = {
         isPromoError: false,
         minProductPrice: 'от',
+        isRangeByPriceError: false,
         maxProductPrice: 'до',
         selectedProduct: {} as Product,
         isDataLoaded: false,
@@ -484,8 +512,42 @@ describe('Reducer: productData', () => {
       expect(productData.reducer(state, { type: fetchProductsByPriceAction.fulfilled.type, payload: fakePriceRangeActionPayload }))
         .toEqual({
           products: [],
+          isRangeByPriceError: false,
           minProductPrice: fakePriceRangeActionPayload.minProductPrice,
           maxProductPrice: fakePriceRangeActionPayload.maxProductPrice,
+          selectedProduct: {} as Product,
+          isPromoError: false,
+          isDataLoaded: false,
+          isProductsError: false,
+          isSimilarProductError: false,
+          isSelectedProductError: false,
+          similarProducts: [],
+          pagesCount: fakePagesCount,
+          productDetails: ProductDetailsType.Description
+        });
+    });
+    it('should update isRangeByPriceError when fetchProductsByPriceAction.rejected', () => {
+      const state = {
+        isPromoError: false,
+        minProductPrice: 'от',
+        isRangeByPriceError: false,
+        maxProductPrice: 'до',
+        selectedProduct: {} as Product,
+        isDataLoaded: false,
+        isProductsError: false,
+        isSimilarProductError: false,
+        isSelectedProductError: false,
+        products: [],
+        pagesCount: fakePagesCount,
+        similarProducts: [],
+        productDetails: ProductDetailsType.Description
+      };
+      expect(productData.reducer(state, { type: fetchProductsByPriceAction.rejected.type, payload: fakePriceRangeActionPayload }))
+        .toEqual({
+          products: [],
+          isRangeByPriceError: true,
+          minProductPrice: 'от',
+          maxProductPrice: 'до',
           selectedProduct: {} as Product,
           isPromoError: false,
           isDataLoaded: false,
