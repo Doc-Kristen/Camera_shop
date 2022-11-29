@@ -8,24 +8,36 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
   handler: (event: MouseEvent | TouchEvent) => void,
 ) => {
   useEffect(() => {
-    const handleInputMinPriceRefClick = (event: Event) => {
+    const handleInputMinPriceRefClick = (evt: Event) => {
       const el = inputMinPriceRef?.current;
+      const target = evt.target as HTMLElement;
 
       if (
-        !el || el.contains((event?.target as Node) || null) || event?.target === inputMaxPriceRef.current) {
+        !el || el.contains((evt?.target as Node) || null) || evt?.target === inputMaxPriceRef.current) {
+        evt.stopPropagation();
         return;
       }
-      handler(event);
+      if(target.id === 'reset-button') {
+        evt.stopPropagation();
+        return;
+      }
+      handler(evt);
     };
 
-    const handleInputMaxPriceRefClick = (event: Event) => {
+    const handleInputMaxPriceRefClick = (evt: Event) => {
       const el = inputMaxPriceRef?.current;
+      const target = evt.target as HTMLElement;
 
-      if (!el || el.contains((event?.target as Node) || null) || event?.target === inputMinPriceRef.current) {
+      if (!el || el.contains((evt?.target as Node) || null) || evt?.target === inputMinPriceRef.current) {
+        evt.stopPropagation();
+        return;
+      }
+      if(target.id === 'reset-button') {
+        evt.stopPropagation();
         return;
       }
 
-      handler(event);
+      handler(evt);
     };
 
     document.addEventListener('mousedown', handleInputMinPriceRefClick);
