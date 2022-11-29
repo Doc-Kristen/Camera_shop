@@ -40,6 +40,7 @@ type ProductData = {
 
 type SearchData = {
     searchedProducts?: Products | null;
+    isSearchedProductsError: boolean;
 }
 
 type SortingProcess = {

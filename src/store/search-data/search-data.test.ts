@@ -11,12 +11,24 @@ describe('Reducer: searchData', () => {
       });
   });
 
-  it('fetchSearchQueryAction', () => {
+  it('fetchSearchQueryAction.fulfilled', () => {
     const state = {
+      isSearchedProductsError: false
     };
     expect(searchData.reducer(state, { type: fetchSearchQueryAction.fulfilled.type, payload: products}))
       .toEqual({
         searchedProducts: products,
+        isSearchedProductsError: false
+      });
+  });
+
+  it('fetchSearchQueryAction.rejected', () => {
+    const state = {
+      isSearchedProductsError: false
+    };
+    expect(searchData.reducer(state, { type: fetchSearchQueryAction.rejected.type, payload: products}))
+      .toEqual({
+        isSearchedProductsError: true
       });
   });
 

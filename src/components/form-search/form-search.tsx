@@ -1,12 +1,16 @@
-import { useAppSelector } from '../../hooks';
+import { ERROR_MESSAGE_TIME } from '../../helpers/const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useSearch } from '../../hooks/use-search';
-import { getsearchedProducts } from '../../store/search-data/selectors';
+import { setSearchErrorStatus } from '../../store/action';
+import { getsearchedProducts, getSearchedProductsErrorStatus } from '../../store/search-data/selectors';
 import { SearchQuery } from '../../types/search';
 import SearchedProductsList from '../searched-products-list/searched-products-list';
 
 const FormSearch = (): JSX.Element => {
 
   const searchedProducts = useAppSelector(getsearchedProducts);
+  const isSearchedProductsError = useAppSelector(getSearchedProductsErrorStatus);
+  const dispatch = useAppDispatch();
 
   const formSearchDefault: SearchQuery = {
     searchQuery: '',
@@ -16,6 +20,12 @@ const FormSearch = (): JSX.Element => {
     formData,
     handleInputChange,
     handleButtonClick] = useSearch(formSearchDefault);
+
+  if (isSearchedProductsError) {
+    setTimeout(() => {
+      dispatch(setSearchErrorStatus(false));
+    }, ERROR_MESSAGE_TIME);
+  }
 
   return (
     <div className={`form-search ${searchedProducts && searchedProducts.length > 0 ? 'list-opened' : ''}`}>
@@ -30,7 +40,7 @@ const FormSearch = (): JSX.Element => {
             type="text"
             autoComplete="off"
             placeholder="Поиск по сайту"
-            value={formData.searchQuery}
+            value={isSearchedProductsError ? 'Сервер недоступен' : formData.searchQuery}
             onChange={handleInputChange}
           />
         </label>
