@@ -2,6 +2,8 @@ const MIN_COMMENT_LENGTH = 5;
 
 const DEFAULT_PAGE = 1;
 
+const DEFAULT_SEARCH = '';
+
 const ERROR_MESSAGE_TIME = 2000;
 
 const DEFAULT_PRODUCTS_COUNT_PER_PAGE = 9;
@@ -167,6 +169,7 @@ export {
   DEFAULT_PRODUCTS_COUNT_PER_PAGE,
   DEFAULT_STEP_PAGINATION,
   productFilterType,
+  DEFAULT_SEARCH,
   AppRoute,
   APIRoute,
   NameSpace,
