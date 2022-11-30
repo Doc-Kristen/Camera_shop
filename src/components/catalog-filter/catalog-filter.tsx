@@ -18,8 +18,10 @@ const CatalogFilter = (): JSX.Element => {
 
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const isRangeByPriceError = useAppSelector(getRangeByPriceErrorStatus);
+
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
+
   const inputMinPriceRef = useRef<HTMLInputElement>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement>(null);
 
@@ -108,7 +110,6 @@ const CatalogFilter = (): JSX.Element => {
                   placeholder={String(minProductPrice)}
                   onChange={handleInputChangePrice}
                   value={minPriceValue}
-                  autoComplete='off'
                   disabled={isProductsLoaded}
                 />
               </label>
@@ -124,7 +125,6 @@ const CatalogFilter = (): JSX.Element => {
                   placeholder={String(maxProductPrice)}
                   onChange={handleInputChangePrice}
                   value={maxPriceValue}
-                  autoComplete='off'
                   disabled={isProductsLoaded}
                 />
               </label>
@@ -225,7 +225,7 @@ const CatalogFilter = (): JSX.Element => {
           }
         </fieldset>
         <button
-          className="btn catalog-filter__reset-btn" type="button"
+          className="btn catalog-filter__reset-btn" type="reset"
           id='reset-button'
           onClick={handleButtonClick}
           disabled={search === '' || isProductsLoaded}

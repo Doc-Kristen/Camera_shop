@@ -8,12 +8,12 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
-import { DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
+import { DEFAULT_PAGE, DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { fetchProductsAction, fetchProductsByPriceAction } from '../../store/api-actions';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
-// import NotFoundScreen from '../not-found-screen/not-found-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const CatalogScreen = (): JSX.Element => {
 
@@ -68,11 +68,15 @@ const CatalogScreen = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [currentPage, dispatch, location.pathname, searchParams, sortParams]);
+  }, [currentPage, dispatch, location.pathname, pagesCount, searchParams, sortParams]);
 
-  // if ((currentPage < DEFAULT_PAGE) || currentPage > pagesCount || isNaN(currentPage)) {
-  //   return <NotFoundScreen />;
-  // }
+  if (currentPage === 0 || isNaN(currentPage)) {
+    return <NotFoundScreen />;
+  }
+
+  if ((currentPage > pagesCount || currentPage < DEFAULT_PAGE) && pagesCount !== 0) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <div className="wrapper">

@@ -175,7 +175,7 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
   };
 
   const handleInputChangePrice = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    evt.preventDefault();
+
     if (evt.target.id === 'price_gte' && Number(evt.target.value) >= 0) {
       setFormData({ ...formData, minProductPrice: evt.target.value });
     }
