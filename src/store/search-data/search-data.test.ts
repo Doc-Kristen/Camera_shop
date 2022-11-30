@@ -8,6 +8,7 @@ describe('Reducer: searchData', () => {
   it('without additional parameters should return initial state', () => {
     expect(searchData.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
       .toEqual({
+        isSearchedProductsError: false
       });
   });
 

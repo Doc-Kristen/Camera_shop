@@ -47,11 +47,11 @@ const CatalogScreen = (): JSX.Element => {
       const fetchData = () => {
         if (currentPage) {
           dispatch(setCurrentCatalogPath({
-            currentPage,
+            currentPage: currentPage <= pagesCount ? currentPage : DEFAULT_PAGE,
             search: decodeURI(searchParams.toString())
           }));
           dispatch(fetchProductsAction({
-            currentPage,
+            currentPage: currentPage <= pagesCount ? currentPage : DEFAULT_PAGE,
             params: {
               ...sortParams,
             },
