@@ -57,6 +57,7 @@ enum QueryParameterType {
   Level = 'level',
   PriceMinimum = 'price_gte',
   PriceMaximum = 'price_lte',
+  NameLike = 'name_like'
 }
 
 enum SortingType {

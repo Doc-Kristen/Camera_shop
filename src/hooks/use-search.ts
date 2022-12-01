@@ -5,7 +5,7 @@ import { fetchSearchQueryAction } from '../store/api-actions';
 import { SearchQuery } from '../types/search';
 
 type ResultUseSearch = [
-    SearchQuery,
+  SearchQuery,
   (evt: React.ChangeEvent<HTMLInputElement>) => void,
   (evt: React.MouseEvent<HTMLButtonElement>) => void,
 ];
@@ -16,19 +16,19 @@ export const useSearch = (formSearchDefault: SearchQuery): ResultUseSearch => {
 
   const [formData, setFormData] = useState(formSearchDefault);
 
-  const sendSearchQuery = () => {
-    dispatch(fetchSearchQueryAction(formData.searchQuery));
-  };
-
   const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
-    setFormData({...formData, searchQuery: evt.target.value});
-    sendSearchQuery();
+    const userSearch = evt.target.value;
+    setFormData({ ...formData, searchQuery: userSearch });
+    if (userSearch) { dispatch(fetchSearchQueryAction(userSearch)); }
+    if (userSearch === formSearchDefault.searchQuery) {
+      dispatch(removeSearchedProducts(null));
+    }
   };
 
   const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    setFormData({...formData, searchQuery: ''});
+    setFormData({ ...formData, searchQuery: '' });
     dispatch(removeSearchedProducts(null));
 
   };
