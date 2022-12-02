@@ -73,11 +73,11 @@ const CatalogFilter = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (maxPriceSearch && inputMaxPriceRef.current?.value) {
-      inputMaxPriceRef.current.value = String(maxProductPrice);
+      inputMaxPriceRef.current.value = String(maxProductPrice ? maxProductPrice : 0);
     }
 
     if (minPriceSearch && inputMinPriceRef.current?.value) {
-      inputMinPriceRef.current.value = String(minProductPrice);
+      inputMinPriceRef.current.value = String(minProductPrice ? minProductPrice : 0);
     }
     if (isMounted) {
       const keyCloseHandler = (evt: KeyboardEvent) => {

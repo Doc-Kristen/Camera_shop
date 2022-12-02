@@ -87,8 +87,8 @@ export const fetchProductsByPriceAction = createAsyncThunk<FetchProductsByPriceT
       }
     });
     return {
-      minProductPrice: data[0].price,
-      maxProductPrice: data[data.length - 1].price
+      minProductPrice: data[0]?.price,
+      maxProductPrice: data[data.length - 1]?.price
     };
   },
 );
