@@ -1,4 +1,5 @@
 import { RefObject, useEffect } from 'react';
+import { useAppDispatch } from '.';
 
 type Event = MouseEvent | TouchEvent;
 
@@ -7,7 +8,9 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
   inputMaxPriceRef: RefObject<T>,
   handler: (event: Event) => void,
 ) => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
+
     const handleInputMinPriceRefClick = (evt: Event) => {
       const el = inputMinPriceRef?.current;
       const target = evt.target as HTMLElement;
@@ -55,5 +58,5 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
       document.removeEventListener('mousedown', handleInputMaxPriceRefClick);
       document.removeEventListener('touchstart', handleInputMaxPriceRefClick);
     };
-  }, [handler, inputMaxPriceRef, inputMinPriceRef]);
+  }, [dispatch, handler, inputMaxPriceRef, inputMinPriceRef]);
 };

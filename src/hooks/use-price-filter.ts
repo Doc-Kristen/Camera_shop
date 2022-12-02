@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, DEFAULT_SEARCH, QueryParameterType } from '../helpers/const';
 import { getMaxProductPrice, getMinProductPrice } from '../store/product-data/selectors';
@@ -13,7 +13,11 @@ type ResultUsePriceFilter = [
   (evt: React.MouseEvent<HTMLButtonElement>) => void,
 ];
 
-export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePriceFilter => {
+export const usePriceFilter = (
+  formSearchDefault: PriceRangeType,
+  inputMinPriceRef: RefObject<HTMLInputElement>,
+  inputMaxPriceRef: RefObject<HTMLInputElement>,
+): ResultUsePriceFilter => {
   const navigate = useNavigate();
 
   const minProductPrice = useAppSelector(getMinProductPrice);
@@ -53,8 +57,8 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
 
   const [formData, setFormData] = useState(updateSearchParams());
 
-  const minProductPriceCurrent = Number(formData.minProductPrice);
-  const maxProductPriceCurrent = Number(formData.maxProductPrice);
+  const minProductPriceCurrent = Number(inputMinPriceRef.current?.value);
+  const maxProductPriceCurrent = Number(inputMaxPriceRef.current?.value);
 
   const isValidMinPrice = () =>
     minProductPriceCurrent >= minProductPrice &&
@@ -177,10 +181,10 @@ export const usePriceFilter = (formSearchDefault: PriceRangeType): ResultUsePric
   const handleInputChangePrice = (evt: React.ChangeEvent<HTMLInputElement>) => {
 
     if (evt.target.id === 'price_gte' && Number(evt.target.value) >= 0) {
-      setFormData({ ...formData, minProductPrice: evt.target.value });
+      setFormData({ ...formData, minProductPrice: Number(inputMinPriceRef.current?.value) });
     }
     if (evt.target.id === 'price_lte' && Number(evt.target.value) >= 0) {
-      setFormData({ ...formData, maxProductPrice: evt.target.value });
+      setFormData({ ...formData, maxProductPrice: Number(inputMaxPriceRef.current?.value) });
     }
   };
 

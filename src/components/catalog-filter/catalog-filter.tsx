@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ERROR_MESSAGE_TIME, productFilterType } from '../../helpers/const';
+import { ERROR_MESSAGE_TIME, productFilterType, QueryParameterType } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useClickOutsideElement } from '../../hooks/use-click-outside-element';
@@ -25,6 +25,9 @@ const CatalogFilter = (): JSX.Element => {
   const inputMinPriceRef = useRef<HTMLInputElement>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement>(null);
 
+  const minPriceSearch = searchParams.get(QueryParameterType.PriceMinimum);
+  const maxPriceSearch = searchParams.get(QueryParameterType.PriceMaximum);
+
   const priceRangeValueDefault = {
     minProductPrice: '',
     maxProductPrice: ''
@@ -35,7 +38,7 @@ const CatalogFilter = (): JSX.Element => {
     handleInputChangePrice,
     validatePriceValue,
     handleButtonClick
-  ] = usePriceFilter(priceRangeValueDefault);
+  ] = usePriceFilter(priceRangeValueDefault, inputMinPriceRef, inputMaxPriceRef);
 
   const [
     resetPageParams
@@ -69,6 +72,13 @@ const CatalogFilter = (): JSX.Element => {
 
   useEffect(() => {
     let isMounted = true;
+    if (maxPriceSearch && inputMaxPriceRef.current?.value) {
+      inputMaxPriceRef.current.value = String(maxProductPrice);
+    }
+
+    if (minPriceSearch && inputMinPriceRef.current?.value) {
+      inputMinPriceRef.current.value = String(minProductPrice);
+    }
     if (isMounted) {
       const keyCloseHandler = (evt: KeyboardEvent) => {
         if (isKeyPressed(evt, 'Enter')) {
@@ -84,7 +94,7 @@ const CatalogFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick]);
+  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick, maxProductPrice, minProductPrice, maxPriceSearch, minPriceSearch]);
 
   if (isRangeByPriceError) {
     setTimeout(() => {
@@ -132,8 +142,8 @@ const CatalogFilter = (): JSX.Element => {
           </div>
           {
             isRangeByPriceError ?
-              <span>Ошибка сервера.<br/>
-            Диапазон цен не загружен.
+              <span>Ошибка сервера.<br />
+                Диапазон цен не загружен.
               </span> : null
           }
         </fieldset>
