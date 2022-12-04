@@ -24,6 +24,7 @@ const CatalogFilter = (): JSX.Element => {
 
   const inputMinPriceRef = useRef<HTMLInputElement>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const minPriceSearch = searchParams.get(QueryParameterType.PriceMinimum);
   const maxPriceSearch = searchParams.get(QueryParameterType.PriceMaximum);
@@ -38,7 +39,7 @@ const CatalogFilter = (): JSX.Element => {
     handleInputChangePrice,
     validatePriceValue,
     handleButtonClick
-  ] = usePriceFilter(priceRangeValueDefault, inputMinPriceRef, inputMaxPriceRef);
+  ] = usePriceFilter(priceRangeValueDefault, inputMinPriceRef, inputMaxPriceRef, formRef);
 
   const [
     resetPageParams
@@ -50,7 +51,6 @@ const CatalogFilter = (): JSX.Element => {
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const categoryFilter = target.getAttribute('data-filter-type');
     const value = target.getAttribute('data-value');
-
     if (!searchParams.getAll(categoryFilter ? categoryFilter : '').includes(String(value))) {
       searchParams.append(String(categoryFilter), String(value));
       setSearchParams(searchParams);
@@ -73,11 +73,11 @@ const CatalogFilter = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (maxPriceSearch && inputMaxPriceRef.current?.value) {
-      inputMaxPriceRef.current.value = String(maxProductPrice ? maxProductPrice : 0);
+      inputMaxPriceRef.current.value = String(maxProductPrice ? maxProductPrice : maxPriceSearch);
     }
 
     if (minPriceSearch && inputMinPriceRef.current?.value) {
-      inputMinPriceRef.current.value = String(minProductPrice ? minProductPrice : 0);
+      inputMinPriceRef.current.value = String(minProductPrice ? minProductPrice : maxPriceSearch);
     }
     if (isMounted) {
       const keyCloseHandler = (evt: KeyboardEvent) => {
@@ -94,7 +94,7 @@ const CatalogFilter = (): JSX.Element => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, setSearchParams, validatePriceValue, handleButtonClick, maxProductPrice, minProductPrice, maxPriceSearch, minPriceSearch]);
+  }, [searchParams, validatePriceValue, maxProductPrice, minProductPrice, maxPriceSearch, minPriceSearch, setSearchParams]);
 
   if (isRangeByPriceError) {
     setTimeout(() => {
@@ -104,7 +104,7 @@ const CatalogFilter = (): JSX.Element => {
 
   return (
     <div className="catalog-filter">
-      <form action="#">
+      <form action="#" ref={formRef}>
         <h2 className="visually-hidden">Фильтр</h2>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Цена, ₽</legend>
@@ -117,7 +117,7 @@ const CatalogFilter = (): JSX.Element => {
                   type="number"
                   name="price"
                   id='price_gte'
-                  placeholder={String(minProductPrice)}
+                  placeholder={String(minProductPrice ? minProductPrice : 'от')}
                   onChange={handleInputChangePrice}
                   value={minPriceValue}
                   disabled={isProductsLoaded}
@@ -132,7 +132,7 @@ const CatalogFilter = (): JSX.Element => {
                   ref={inputMaxPriceRef}
                   name="priceUp"
                   id='price_lte'
-                  placeholder={String(maxProductPrice)}
+                  placeholder={String(maxProductPrice ? maxProductPrice : 'до')}
                   onChange={handleInputChangePrice}
                   value={maxPriceValue}
                   disabled={isProductsLoaded}
