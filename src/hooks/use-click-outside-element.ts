@@ -23,7 +23,7 @@ export const useClickOutsideElement = <T extends HTMLElement = HTMLElement>(
         evt.stopPropagation();
         return;
       }
-      if (target.matches('.custom-checkbox__label')
+      if (target.matches('.checkbox_filter')
       ) {
         evt.stopPropagation();
         return;
