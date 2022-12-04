@@ -51,16 +51,18 @@ const CatalogFilter = (): JSX.Element => {
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const categoryFilter = target.getAttribute('data-filter-type');
     const value = target.getAttribute('data-value');
+
+    formData.minProductPrice ? searchParams.set(QueryParameterType.PriceMinimum, String(formData.minProductPrice)) : searchParams.delete(QueryParameterType.PriceMinimum);
+    formData.maxProductPrice ? searchParams.set(QueryParameterType.PriceMaximum, String(formData.maxProductPrice)) : searchParams.delete(QueryParameterType.PriceMaximum);
+
     if (!searchParams.getAll(categoryFilter ? categoryFilter : '').includes(String(value))) {
       searchParams.append(String(categoryFilter), String(value));
-      setSearchParams(searchParams);
       resetPageParams(searchParams);
       return;
     }
     const newParams = Array.from(searchParams.entries())
       .filter(([_, currentValue]) => currentValue !== value);
     const newSearchParams = new URLSearchParams(newParams);
-    validatePriceValue();
     setSearchParams(newSearchParams);
     resetPageParams(newSearchParams);
   };
@@ -156,8 +158,9 @@ const CatalogFilter = (): JSX.Element => {
                   key={item.Name}
                   className="custom-checkbox catalog-filter__item"
                 >
-                  <label >
+                  <label>
                     <input
+                      className='checkbox_filter'
                       type="checkbox"
                       data-filter-type='category'
                       data-value={item.Label}
@@ -167,10 +170,10 @@ const CatalogFilter = (): JSX.Element => {
                       checked={search?.includes(item.Label) || false}
                     />
                     <span
-                      className="custom-checkbox__icon"
+                      className="custom-checkbox__icon checkbox_filter"
                     >
                     </span>
-                    <span className="custom-checkbox__label">{item.Label === 'Фотоаппарат' ? 'Фотокамера' : item.Label}
+                    <span className="custom-checkbox__label checkbox_filter">{item.Label === 'Фотоаппарат' ? 'Фотокамера' : item.Label}
                     </span>
                   </label>
                 </div>
@@ -190,6 +193,7 @@ const CatalogFilter = (): JSX.Element => {
                 >
                   <label>
                     <input
+                      className='checkbox_filter'
                       type="checkbox"
                       data-filter-type='type'
                       data-value={item.Label}
@@ -199,10 +203,10 @@ const CatalogFilter = (): JSX.Element => {
                       disabled={(search?.includes('Видеокамера') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')) || isProductsLoaded}
                     />
                     <span
-                      className="custom-checkbox__icon"
+                      className="custom-checkbox__icon checkbox_filter"
                     >
                     </span>
-                    <span className="custom-checkbox__label">{item.Label}</span>
+                    <span className="custom-checkbox__label checkbox_filter">{item.Label}</span>
                   </label>
                 </div>
               ))
@@ -218,8 +222,9 @@ const CatalogFilter = (): JSX.Element => {
                   key={item.Name}
                   className="custom-checkbox catalog-filter__item"
                 >
-                  <label>
+                  <label >
                     <input
+                      className='checkbox_filter'
                       type="checkbox"
                       data-filter-type='level'
                       data-value={item.Label}
@@ -228,7 +233,10 @@ const CatalogFilter = (): JSX.Element => {
                       disabled={isProductsLoaded}
                       checked={search?.includes(item.Label) || false}
                     />
-                    <span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{item.Label}</span>
+                    <span
+                      className="custom-checkbox__icon checkbox_filter"
+                    >
+                    </span><span className="custom-checkbox__label checkbox_filter">{item.Label}</span>
                   </label>
                 </div>
               ))
