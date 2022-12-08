@@ -33,7 +33,7 @@ const SearchedProductsList = ({ searchedProducts }: SearchedProductsListProps): 
 
   return (
     <ul
-      className="form-search__select-list"
+      className="form-search__select-list scroller"
       id="search-list"
       data-testid='searched-products'
     >
