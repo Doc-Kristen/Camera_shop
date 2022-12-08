@@ -166,7 +166,7 @@ const CatalogFilter = (): JSX.Element => {
                       data-value={item.Label}
                       name={item.Name}
                       onChange={handleInputChange}
-                      disabled={(item.Label === 'Видеокамера' && (search?.includes('Моментальная') || search?.includes('Плёночная'))) || isProductsLoaded}
+                      disabled={isProductsLoaded}
                       checked={search?.includes(item.Label) || false}
                     />
                     <span
@@ -200,7 +200,7 @@ const CatalogFilter = (): JSX.Element => {
                       name={item.Name}
                       onChange={handleInputChange}
                       checked={search?.includes(item.Label) || false}
-                      disabled={(search?.includes('Видеокамера') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')) || isProductsLoaded}
+                      disabled={(search?.includes('Видеокамера') && !search?.includes('Фотоаппарат') && (item.Label === 'Плёночная' || item.Label === 'Моментальная')) || isProductsLoaded}
                     />
                     <span
                       className="custom-checkbox__icon checkbox_filter"
