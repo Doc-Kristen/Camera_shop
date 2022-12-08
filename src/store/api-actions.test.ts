@@ -12,9 +12,9 @@ const fakePageNumber = 1;
 const fakeParams = {
   sortType: 'price',
   orderType: 'asc',
-  categoryType: 'Фотоаппарат',
-  productType: 'Цифровая',
-  levelType: 'Нулевой',
+  categoryType: ['Фотоаппарат'],
+  productType: ['Цифровая'],
+  levelType: ['Нулевой'],
   priceMinimum: '1000',
   priceMaximum: '20000'
 };

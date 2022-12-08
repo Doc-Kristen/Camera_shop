@@ -3,9 +3,9 @@ import { Products } from './product';
 type QueryParameters = {
   sortType: string | null;
   orderType: string | null;
-  categoryType: string | null;
-  productType: string | null;
-  levelType: string | null;
+  categoryType: string[] | null;
+  productType: string[] | null;
+  levelType: string[] | null;
   priceMinimum?: string | null;
   priceMaximum?: string | null;
 }
@@ -23,9 +23,9 @@ type FetchProductPayloadType = {
 type FetchProductByPricePayloadType = {
   params:
   {
-    categoryType: string | null;
-    productType: string | null;
-    levelType: string | null;
+    categoryType: string[] | null;
+    productType: string[] | null;
+    levelType: string[] | null;
     priceMinimum: string | null;
     priceMaximum: string | null;
   };

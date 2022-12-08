@@ -34,9 +34,9 @@ const CatalogScreen = (): JSX.Element => {
   const sortParams = useMemo(() => ({
     sortType: searchParams.get(QueryParameterType.Sort),
     orderType: searchParams.get(QueryParameterType.Order),
-    categoryType: searchParams.get(QueryParameterType.Category),
-    productType: searchParams.get(QueryParameterType.Type),
-    levelType: searchParams.get(QueryParameterType.Level),
+    categoryType: searchParams.getAll(QueryParameterType.Category),
+    productType: searchParams.getAll(QueryParameterType.Type),
+    levelType: searchParams.getAll(QueryParameterType.Level),
     priceMinimum: searchParams.get(QueryParameterType.PriceMinimum),
     priceMaximum: searchParams.get(QueryParameterType.PriceMaximum),
   }), [searchParams]);
