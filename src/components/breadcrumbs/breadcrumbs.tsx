@@ -70,6 +70,17 @@ const Breadcrumbs = ({ productName }: BreadcrumbsProps): JSX.Element => {
               </li>
               : null
           }
+          {
+            location.pathname === AppRoute.Basket ?
+              <li className="breadcrumbs__item">
+                <Link className='breadcrumbs__link breadcrumbs__link--active'
+                  to={AppRoute.Basket}
+                >
+                  Корзина
+                </Link>
+              </li>
+              : null
+          }
 
         </ul>
       </div>
