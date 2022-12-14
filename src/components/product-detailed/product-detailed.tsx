@@ -1,3 +1,5 @@
+import { useAppDispatch } from '../../hooks';
+import { setBasketModalOpeningStatus } from '../../store/action';
 import { Product } from '../../types/product';
 import Rating from '../rating/rating';
 import TabProduct from '../tab-product/tab-product';
@@ -7,6 +9,7 @@ type ProductDetailedProps = {
 }
 
 const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const {
     name,
@@ -32,7 +35,13 @@ const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element
             productCard={productDetailed}
           />
           <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
-          <button className="btn btn--purple" type="button">
+          <button
+            className="btn btn--purple"
+            type="button"
+            onClick={() => {
+              dispatch(setBasketModalOpeningStatus(true));
+            }}
+          >
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>Добавить в корзину

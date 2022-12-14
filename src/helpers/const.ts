@@ -31,7 +31,9 @@ enum AppRoute {
 enum APIRoute {
   Promo = '/promo',
   Products = '/cameras',
-  Reviews = '/reviews'
+  Reviews = '/reviews',
+  Order = '/orders',
+  Coupons = '/coupons'
 }
 
 enum NameSpace {
@@ -39,7 +41,9 @@ enum NameSpace {
   Review = 'REVIEW',
   User = 'USER',
   Search = 'SEARCH',
-  Path = 'PATH'
+  Path = 'PATH',
+  Order = 'ORDER',
+  Basket = 'BASKET'
 }
 
 enum ProductDetailsType {

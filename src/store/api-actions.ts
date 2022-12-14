@@ -174,3 +174,37 @@ export const fetchSearchQueryAction = createAsyncThunk<Products, string, {
     });
     return data;
   });
+
+// export const sendCoupon = createAsyncThunk<Review, Coupon, {
+//     dispatch: AppDispatch;
+//     state: State;
+//     extra: AxiosInstance;
+//   }>(
+//     'user/postCoupon',
+//     async ({ coupon }, { dispatch, extra: api }) => {
+//       try {
+//         const { data } = await api.post<Review>(APIRoute.Coupons, coupon);
+//         // dispatch(fetchSelectedProductAction(id));
+//         console.log(data);
+//         return data;
+//       } catch (e) {
+//         dispatch(setOrderErrorStatus(true));
+//         throw e;
+//       }
+//     });
+
+// export const sendOrder = createAsyncThunk<Review, Order, {
+//     dispatch: AppDispatch;
+//     state: State;
+//     extra: AxiosInstance;
+//   }>(
+//     'user/postOrder',
+//     async ({ camerasIds, coupon }, { dispatch, extra: api }) => {
+//       try {
+//         const { data } = await api.post<Review>(APIRoute.Order, {camerasIds, coupon});
+//         return data;
+//       } catch (e) {
+//         dispatch(setOrderErrorStatus(true));
+//         throw e;
+//       }
+//     });

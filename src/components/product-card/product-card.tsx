@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Rating from '../rating/rating';
 import { useAppSelector } from '../../hooks';
 import { getProductDetails } from '../../store/product-data/selectors';
+import { AppRoute } from '../../helpers/const';
+import { getBasketProducts } from '../../store/basket-process/selectors';
 
 type ProductCardProps = {
   productCard: Product;
@@ -12,6 +14,7 @@ type ProductCardProps = {
 const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element => {
 
   const productDetails = useAppSelector(getProductDetails);
+  const basketProducts = useAppSelector(getBasketProducts);
 
   const {
     id,
@@ -39,11 +42,18 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
-      <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
-        </button>
-        <Link className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}>Подробнее
-        </Link>
+      <div className="product-card__buttons"> {
+        basketProducts.some((item) => item.id === productCard.id) ?
+          <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Basket}>
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>В корзине
+          </Link> :
+          <button className="btn btn--purple product-card__btn" type="button">Купить
+          </button>
+      }
+      <Link className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}>Подробнее
+      </Link>
       </div>
     </div>
   );

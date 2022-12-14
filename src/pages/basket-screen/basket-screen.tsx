@@ -4,10 +4,11 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { getProducts } from '../../store/product-data/selectors';
+import { getBasketProducts } from '../../store/basket-process/selectors';
 
 const BasketScreen = (): JSX.Element => {
-  const basketProducts = useAppSelector(getProducts);
+  const basketProducts = useAppSelector(getBasketProducts);
+  let counter = 1;
   return (
     <div className="wrapper">
       <Header />
@@ -22,7 +23,7 @@ const BasketScreen = (): JSX.Element => {
                   basketProducts.map((product) =>
                     (
                       <BasketProductCard
-                        key={`basket-${product.id}`}
+                        key={`basket-${product.id}-${counter++}`}
                         productCard={product}
                       />)
                   )

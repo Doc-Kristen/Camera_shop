@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { Products } from '../types/product';
 import { CurrentCatalogPathType } from '../types/query-parameters';
 
 const Action = {
@@ -8,11 +9,15 @@ const Action = {
   SET_SEARCH_ERROR_STATUS: 'SET_SEARCH_ERROR_STATUS',
   SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS',
   SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
+  SET_BASKET_MODAL_OPENING_STATUS: 'SET_BASKET_MODAL_OPENING_STATUS',
+  SET_BASKET_SUCCESS_OPENING_STATUS: 'SET_BASKET_SUCCESS_OPENING_STATUS',
+  // SET_BASKET_ERROR_STATUS: 'SET_BASKET_ERROR_STATUS',
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
+  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -25,6 +30,16 @@ const setModalOpeningStatus = createAction(Action.SET_REVIEW_MODAL_OPENING_STATU
     payload: value,
   }));
 
+const setBasketModalOpeningStatus = createAction(Action.SET_BASKET_MODAL_OPENING_STATUS, (value: boolean) => (
+  {
+    payload: value,
+  }));
+
+// const setOrderErrorStatus = createAction(Action.SET_BASKET_ERROR_STATUS, (value: boolean) => (
+//   {
+//     payload: value,
+//   }));
+
 const setReviewErrorStatus = createAction(Action.SET_REVIEW_ERROR_STATUS, (value: boolean) => (
   {
     payload: value,
@@ -34,6 +49,12 @@ const setSearchErrorStatus = createAction(Action.SET_SEARCH_ERROR_STATUS, (value
   {
     payload: value,
   }));
+
+const setBasketSuccessOpeningStatus = createAction(Action.SET_BASKET_SUCCESS_OPENING_STATUS, (value: boolean) => (
+  {
+    payload: value,
+  }));
+
 
 const setSuccessOpeningStatus = createAction(Action.SET_REVIEW_SUCCESS_OPENING_STATUS, (value: boolean) => (
   {
@@ -65,6 +86,11 @@ const setCurrentCatalogPath = createAction(Action.SET_CURRENT_CATALOG_PATH, (val
     payload: value,
   }));
 
+const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: Products) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -76,5 +102,9 @@ export {
   removeSearchedProducts,
   setCurrentCatalogPath,
   setPriceRangeErrorStatus,
-  setSearchErrorStatus
+  setSearchErrorStatus,
+  setBasketModalOpeningStatus,
+  // setOrderErrorStatus,
+  setBasketSuccessOpeningStatus,
+  setBasketProducts
 };

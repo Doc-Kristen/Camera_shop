@@ -14,6 +14,9 @@ import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selec
 import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
 import ReviewModal from '../../components/review-modal/review-modal';
 import ReviewSuccess from '../../components/review-success/review-success';
+import { geBasketModalOpenedStatus, getBasketSuccessStatus } from '../../store/basket-process/selectors';
+import BasketModal from '../../components/basket-modal/basket-modal';
+import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
 
 const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -29,6 +32,8 @@ const ProductScreen = (): JSX.Element => {
   const allReviews = useAppSelector(getReviews);
   const productsSimilarIsError = useAppSelector(getSimilarProductErrorStatus);
   const isFormOpened = useAppSelector(getFormOpenedStatus);
+  const isBasketModalOpened = useAppSelector(geBasketModalOpenedStatus);
+  const isBasketSuccess = useAppSelector(getBasketSuccessStatus);
 
   useEffect(() => {
     let isMounted = true;
@@ -108,6 +113,8 @@ const ProductScreen = (): JSX.Element => {
       </div>
       {isFormOpened && <ReviewModal />}
       {isReviewSuccess && <ReviewSuccess />}
+      {isBasketSuccess && <BasketSuccessModal/>}
+      {isBasketModalOpened && productDetailed && <BasketModal productCard={productDetailed}/>}
     </>
   );
 };

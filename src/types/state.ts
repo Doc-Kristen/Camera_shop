@@ -48,6 +48,13 @@ type SortingProcess = {
     orderType: string;
 }
 
+type BasketProcess = {
+    isBasketModalOpened: boolean;
+    isBasketModalBlocked: boolean;
+    isBasketSuccess: boolean;
+    basketProducts: Products;
+}
+
 export type {
   State,
   AppDispatch,
@@ -55,5 +62,6 @@ export type {
   ReviewData,
   ProductData,
   SearchData,
-  SortingProcess
+  SortingProcess,
+  BasketProcess
 };
