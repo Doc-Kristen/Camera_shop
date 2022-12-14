@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Products } from '../types/product';
+import { Product, Products } from '../types/product';
 import { CurrentCatalogPathType } from '../types/query-parameters';
 
 const Action = {
@@ -16,6 +16,7 @@ const Action = {
   PRODUCT_DETAILS_SHOWN: 'PRODUCT_DETAILS_SHOWN',
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
+  SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
   SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS'
 };
@@ -86,6 +87,11 @@ const setCurrentCatalogPath = createAction(Action.SET_CURRENT_CATALOG_PATH, (val
     payload: value,
   }));
 
+const setCurrentCatalogProduct = createAction(Action.SET_CURRENT_CATALOG_PRODUCT, (value: Product) => (
+  {
+    payload: value,
+  }));
+
 const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: Products) => (
   {
     payload: value,
@@ -106,5 +112,6 @@ export {
   setBasketModalOpeningStatus,
   // setOrderErrorStatus,
   setBasketSuccessOpeningStatus,
-  setBasketProducts
+  setBasketProducts,
+  setCurrentCatalogProduct
 };

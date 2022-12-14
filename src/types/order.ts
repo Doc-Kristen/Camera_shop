@@ -7,5 +7,4 @@ type Order = {
     coupon: string | null;
 };
 
-
 export type { Order, Coupon };

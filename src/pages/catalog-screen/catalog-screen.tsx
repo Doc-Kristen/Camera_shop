@@ -1,6 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner';
+import BasketModal from '../../components/basket-modal/basket-modal';
+import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CardsList from '../../components/cards-list/cards-list';
 import CatalogFilter from '../../components/catalog-filter/catalog-filter';
@@ -12,6 +14,7 @@ import { DEFAULT_PAGE, DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } fro
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { fetchProductsAction, fetchProductsByPriceAction } from '../../store/api-actions';
+import { geBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
@@ -23,7 +26,10 @@ const CatalogScreen = (): JSX.Element => {
   const [searchParams] = useSearchParams();
 
   const products = useAppSelector(getProducts);
+  const currentCatalogProduct = useAppSelector(getCurrentCatalogProduct);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
+  const isBasketSuccess = useAppSelector(getBasketSuccessStatus);
+  const isBasketModalOpened = useAppSelector(geBasketModalOpenedStatus);
   const currentPage = Number(pageNumber);
   const totalProductsCount = useAppSelector(getPagesCount);
 
@@ -79,48 +85,52 @@ const CatalogScreen = (): JSX.Element => {
   }
 
   return (
-    <div className="wrapper">
-      <Header />
-      <main>
-        <Banner />
-        <div className="page-content" id='page-content'>
-          <Breadcrumbs />
-          <section
-            className="catalog"
-            id='catalog'
-          >
-            <div className="container">
-              <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-              <div className="page-content__columns">
-                <div className="catalog__aside">
-                  <CatalogFilter />
-                </div>
-                <div className="catalog__content">
-                  <CatalogSort />
-                  {
-                    isProductsLoaded ? <p>Загрузка данных...</p> :
-                      <>
-                        <CardsList
-                          products={products}
-                        />
-                        {
-                          products.length > 0 ?
-                            <Pagination
-                              pagesCount={pagesCount}
-                            />
-                            : null
-                        }
+    <>
+      <div className="wrapper">
+        <Header />
+        <main>
+          <Banner />
+          <div className="page-content" id='page-content'>
+            <Breadcrumbs />
+            <section
+              className="catalog"
+              id='catalog'
+            >
+              <div className="container">
+                <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
+                <div className="page-content__columns">
+                  <div className="catalog__aside">
+                    <CatalogFilter />
+                  </div>
+                  <div className="catalog__content">
+                    <CatalogSort />
+                    {
+                      isProductsLoaded ? <p>Загрузка данных...</p> :
+                        <>
+                          <CardsList
+                            products={products}
+                          />
+                          {
+                            products.length > 0 ?
+                              <Pagination
+                                pagesCount={pagesCount}
+                              />
+                              : null
+                          }
 
-                      </>
-                  }
+                        </>
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
-      </main>
-      <Footer />
-    </div>
+            </section>
+          </div>
+        </main>
+        <Footer />
+      </div>
+      {isBasketSuccess && <BasketSuccessModal />}
+      {isBasketModalOpened && currentCatalogProduct && <BasketModal productCard={currentCatalogProduct} />}
+    </>
   );
 };
 

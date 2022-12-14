@@ -14,7 +14,7 @@ import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selec
 import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
 import ReviewModal from '../../components/review-modal/review-modal';
 import ReviewSuccess from '../../components/review-success/review-success';
-import { geBasketModalOpenedStatus, getBasketSuccessStatus } from '../../store/basket-process/selectors';
+import { geBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
 import BasketModal from '../../components/basket-modal/basket-modal';
 import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
 
@@ -24,6 +24,7 @@ const ProductScreen = (): JSX.Element => {
   const { id } = useParams();
   const ProductId = Number(id);
   const productDetailed = useAppSelector(getSelectedProduct);
+  const currentCatalogProduct = useAppSelector(getCurrentCatalogProduct);
   const similarProducts = useAppSelector(getSimilarProducts);
   const productIsError = useAppSelector(getSelectedProductErrorStatus);
   const productIsLoaded = useAppSelector(getDataLoadedStatus);
@@ -114,7 +115,7 @@ const ProductScreen = (): JSX.Element => {
       {isFormOpened && <ReviewModal />}
       {isReviewSuccess && <ReviewSuccess />}
       {isBasketSuccess && <BasketSuccessModal/>}
-      {isBasketModalOpened && productDetailed && <BasketModal productCard={productDetailed}/>}
+      {isBasketModalOpened && currentCatalogProduct && <BasketModal productCard={currentCatalogProduct}/>}
     </>
   );
 };

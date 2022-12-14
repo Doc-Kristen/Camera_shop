@@ -53,6 +53,7 @@ type BasketProcess = {
     isBasketModalBlocked: boolean;
     isBasketSuccess: boolean;
     basketProducts: Products;
+    currentCatalogProduct: Product;
 }
 
 export type {

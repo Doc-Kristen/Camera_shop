@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { setBasketModalOpeningStatus } from '../../store/action';
+import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
 import { Product } from '../../types/product';
 import Rating from '../rating/rating';
 import TabProduct from '../tab-product/tab-product';
@@ -39,6 +39,7 @@ const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element
             className="btn btn--purple"
             type="button"
             onClick={() => {
+              dispatch(setCurrentCatalogProduct(productDetailed));
               dispatch(setBasketModalOpeningStatus(true));
             }}
           >

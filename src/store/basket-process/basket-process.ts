@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../helpers/const';
-import { Products } from '../../types/product';
+import { Product, Products } from '../../types/product';
 import { BasketProcess } from '../../types/state';
-import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus } from '../action';
+import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus, setCurrentCatalogProduct } from '../action';
 
 const initialState: BasketProcess = {
   isBasketModalOpened: false,
   isBasketModalBlocked: false,
   isBasketSuccess: false,
   basketProducts: [] as Products,
+  currentCatalogProduct: {} as Product,
 };
 
 export const basketProcess = createSlice({
@@ -22,6 +23,9 @@ export const basketProcess = createSlice({
       })
       .addCase(setBasketSuccessOpeningStatus, (state, action) => {
         state.isBasketSuccess = action.payload;
+      })
+      .addCase(setCurrentCatalogProduct, (state, action) => {
+        state.currentCatalogProduct = action.payload;
       })
       .addCase(setBasketProducts, (state, action) => {
         state.basketProducts = action.payload;

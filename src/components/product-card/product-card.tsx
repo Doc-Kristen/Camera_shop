@@ -1,10 +1,11 @@
 import { Product } from '../../types/product';
 import { Link } from 'react-router-dom';
 import Rating from '../rating/rating';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProductDetails } from '../../store/product-data/selectors';
 import { AppRoute } from '../../helpers/const';
 import { getBasketProducts } from '../../store/basket-process/selectors';
+import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
 
 type ProductCardProps = {
   productCard: Product;
@@ -12,6 +13,7 @@ type ProductCardProps = {
 }
 
 const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const productDetails = useAppSelector(getProductDetails);
   const basketProducts = useAppSelector(getBasketProducts);
@@ -49,7 +51,14 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
               <use xlinkHref="#icon-basket"></use>
             </svg>В корзине
           </Link> :
-          <button className="btn btn--purple product-card__btn" type="button">Купить
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={() => {
+              dispatch(setCurrentCatalogProduct(productCard));
+              dispatch(setBasketModalOpeningStatus(true));
+            }}
+          >Купить
           </button>
       }
       <Link className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}>Подробнее
