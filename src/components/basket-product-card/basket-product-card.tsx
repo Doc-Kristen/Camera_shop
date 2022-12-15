@@ -1,3 +1,5 @@
+import { useAppSelector } from '../../hooks';
+import { getBasketProducts } from '../../store/basket-process/selectors';
 import { Product } from '../../types/product';
 
 type BasketProductCardProps = {
@@ -17,6 +19,11 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
     previewImgWebp,
     previewImgWebp2x
   } = productCard;
+
+  const basketProducts = useAppSelector(getBasketProducts).slice();
+  const initialValue = 0;
+  const getBasketProductsCount = basketProducts.reduce(
+    (accumulator, currentValue: Product) => currentValue.id === productCard.id ? accumulator + 1 : accumulator + 0, initialValue);
 
   return (
     <li className="basket-item">
@@ -43,14 +50,20 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" defaultValue="2" min="1" max="99" aria-label="количество товара" />
+        <input
+          type="number"
+          id="counter1"
+          defaultValue={getBasketProductsCount}
+          min="1" max="99"
+          aria-label="количество товара"
+        />
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{productCard.price * getBasketProductsCount} ₽</div>
       <button className="cross-btn" type="button" aria-label="Удалить товар">
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

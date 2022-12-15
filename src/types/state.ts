@@ -54,6 +54,7 @@ type BasketProcess = {
     isBasketSuccess: boolean;
     basketProducts: Products;
     currentCatalogProduct: Product;
+    basketProductsId: number[];
 }
 
 export type {

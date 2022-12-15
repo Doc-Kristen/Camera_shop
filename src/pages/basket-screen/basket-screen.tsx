@@ -5,10 +5,19 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { getBasketProducts } from '../../store/basket-process/selectors';
+import { Products } from '../../types/product';
 
 const BasketScreen = (): JSX.Element => {
-  const basketProducts = useAppSelector(getBasketProducts);
+  const basketProducts = useAppSelector(getBasketProducts).slice();
   let counter = 1;
+
+  const getUniqueBasketProducts = (arr: Products, key: string) => {
+    const set = new Set();
+    return arr.filter((productId: { [x: string]: string | number }) => !set.has(productId[key]) && set.add(productId[key]));
+  };
+
+  const uniqueBasketProducts = getUniqueBasketProducts(basketProducts, 'id');
+
   return (
     <div className="wrapper">
       <Header />
@@ -20,7 +29,7 @@ const BasketScreen = (): JSX.Element => {
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
                 {
-                  basketProducts.map((product) =>
+                  uniqueBasketProducts.map((product) =>
                     (
                       <BasketProductCard
                         key={`basket-${product.id}-${counter++}`}

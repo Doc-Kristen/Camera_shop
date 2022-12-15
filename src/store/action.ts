@@ -18,7 +18,8 @@ const Action = {
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
-  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS'
+  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
+  SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -97,6 +98,11 @@ const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: Produ
     payload: value,
   }));
 
+const setBasketProductsId = createAction(Action.SET_BASKET_PRODUCTS_ID, (value: number[]) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -113,5 +119,6 @@ export {
   // setOrderErrorStatus,
   setBasketSuccessOpeningStatus,
   setBasketProducts,
-  setCurrentCatalogProduct
+  setCurrentCatalogProduct,
+  setBasketProductsId
 };

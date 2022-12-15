@@ -7,7 +7,7 @@ import Logo from '../logo/logo';
 
 const Header = (): JSX.Element => {
   const basketProducts = useAppSelector(getBasketProducts);
-  return (
+  return(
     <header className="header" id="header">
       <div className="container">
         <Logo />
