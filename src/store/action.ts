@@ -10,6 +10,7 @@ const Action = {
   SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS',
   SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
   SET_BASKET_MODAL_OPENING_STATUS: 'SET_BASKET_MODAL_OPENING_STATUS',
+  SET_BASKET_REMOVE_PRODUCT_MODAL_OPENING_STATUS: 'SET_BASKET_REMOVE_PRODUCT_MODAL_OPENING_STATUS',
   SET_BASKET_SUCCESS_OPENING_STATUS: 'SET_BASKET_SUCCESS_OPENING_STATUS',
   // SET_BASKET_ERROR_STATUS: 'SET_BASKET_ERROR_STATUS',
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
@@ -19,7 +20,8 @@ const Action = {
   SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
   SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
-  SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID'
+  SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID',
+  SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -33,6 +35,11 @@ const setModalOpeningStatus = createAction(Action.SET_REVIEW_MODAL_OPENING_STATU
   }));
 
 const setBasketModalOpeningStatus = createAction(Action.SET_BASKET_MODAL_OPENING_STATUS, (value: boolean) => (
+  {
+    payload: value,
+  }));
+
+const setBasketRemoveProductModalOpeningStatus = createAction(Action.SET_BASKET_REMOVE_PRODUCT_MODAL_OPENING_STATUS, (value: boolean) => (
   {
     payload: value,
   }));
@@ -103,6 +110,11 @@ const setBasketProductsId = createAction(Action.SET_BASKET_PRODUCTS_ID, (value: 
     payload: value,
   }));
 
+const setTotalPriceBasketProduct = createAction(Action.SET_TOTAL_PRICE_BASKET_PRODUCTS, (value: number) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -120,5 +132,7 @@ export {
   setBasketSuccessOpeningStatus,
   setBasketProducts,
   setCurrentCatalogProduct,
-  setBasketProductsId
+  setBasketProductsId,
+  setTotalPriceBasketProduct,
+  setBasketRemoveProductModalOpeningStatus
 };

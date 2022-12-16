@@ -1,4 +1,7 @@
-import { useAppSelector } from '../../hooks';
+import { useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useBasket } from '../../hooks/use-basket';
+import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
 import { getBasketProducts } from '../../store/basket-process/selectors';
 import { Product } from '../../types/product';
 
@@ -8,6 +11,7 @@ type BasketProductCardProps = {
 
 const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element => {
 
+  const dispatch = useAppDispatch();
   const {
     category,
     name,
@@ -21,9 +25,18 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
   } = productCard;
 
   const basketProducts = useAppSelector(getBasketProducts).slice();
+  const inpuPriceRef = useRef<HTMLInputElement>(null);
   const initialValue = 0;
+
   const getBasketProductsCount = basketProducts.reduce(
     (accumulator, currentValue: Product) => currentValue.id === productCard.id ? accumulator + 1 : accumulator + 0, initialValue);
+
+  const [
+    formData,
+    handleInputChangeProductCount,
+    handleButtonClickPrev,
+    handleButtonClickNext
+  ] = useBasket(getBasketProductsCount, productCard);
 
   return (
     <li className="basket-item">
@@ -44,7 +57,11 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
       <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
+        <button
+          className="btn-icon btn-icon--prev"
+          aria-label="уменьшить количество товара"
+          onClick={handleButtonClickPrev}
+        >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
@@ -53,18 +70,33 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
         <input
           type="number"
           id="counter1"
-          defaultValue={getBasketProductsCount}
+          ref={inpuPriceRef}
+          onChange={handleInputChangeProductCount}
+          value={formData}
           min="1" max="99"
           aria-label="количество товара"
         />
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
+        <button
+          className="btn-icon btn-icon--next"
+          aria-label="увеличить количество товара"
+          onClick={handleButtonClickNext}
+        >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{productCard.price * getBasketProductsCount} ₽</div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар">
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{productCard.price * formData} ₽</div>
+      <button
+        className="cross-btn" type="button"
+        aria-label="Удалить товар"
+        onClick={
+          ()=> {
+            dispatch(setCurrentCatalogProduct(productCard));
+            dispatch(setBasketRemoveProductModalOpeningStatus(true));
+          }
+        }
+      >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>

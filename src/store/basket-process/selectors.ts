@@ -4,6 +4,8 @@ import { State } from '../../types/state';
 
 export const geBasketModalOpenedStatus = (state: State): boolean => state[NameSpace.Basket].isBasketModalOpened;
 
+export const getBasketModalRemoveOpenedStatus = (state : State) : boolean => state[NameSpace.Basket].isBasketRemoveProductModalOpened;
+
 export const getOrderBlockedStatus = (state: State): boolean => state[NameSpace.Basket].isBasketModalBlocked;
 
 export const getBasketSuccessStatus = (state: State): boolean => state[NameSpace.Basket].isBasketSuccess;
