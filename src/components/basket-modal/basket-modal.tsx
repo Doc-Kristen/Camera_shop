@@ -3,6 +3,7 @@ import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus } from '../../store/action';
 import { getBasketProducts } from '../../store/basket-process/selectors';
+import { BasketProduct } from '../../types/basket';
 import { Product } from '../../types/product';
 
 type BasketModalProps = {
@@ -24,7 +25,30 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
     previewImgWebp2x
   } = productCard;
 
-  const basketProducts = useAppSelector(getBasketProducts).slice();
+  const basketProductsList = useAppSelector(getBasketProducts).slice();
+
+  const addProduct = (product: Product) => {
+    const indexAddedProduct = basketProductsList.findIndex((item: BasketProduct) => item.productCard.id === product.id);
+
+    switch (indexAddedProduct === -1) {
+      case true:
+        basketProductsList.push({
+          productCard: product,
+          countProductCards: 1
+        });
+        dispatch(setBasketProducts(basketProductsList));
+        break;
+      case false:
+        basketProductsList[indexAddedProduct] = {
+          productCard: product,
+          countProductCards: basketProductsList[indexAddedProduct].countProductCards + 1
+        };
+        dispatch(setBasketProducts(basketProductsList));
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -87,8 +111,7 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               onClick={() => {
-                basketProducts.push(productCard);
-                dispatch(setBasketProducts(basketProducts));
+                addProduct(productCard);
                 dispatch(setBasketModalOpeningStatus(false));
                 dispatch(setBasketSuccessOpeningStatus(true));
               }}

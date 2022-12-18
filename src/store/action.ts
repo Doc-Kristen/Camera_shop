@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Product, Products } from '../types/product';
+import { BasketProduct, BasketProducts } from '../types/basket';
+import { Product } from '../types/product';
 import { CurrentCatalogPathType } from '../types/query-parameters';
 
 const Action = {
@@ -19,9 +20,10 @@ const Action = {
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
-  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
   SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID',
-  SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS'
+  SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS',
+  SET_BASKET_PRODUCT: 'SET_BASKET_PRODUCT',
+  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -100,17 +102,22 @@ const setCurrentCatalogProduct = createAction(Action.SET_CURRENT_CATALOG_PRODUCT
     payload: value,
   }));
 
-const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: Products) => (
-  {
-    payload: value,
-  }));
-
 const setBasketProductsId = createAction(Action.SET_BASKET_PRODUCTS_ID, (value: number[]) => (
   {
     payload: value,
   }));
 
 const setTotalPriceBasketProduct = createAction(Action.SET_TOTAL_PRICE_BASKET_PRODUCTS, (value: number) => (
+  {
+    payload: value,
+  }));
+
+const setBasketProduct = createAction(Action.SET_BASKET_PRODUCT, (value: BasketProduct) => (
+  {
+    payload: value,
+  }));
+
+const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: BasketProducts) => (
   {
     payload: value,
   }));
@@ -130,9 +137,10 @@ export {
   setBasketModalOpeningStatus,
   // setOrderErrorStatus,
   setBasketSuccessOpeningStatus,
-  setBasketProducts,
   setCurrentCatalogProduct,
   setBasketProductsId,
   setTotalPriceBasketProduct,
-  setBasketRemoveProductModalOpeningStatus
+  setBasketRemoveProductModalOpeningStatus,
+  setBasketProduct,
+  setBasketProducts
 };

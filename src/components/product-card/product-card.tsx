@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProductDetails } from '../../store/product-data/selectors';
 import { AppRoute } from '../../helpers/const';
 import { getBasketProducts } from '../../store/basket-process/selectors';
-import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
+import { setBasketModalOpeningStatus, setBasketProduct, setCurrentCatalogProduct } from '../../store/action';
 
 type ProductCardProps = {
   productCard: Product;
@@ -45,7 +45,7 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
         </p>
       </div>
       <div className="product-card__buttons"> {
-        basketProducts.some((item) => item.id === productCard.id) ?
+        basketProducts.some((item) => item.productCard.id === productCard.id) ?
           <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.Basket}>
             <svg width="16" height="16" aria-hidden="true">
               <use xlinkHref="#icon-basket"></use>
@@ -56,6 +56,10 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
             type="button"
             onClick={() => {
               dispatch(setCurrentCatalogProduct(productCard));
+              dispatch(setBasketProduct({
+                productCard: productCard,
+                countProductCards: 1
+              }));
               dispatch(setBasketModalOpeningStatus(true));
             }}
           >Купить

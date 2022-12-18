@@ -2,12 +2,19 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
 import { getBasketProducts } from '../../store/basket-process/selectors';
+import { BasketProduct } from '../../types/basket';
 import FormSearch from '../form-search/form-search';
 import Logo from '../logo/logo';
 
 const Header = (): JSX.Element => {
+
+  const initialValue = 0;
   const basketProducts = useAppSelector(getBasketProducts);
-  return(
+  const getBasketProductsCount = basketProducts.reduce(
+    (accumulator, currentValue: BasketProduct) => accumulator + currentValue.countProductCards,
+    initialValue
+  );
+  return (
     <header className="header" id="header">
       <div className="container">
         <Logo />
@@ -29,7 +36,7 @@ const Header = (): JSX.Element => {
             <use xlinkHref="#icon-basket"></use>
           </svg> {
             basketProducts.length ?
-              <span className="header__basket-count">{basketProducts.length}</span> :
+              <span className="header__basket-count">{getBasketProductsCount}</span> :
               null
           }
         </Link>

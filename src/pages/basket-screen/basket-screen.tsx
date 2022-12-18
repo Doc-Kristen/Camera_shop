@@ -1,24 +1,20 @@
 import BasketProductCard from '../../components/basket-product-card/basket-product-card';
 import BasketPromo from '../../components/basket-promo/basket-promo';
-import BasketSuccessModal from '../../components/basket-remove-product-modal/basket-remove-product-modal';
+import BasketRemoveProductModal from '../../components/basket-remove-product-modal/basket-remove-product-modal';
+import BasketSummary from '../../components/basket-summary/basket-summary';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { getBasketModalRemoveOpenedStatus, getBasketProducts } from '../../store/basket-process/selectors';
-import { Products } from '../../types/product';
+import { BasketProduct } from '../../types/basket';
 
 const BasketScreen = (): JSX.Element => {
-  const basketProducts = useAppSelector(getBasketProducts).slice();
+
   const isModalOpened = useAppSelector(getBasketModalRemoveOpenedStatus);
   let counter = 1;
 
-  const getUniqueBasketProducts = (arr: Products, key: string) => {
-    const set = new Set();
-    return arr.filter((productId: { [x: string]: string | number }) => !set.has(productId[key]) && set.add(productId[key]));
-  };
-
-  const uniqueBasketProducts = getUniqueBasketProducts(basketProducts, 'id');
+  const basketProductsList = useAppSelector(getBasketProducts).slice();
 
   return (
     <>
@@ -32,10 +28,10 @@ const BasketScreen = (): JSX.Element => {
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
                   {
-                    uniqueBasketProducts.map((product) =>
+                    basketProductsList.map((product : BasketProduct) =>
                       (
                         <BasketProductCard
-                          key={`basket-${product.id}-${counter++}`}
+                          key={`basket-${product.productCard.id}-${counter++}`}
                           productCard={product}
                         />)
                     )
@@ -43,13 +39,7 @@ const BasketScreen = (): JSX.Element => {
                 </ul>
                 <div className="basket__summary">
                   <BasketPromo />
-                  <div className="basket__summary-order">
-                    <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">111 390 ₽</span></p>
-                    <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">0 ₽</span></p>
-                    <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">111 390 ₽</span></p>
-                    <button className="btn btn--purple" type="submit">Оформить заказ
-                    </button>
-                  </div>
+                  <BasketSummary />
                 </div>
               </div>
             </section>
@@ -57,7 +47,7 @@ const BasketScreen = (): JSX.Element => {
         </main>
         <Footer />
       </div>
-      {isModalOpened && <BasketSuccessModal />}
+      {isModalOpened && <BasketRemoveProductModal/>}
     </>
   );
 };

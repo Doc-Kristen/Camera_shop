@@ -1,4 +1,5 @@
 import { store } from '../store/index';
+import { BasketProducts } from './basket';
 import { Product, Products } from './product';
 import { Promo } from './promo';
 import { Reviews } from './review';
@@ -53,9 +54,9 @@ type BasketProcess = {
     isBasketRemoveProductModalOpened: boolean;
     isBasketModalBlocked: boolean;
     isBasketSuccess: boolean;
-    basketProducts: Products;
     currentCatalogProduct: Product;
     basketProductsId: number[];
+    basketProducts: BasketProducts;
 }
 
 export type {

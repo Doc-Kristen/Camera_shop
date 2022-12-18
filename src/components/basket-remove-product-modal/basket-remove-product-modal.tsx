@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketProducts, setBasketRemoveProductModalOpeningStatus } from '../../store/action';
 import { getBasketProducts, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
 import { getCurrentCatalogPath } from '../../store/path-process/selectors';
-import { Products } from '../../types/product';
+import { BasketProducts } from '../../types/basket';
 
-const BasketSuccessModal = (): JSX.Element => {
+const BasketRemoveProductModal = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
@@ -24,9 +24,13 @@ const BasketSuccessModal = (): JSX.Element => {
     previewImgWebp,
     previewImgWebp2x } = useAppSelector(getCurrentCatalogProduct);
 
-  const basketProducts = useAppSelector(getBasketProducts);
+  const basketProducts = useAppSelector(getBasketProducts).slice();
 
-  const deleteProductItem = (selectedProducts : Products, productId : number) => selectedProducts.filter((item) => item.id !== productId);
+  const removeProductItem = (selectedProducts : BasketProducts, productId : number) => {
+    const newBasketProducts = selectedProducts.filter((item) => item.productCard.id !== productId);
+    dispatch(setBasketProducts(newBasketProducts));
+    dispatch(setBasketRemoveProductModalOpeningStatus(false));
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -90,8 +94,7 @@ const BasketSuccessModal = (): JSX.Element => {
               id='remove-item-modal-button'
               type="button"
               onClick={() => {
-                dispatch(setBasketProducts(deleteProductItem(basketProducts, id)));
-                dispatch(setBasketRemoveProductModalOpeningStatus(false));
+                removeProductItem(basketProducts, id);
               }}
             >Удалить
             </button>
@@ -120,4 +123,4 @@ const BasketSuccessModal = (): JSX.Element => {
     </div>
   );
 };
-export default BasketSuccessModal;
+export default BasketRemoveProductModal;

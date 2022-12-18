@@ -1,12 +1,11 @@
 import { useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { useBasket } from '../../hooks/use-basket';
 import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
-import { getBasketProducts } from '../../store/basket-process/selectors';
-import { Product } from '../../types/product';
+import { BasketProduct } from '../../types/basket';
 
 type BasketProductCardProps = {
-  productCard: Product;
+  productCard: BasketProduct;
 }
 
 const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element => {
@@ -22,21 +21,16 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
     previewImg2x,
     previewImgWebp,
     previewImgWebp2x
-  } = productCard;
+  } = productCard.productCard;
 
-  const basketProducts = useAppSelector(getBasketProducts).slice();
   const inpuPriceRef = useRef<HTMLInputElement>(null);
-  const initialValue = 0;
-
-  const getBasketProductsCount = basketProducts.reduce(
-    (accumulator, currentValue: Product) => currentValue.id === productCard.id ? accumulator + 1 : accumulator + 0, initialValue);
 
   const [
     formData,
     handleInputChangeProductCount,
     handleButtonClickPrev,
     handleButtonClickNext
-  ] = useBasket(getBasketProductsCount, productCard);
+  ] = useBasket(productCard);
 
   return (
     <li className="basket-item">
@@ -86,13 +80,13 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{productCard.price * formData} ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * formData} ₽</div>
       <button
         className="cross-btn" type="button"
         aria-label="Удалить товар"
         onClick={
           ()=> {
-            dispatch(setCurrentCatalogProduct(productCard));
+            dispatch(setCurrentCatalogProduct(productCard.productCard));
             dispatch(setBasketRemoveProductModalOpeningStatus(true));
           }
         }

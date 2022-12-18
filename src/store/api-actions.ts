@@ -8,6 +8,7 @@ import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute, setReviewErrorStatus } from './action';
 import { FetchProductByPricePayloadType, FetchProductPayloadType, FetchProductsByPriceType, FetchProductsType } from '../types/query-parameters';
+// import { Coupon } from '../types/order';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -181,14 +182,16 @@ export const fetchSearchQueryAction = createAsyncThunk<Products, string, {
 //     extra: AxiosInstance;
 //   }>(
 //     'user/postCoupon',
-//     async ({ coupon }, { dispatch, extra: api }) => {
+//     async ( coupon , { dispatch, extra: api }) => {
 //       try {
 //         const { data } = await api.post<Review>(APIRoute.Coupons, coupon);
 //         // dispatch(fetchSelectedProductAction(id));
-//         console.log(data);
+//         // console.log(data);
 //         return data;
 //       } catch (e) {
-//         dispatch(setOrderErrorStatus(true));
+//         // dispatch(setOr(true));
+//         console.error(e);
+//         // console.log(coupon);
 //         throw e;
 //       }
 //     });
