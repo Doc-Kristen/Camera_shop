@@ -3,8 +3,8 @@ import { couponDefaultValue, NameSpace } from '../../helpers/const';
 import { BasketProducts } from '../../types/basket';
 import { Product } from '../../types/product';
 import { BasketProcess } from '../../types/state';
-import { setBasketModalOpeningStatus, setBasketProductsId, setBasketProducts, setBasketRemoveProductModalOpeningStatus, setBasketSuccessOpeningStatus, setCurrentCatalogProduct, setCoupon } from '../action';
-import { sendCoupon } from '../api-actions';
+import { setBasketModalOpeningStatus, setBasketProductsId, setBasketProducts, setBasketRemoveProductModalOpeningStatus, setBasketSuccessOpeningStatus, setCurrentCatalogProduct, setCoupon, setOrderSuccesStatus } from '../action';
+import { sendCoupon, sendOrder } from '../api-actions';
 
 const initialState: BasketProcess = {
   isBasketModalOpened: false,
@@ -12,6 +12,7 @@ const initialState: BasketProcess = {
   isBasketModalBlocked: false,
   isBasketSuccess: false,
   isCouponPosted: false,
+  isOrderSuccess: false,
   currentCatalogProduct: {} as Product,
   basketProductsId: [],
   basketProducts: [] as BasketProducts,
@@ -45,20 +46,35 @@ export const basketProcess = createSlice({
       })
       .addCase(sendCoupon.pending, (state) => {
         state.isCouponPosted = true;
+        // state.isOrderSuccess = false;
       })
       .addCase(sendCoupon.fulfilled, (state, action) => {
         state.discountPercent = action.payload;
         state.isCouponValid = true;
         state.isCouponPosted = false;
+        // state.isOrderSuccess = true;
       })
       .addCase(sendCoupon.rejected, (state) => {
         state.coupon = couponDefaultValue;
         state.discountPercent = null;
         state.isCouponPosted = false;
         state.isCouponValid = false;
+        // state.isOrderSuccess = false;
       })
       .addCase(setCoupon, (state, action) => {
         state.coupon = action.payload;
+      })
+      .addCase(setOrderSuccesStatus, (state, action) => {
+        state.isOrderSuccess = action.payload;
+      })
+      .addCase(sendOrder.pending, (state) => {
+        state.isOrderSuccess = false;
+      })
+      .addCase(sendOrder.fulfilled, (state) => {
+        state.isOrderSuccess = true;
+      })
+      .addCase(sendOrder.rejected, (state) => {
+        state.isOrderSuccess = false;
       });
   }
 });

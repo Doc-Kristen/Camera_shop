@@ -9,6 +9,7 @@ const Action = {
   SET_REVIEW_ERROR_STATUS: 'SET_REVIEW_ERROR_STATUS',
   SET_SEARCH_ERROR_STATUS: 'SET_SEARCH_ERROR_STATUS',
   SET_REVIEW_SUCCESS_OPENING_STATUS: 'SET_REVIEW_SUCCESs_OPENING_STATUS',
+  SET_ORDER_SUCCESS_STATUS: 'SET_ORDER_SUCCESS_STATUS',
   SET_SELECTED_PRODUCT_ERROR_STATUS: 'SET_SELECTED_PRODUCT_ERROR_STATUS',
   SET_BASKET_MODAL_OPENING_STATUS: 'SET_BASKET_MODAL_OPENING_STATUS',
   SET_BASKET_REMOVE_PRODUCT_MODAL_OPENING_STATUS: 'SET_BASKET_REMOVE_PRODUCT_MODAL_OPENING_STATUS',
@@ -53,6 +54,11 @@ const setBasketRemoveProductModalOpeningStatus = createAction(Action.SET_BASKET_
 //   {
 //     payload: value,
 //   }));
+
+const setOrderSuccesStatus = createAction(Action.SET_ORDER_SUCCESS_STATUS, (value: boolean) => (
+  {
+    payload: value,
+  }));
 
 const setReviewErrorStatus = createAction(Action.SET_REVIEW_ERROR_STATUS, (value: boolean) => (
   {
@@ -145,6 +151,7 @@ export {
   setModalOpeningStatus,
   setReviewErrorStatus,
   setSuccessOpeningStatus,
+  setOrderSuccesStatus,
   setSelectedProductErrorStatus,
   setProductDetailsShown,
   removeSearchedProducts,

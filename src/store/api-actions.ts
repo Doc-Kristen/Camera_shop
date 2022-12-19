@@ -8,7 +8,7 @@ import { Review, Reviews } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 import { redirectToRoute, setCoupon, setReviewErrorStatus } from './action';
 import { FetchProductByPricePayloadType, FetchProductPayloadType, FetchProductsByPriceType, FetchProductsType } from '../types/query-parameters';
-import { Coupon } from '../types/order';
+import { Coupon, Order } from '../types/order';
 
 export const fetchPromoAction = createAsyncThunk<Promo, void, {
   dispatch: AppDispatch;
@@ -190,18 +190,13 @@ export const sendCoupon = createAsyncThunk<number, Coupon, {
 
   });
 
-// export const sendOrder = createAsyncThunk<Review, Order, {
-//     dispatch: AppDispatch;
-//     state: State;
-//     extra: AxiosInstance;
-//   }>(
-//     'user/postOrder',
-//     async ({ camerasIds, coupon }, { dispatch, extra: api }) => {
-//       try {
-//         const { data } = await api.post<Review>(APIRoute.Order, {camerasIds, coupon});
-//         return data;
-//       } catch (e) {
-//         dispatch(setOrderErrorStatus(true));
-//         throw e;
-//       }
-//     });
+export const sendOrder = createAsyncThunk<number, Order, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/postOrder',
+  async ({ camerasIds, coupon }, { extra: api }) => {
+    const { data } = await api.post<number>(APIRoute.Order, { camerasIds, coupon });
+    return data;
+  });

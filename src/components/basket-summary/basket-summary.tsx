@@ -1,16 +1,49 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { sendOrder } from '../../store/api-actions';
+import { getBasketProducts, getCoupon, getDiscountPercent } from '../../store/basket-process/selectors';
+import { BasketProduct } from '../../types/basket';
 
-// type CardsListProps = {
-//   products: Products;
-// }
 
-const BasketSummary = (): JSX.Element => (
-  <div className="basket__summary-order">
-    <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">111 390 ₽</span></p>
-    <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">0 ₽</span></p>
-    <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">111 390 ₽</span></p>
-    <button className="btn btn--purple" type="submit">Оформить заказ
-    </button>
-  </div>
-);
+const BasketSummary = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  const initialValue = 0;
+  const seperator = ',';
+  const basketProducts = useAppSelector(getBasketProducts);
+  const discountPercent = useAppSelector(getDiscountPercent);
+  const validCoupon = useAppSelector(getCoupon);
+
+  const priceAllBasketProducts = basketProducts.reduce(
+    (accumulator, currentValue: BasketProduct) => accumulator + currentValue.productCard.price * currentValue.countProductCards,
+    initialValue
+  );
+
+  const basketProductsIds = basketProducts.map(
+    (item : BasketProduct) => Array(item.countProductCards as unknown as number[]).fill(item.productCard.id as unknown as number[])).join().split(seperator).map((item) => Number(item));
+
+  const discount = Math.round(discountPercent ? priceAllBasketProducts * discountPercent / 100 : 0);
+
+  const finalPrice = priceAllBasketProducts - discount;
+
+  return (
+    <div className="basket__summary-order">
+      <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{priceAllBasketProducts} ₽</span></p>
+      <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{discount} ₽</span></p>
+      <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{finalPrice} ₽</span></p>
+      <button
+        className="btn btn--purple"
+        type='button'
+        onClick={() => {
+          dispatch(sendOrder({
+            camerasIds: basketProductsIds,
+            coupon: validCoupon ? validCoupon : null
+          }));
+        }}
+      >
+        Оформить заказ
+      </button>
+    </div>
+  );
+};
 
 export default BasketSummary;

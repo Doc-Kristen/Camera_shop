@@ -13,6 +13,8 @@ export const getBasketSuccessStatus = (state: State): boolean => state[NameSpace
 
 export const getCouponPostedStatus = (state : State) : boolean => state[NameSpace.Basket].isCouponPosted;
 
+export const getOrderSuccessStatus = (state : State) : boolean => state[NameSpace.Basket].isOrderSuccess;
+
 export const getCouponValidStatus = (state : State) : boolean | undefined => state[NameSpace.Basket].isCouponValid;
 
 export const getCurrentCatalogProduct = (state: State): Product => state[NameSpace.Basket].currentCatalogProduct;

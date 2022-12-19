@@ -1,17 +1,19 @@
 import BasketProductCard from '../../components/basket-product-card/basket-product-card';
 import BasketPromo from '../../components/basket-promo/basket-promo';
 import BasketRemoveProductModal from '../../components/basket-remove-product-modal/basket-remove-product-modal';
+import BasketSuccessOrderModal from '../../components/basket-succes-order-modal/basket-succes-order-modal';
 import BasketSummary from '../../components/basket-summary/basket-summary';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { getBasketModalRemoveOpenedStatus, getBasketProducts } from '../../store/basket-process/selectors';
+import { getBasketModalRemoveOpenedStatus, getBasketProducts, getOrderSuccessStatus } from '../../store/basket-process/selectors';
 import { BasketProduct } from '../../types/basket';
 
 const BasketScreen = (): JSX.Element => {
 
   const isModalOpened = useAppSelector(getBasketModalRemoveOpenedStatus);
+  const isOrderSuccess = useAppSelector(getOrderSuccessStatus);
   let counter = 1;
 
   const basketProductsList = useAppSelector(getBasketProducts).slice();
@@ -48,6 +50,7 @@ const BasketScreen = (): JSX.Element => {
         <Footer />
       </div>
       {isModalOpened && <BasketRemoveProductModal/>}
+      {isOrderSuccess && <BasketSuccessOrderModal/>}
     </>
   );
 };

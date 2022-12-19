@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
-import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_PAGE } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketProducts, setBasketRemoveProductModalOpeningStatus } from '../../store/action';
 import { getBasketProducts, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
-import { getCurrentCatalogPath } from '../../store/path-process/selectors';
 import { BasketProducts } from '../../types/basket';
 
 const BasketRemoveProductModal = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
-  const { currentPage, search } = useAppSelector(getCurrentCatalogPath);
   const {
     id,
     name,
@@ -98,15 +94,11 @@ const BasketRemoveProductModal = (): JSX.Element => {
               }}
             >Удалить
             </button>
-            <Link
+            <button
               className="btn btn--transparent modal__btn modal__btn--half-width"
-              to={{
-                pathname: generatePath(AppRoute.Products, { pageNumber: String(currentPage ? currentPage : DEFAULT_PAGE) }),
-                search
-              }}
               onClick={() => dispatch(setBasketRemoveProductModalOpeningStatus(false))}
             >Продолжить покупки
-            </Link>
+            </button>
           </div>
           <button
             id='close-modal-button'
