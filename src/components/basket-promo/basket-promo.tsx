@@ -1,43 +1,72 @@
-import { ChangeEvent, useState } from 'react';
-// import { useAppDispatch } from '../../hooks';
-// import { sendCoupon } from '../../store/api-actions';
+import { useEffect, useState } from 'react';
+import { couponDefaultValue } from '../../helpers/const';
+import { useAppSelector } from '../../hooks';
+import { useBasketPromo } from '../../hooks/use-basket-promo';
+import { getCoupon, getCouponPostedStatus, getCouponValidStatus } from '../../store/basket-process/selectors';
 
 const BasketPromo = (): JSX.Element => {
 
-  const [formData, setformData] = useState('');
+  const isCouponValid = useAppSelector(getCouponValidStatus);
+  const isCouponPosted = useAppSelector(getCouponPostedStatus);
+  const coupon = useAppSelector(getCoupon);
 
-  const onChangeInput = (evt :ChangeEvent<HTMLInputElement>) => {
-    setformData(String(evt.target.value));
-  };
+  const formConteDefault = coupon && isCouponValid ? coupon : couponDefaultValue;
 
-  // const sendUserCoupon = (evt) => {
-  //   dispatch(sendCoupon({ coupon: formData }));
-  // };
+  const [
+    formData,
+    handleInputChange,
+    handleButtonClick,
+  ] = useBasketPromo({
+    coupon: formConteDefault
+  });
+
+  const [couponClassName, setCouponClassName] = useState('custom-input');
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      if (isCouponValid === true) {
+        setCouponClassName('custom-input is-valid');
+      }
+      if (isCouponValid === false) {
+        setCouponClassName('custom-input is-invalid');
+      }
+      if (isCouponValid === undefined) {
+        setCouponClassName('custom-input');
+      }
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [isCouponValid]);
 
   return (
-    <div className="basket__promo">
+    <div
+      className="basket__promo"
+    >
       <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
       <div className="basket-form">
         <form
           action="#"
         >
-          <div className="custom-input">
+          <div className={`${couponClassName}`}>
             <label><span className="custom-input__label">Промокод</span>
               <input
                 type="text"
                 name="promo"
                 placeholder="Введите промокод"
-                // ref={inputPromoRef}
-                value={String(formData)}
-                onChange={onChangeInput}
+                value={String(formData.coupon)}
+                onChange={handleInputChange}
               />
             </label>
             <p className="custom-input__error">Промокод неверный</p>
             <p className="custom-input__success">Промокод принят!</p>
           </div>
           <button
-            // onClick={sendUserCoupon}
-            className="btn" type="submit"
+            type='button'
+            onClick={handleButtonClick}
+            className="btn"
+            disabled={isCouponPosted}
           >Применить
           </button>
         </form>

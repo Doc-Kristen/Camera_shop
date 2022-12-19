@@ -18,6 +18,10 @@ const DEFAULT_STEP_PRODUCT_COUNT = 1;
 
 const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
 
+const couponRegExp = /\s/g;
+
+const couponDefaultValue = '';
+
 const enum Pagination {
   CardsCount = 9,
   SimilarCardsCount = 3,
@@ -184,6 +188,8 @@ export {
   productFilterType,
   DEFAULT_SEARCH,
   MIN_PRODUCTS_COUNT_FOR_ORDER,
+  couponRegExp,
+  couponDefaultValue,
   AppRoute,
   APIRoute,
   NameSpace,

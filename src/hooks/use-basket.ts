@@ -8,10 +8,10 @@ import { BasketProduct } from '../types/basket';
 import { Product } from '../types/product';
 
 type ResultUseBasket = [
-    number,
-    (evt: ChangeEvent<HTMLInputElement>) => void,
-    () => void,
-    () => void,
+  number,
+  (evt: ChangeEvent<HTMLInputElement>) => void,
+  () => void,
+  () => void,
 ];
 
 export const useBasket = (
@@ -41,7 +41,7 @@ export const useBasket = (
     }
   };
 
-  const updateBasketProductsList = (product: Product, value : number) => {
+  const updateBasketProductsList = (product: Product, value: number) => {
     const indexAddedProduct = basketProductsList.findIndex((item: BasketProduct) => item.productCard.id === product.id);
     basketProductsList[indexAddedProduct] = {
       productCard: product,

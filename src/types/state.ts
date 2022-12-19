@@ -54,9 +54,13 @@ type BasketProcess = {
     isBasketRemoveProductModalOpened: boolean;
     isBasketModalBlocked: boolean;
     isBasketSuccess: boolean;
+    isCouponValid?: boolean;
+    isCouponPosted: boolean;
     currentCatalogProduct: Product;
     basketProductsId: number[];
     basketProducts: BasketProducts;
+    discountPercent: null | number;
+    coupon?: string;
 }
 
 export type {

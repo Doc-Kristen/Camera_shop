@@ -23,7 +23,10 @@ const Action = {
   SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID',
   SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS',
   SET_BASKET_PRODUCT: 'SET_BASKET_PRODUCT',
-  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS'
+  SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
+  SET_DISCOUNT_PERCENT: 'SET_DISCOUNT_PERCENT',
+  SET_STATUS_COUPON: 'SET_STATUS_COUPON',
+  SET_COUPON: 'SET_COUPON'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -122,6 +125,20 @@ const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: Baske
     payload: value,
   }));
 
+const setDiscountPercent = createAction(Action.SET_DISCOUNT_PERCENT, (value: number) => (
+  {
+    payload: value,
+  }));
+
+const setStatusCoupon = createAction(Action.SET_STATUS_COUPON, (value: number) => (
+  {
+    payload: value,
+  }));
+const setCoupon = createAction(Action.SET_COUPON, (value: string) => (
+  {
+    payload: value,
+  }));
+
 export {
   Action,
   redirectToRoute,
@@ -142,5 +159,8 @@ export {
   setTotalPriceBasketProduct,
   setBasketRemoveProductModalOpeningStatus,
   setBasketProduct,
-  setBasketProducts
+  setBasketProducts,
+  setDiscountPercent,
+  setStatusCoupon,
+  setCoupon
 };
