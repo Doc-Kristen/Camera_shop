@@ -10,12 +10,13 @@ import { Product } from '../types/product';
 type ResultUseBasket = [
   number,
   (evt: ChangeEvent<HTMLInputElement>) => void,
+  (evt: ChangeEvent<HTMLInputElement>) => void,
   () => void,
   () => void,
 ];
 
 export const useBasket = (
-  basketProduct: BasketProduct
+  basketProduct: BasketProduct,
 ): ResultUseBasket => {
 
   const dispatch = useAppDispatch();
@@ -28,18 +29,7 @@ export const useBasket = (
   const basketProductsList = useAppSelector(getBasketProducts).slice();
   const [formData, setFormData] = useState(countProductCards);
 
-  const validateProductsCount = (value: number) => {
-    switch (true) {
-      case value < MIN_PRODUCTS_COUNT_FOR_ORDER:
-        setFormData(MIN_PRODUCTS_COUNT_FOR_ORDER);
-        break;
-      case value > MAX_PRODUCTS_COUNT_FOR_ORDER:
-        setFormData(MAX_PRODUCTS_COUNT_FOR_ORDER);
-        break;
-      default:
-        setFormData(value);
-    }
-  };
+  const isCountValid = (value: number) => value >= MIN_PRODUCTS_COUNT_FOR_ORDER && value <= MAX_PRODUCTS_COUNT_FOR_ORDER;
 
   const updateBasketProductsList = (product: Product, value: number) => {
     const indexAddedProduct = basketProductsList.findIndex((item: BasketProduct) => item.productCard.id === product.id);
@@ -51,23 +41,56 @@ export const useBasket = (
 
   };
 
+  const validateProductsCount = (value: number) => {
+    switch (true) {
+      case value < MIN_PRODUCTS_COUNT_FOR_ORDER:
+        setFormData(MIN_PRODUCTS_COUNT_FOR_ORDER);
+        updateBasketProductsList(productCard, MIN_PRODUCTS_COUNT_FOR_ORDER);
+        break;
+      case value > MAX_PRODUCTS_COUNT_FOR_ORDER:
+        setFormData(MAX_PRODUCTS_COUNT_FOR_ORDER);
+        updateBasketProductsList(productCard, MAX_PRODUCTS_COUNT_FOR_ORDER);
+        break;
+      default:
+        setFormData(value);
+        updateBasketProductsList(productCard, value);
+    }
+  };
+
   const handleInputChangeProductCount = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    validateProductsCount(Number(target.value));
-    updateBasketProductsList(productCard, Number(target.value));
+
+    if (isCountValid(Number(target.value))) {
+      updateBasketProductsList(productCard, Number(target.value));
+      setFormData(Number(target.value));
+    }
+    if (Number(target.value) > MAX_PRODUCTS_COUNT_FOR_ORDER) {
+      setFormData(MAX_PRODUCTS_COUNT_FOR_ORDER);
+      updateBasketProductsList(productCard, MAX_PRODUCTS_COUNT_FOR_ORDER);
+    }
+    else {
+      setFormData(Number(target.value));
+    }
+  };
+
+  const handleInputBlur = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    if (!target.value) {
+      setFormData(MIN_PRODUCTS_COUNT_FOR_ORDER);
+      updateBasketProductsList(productCard, MIN_PRODUCTS_COUNT_FOR_ORDER);
+    }
   };
 
   const handleButtonClickPrev = () => {
+
     validateProductsCount(formData - DEFAULT_STEP_PRODUCT_COUNT);
-    updateBasketProductsList(productCard, formData - DEFAULT_STEP_PRODUCT_COUNT);
   };
   const handleButtonClickNext = () => {
-    validateProductsCount(formData + DEFAULT_STEP_PRODUCT_COUNT);
-    updateBasketProductsList(productCard, formData + DEFAULT_STEP_PRODUCT_COUNT);
+    validateProductsCount(Number(formData) + DEFAULT_STEP_PRODUCT_COUNT);
   };
 
   return [
     formData,
     handleInputChangeProductCount,
+    handleInputBlur,
     handleButtonClickPrev,
     handleButtonClickNext,
   ];

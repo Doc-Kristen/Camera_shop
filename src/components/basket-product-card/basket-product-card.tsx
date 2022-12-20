@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { MAX_PRODUCTS_COUNT_FOR_ORDER, MIN_PRODUCTS_COUNT_FOR_ORDER } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useBasket } from '../../hooks/use-basket';
 import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
@@ -26,14 +26,15 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
 
   const isOrderPosted = useAppSelector(getOrderPostedStatus);
 
-  const inpuPriceRef = useRef<HTMLInputElement>(null);
-
   const [
     formData,
     handleInputChangeProductCount,
+    handleInputBlur,
     handleButtonClickPrev,
     handleButtonClickNext
   ] = useBasket(productCard);
+
+  const countProducts = formData ? formData : '';
 
   return (
     <li className="basket-item">
@@ -58,7 +59,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={handleButtonClickPrev}
-          disabled={isOrderPosted}
+          disabled={isOrderPosted || formData === MIN_PRODUCTS_COUNT_FOR_ORDER}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -68,9 +69,9 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
         <input
           type="number"
           id="counter1"
-          ref={inpuPriceRef}
           onChange={handleInputChangeProductCount}
-          value={formData}
+          onBlur={handleInputBlur}
+          value={countProducts}
           min="1" max="99"
           aria-label="количество товара"
           disabled={isOrderPosted}
@@ -79,14 +80,14 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
           onClick={handleButtonClickNext}
-          disabled={isOrderPosted}
+          disabled={isOrderPosted || formData === MAX_PRODUCTS_COUNT_FOR_ORDER}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * formData} ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * productCard.countProductCards} ₽</div>
       <button
         className="cross-btn" type="button"
         aria-label="Удалить товар"
