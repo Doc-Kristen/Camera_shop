@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { couponDefaultValue, NameSpace } from '../../helpers/const';
+import { NameSpace } from '../../helpers/const';
 import { BasketProducts } from '../../types/basket';
 import { Product } from '../../types/product';
 import { BasketProcess } from '../../types/state';
-import { setBasketModalOpeningStatus, setBasketProductsId, setBasketProducts, setBasketRemoveProductModalOpeningStatus, setBasketSuccessOpeningStatus, setCurrentCatalogProduct, setCoupon, setOrderSuccesStatus, setOrderErrorStatus } from '../action';
+import { setBasketModalOpeningStatus, setBasketProducts, setBasketRemoveProductModalOpeningStatus, setBasketSuccessOpeningStatus, setCurrentCatalogProduct, setCoupon, setOrderSuccesStatus, setOrderErrorStatus, setStatusCoupon } from '../action';
 import { sendCoupon, sendOrder } from '../api-actions';
 
 const initialState: BasketProcess = {
@@ -16,10 +16,9 @@ const initialState: BasketProcess = {
   isOrderPosted: false,
   isOrderError: false,
   currentCatalogProduct: {} as Product,
-  basketProductsId: [],
   basketProducts: [] as BasketProducts,
   discountPercent: null,
-  coupon: couponDefaultValue
+  coupon: ''
 };
 
 export const basketProcess = createSlice({
@@ -43,9 +42,6 @@ export const basketProcess = createSlice({
       .addCase(setBasketProducts, (state, action) => {
         state.basketProducts = action.payload;
       })
-      .addCase(setBasketProductsId, (state, action) => {
-        state.basketProductsId = action.payload;
-      })
       .addCase(sendCoupon.pending, (state) => {
         state.isCouponPosted = true;
       })
@@ -55,7 +51,7 @@ export const basketProcess = createSlice({
         state.isCouponPosted = false;
       })
       .addCase(sendCoupon.rejected, (state) => {
-        state.coupon = couponDefaultValue;
+        state.coupon = '';
         state.discountPercent = null;
         state.isCouponPosted = false;
         state.isCouponValid = false;
@@ -83,6 +79,9 @@ export const basketProcess = createSlice({
         state.isOrderSuccess = false;
         state.isOrderPosted = false;
         state.isOrderError = true;
+      })
+      .addCase(setStatusCoupon, (state, action) => {
+        state.isCouponValid = action.payload;
       });
   }
 });

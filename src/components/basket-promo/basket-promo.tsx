@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { couponDefaultValue } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
 import { useBasketPromo } from '../../hooks/use-basket-promo';
 import { getCoupon, getCouponPostedStatus, getCouponValidStatus, getOrderPostedStatus } from '../../store/basket-process/selectors';
@@ -11,14 +10,14 @@ const BasketPromo = (): JSX.Element => {
   const isOrderPosted = useAppSelector(getOrderPostedStatus);
   const coupon = useAppSelector(getCoupon);
 
-  const formConteDefault = coupon && isCouponValid ? coupon : couponDefaultValue;
+  const formContentDefault = coupon && isCouponValid ? coupon : '';
 
   const [
     formData,
     handleInputChange,
     handleButtonClick,
   ] = useBasketPromo({
-    coupon: formConteDefault
+    coupon: formContentDefault
   });
 
   const [couponClassName, setCouponClassName] = useState('custom-input');
@@ -26,20 +25,21 @@ const BasketPromo = (): JSX.Element => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      if (isCouponValid === true) {
+      if (coupon) {
         setCouponClassName('custom-input is-valid');
       }
       if (isCouponValid === false) {
-        setCouponClassName('custom-input is-invalid');
+        formData.coupon !== '' ? setCouponClassName('custom-input is-invalid') : setCouponClassName('custom-input');
       }
       if (isCouponValid === undefined) {
         setCouponClassName('custom-input');
       }
+
     }
     return () => {
       isMounted = false;
     };
-  }, [isCouponValid]);
+  }, [coupon, formData.coupon, isCouponValid]);
 
   return (
     <div

@@ -60,7 +60,6 @@ type BasketProcess = {
     isOrderError: boolean;
     isOrderPosted: boolean;
     currentCatalogProduct: Product;
-    basketProductsId: number[];
     basketProducts: BasketProducts;
     discountPercent: null | number;
     coupon?: string;

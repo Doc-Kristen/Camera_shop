@@ -21,13 +21,12 @@ const Action = {
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
   RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
-  SET_BASKET_PRODUCTS_ID: 'SET_BASKET_PRODUCTS_ID',
   SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS',
   SET_BASKET_PRODUCT: 'SET_BASKET_PRODUCT',
   SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
   SET_DISCOUNT_PERCENT: 'SET_DISCOUNT_PERCENT',
-  SET_STATUS_COUPON: 'SET_STATUS_COUPON',
-  SET_COUPON: 'SET_COUPON'
+  SET_COUPON: 'SET_COUPON',
+  SET_STATUS_COUPON: 'SET_STATUS_COUPON'
 };
 
 const redirectToRoute = createAction(Action.REDIRECT_TO_ROUTE, (value: string) => (
@@ -111,11 +110,6 @@ const setCurrentCatalogProduct = createAction(Action.SET_CURRENT_CATALOG_PRODUCT
     payload: value,
   }));
 
-const setBasketProductsId = createAction(Action.SET_BASKET_PRODUCTS_ID, (value: number[]) => (
-  {
-    payload: value,
-  }));
-
 const setTotalPriceBasketProduct = createAction(Action.SET_TOTAL_PRICE_BASKET_PRODUCTS, (value: number) => (
   {
     payload: value,
@@ -136,10 +130,11 @@ const setDiscountPercent = createAction(Action.SET_DISCOUNT_PERCENT, (value: num
     payload: value,
   }));
 
-const setStatusCoupon = createAction(Action.SET_STATUS_COUPON, (value: number) => (
+const setStatusCoupon = createAction(Action.SET_STATUS_COUPON, (value: boolean | undefined) => (
   {
     payload: value,
   }));
+
 const setCoupon = createAction(Action.SET_COUPON, (value: string) => (
   {
     payload: value,
@@ -162,12 +157,11 @@ export {
   setOrderErrorStatus,
   setBasketSuccessOpeningStatus,
   setCurrentCatalogProduct,
-  setBasketProductsId,
   setTotalPriceBasketProduct,
   setBasketRemoveProductModalOpeningStatus,
   setBasketProduct,
   setBasketProducts,
   setDiscountPercent,
-  setStatusCoupon,
-  setCoupon
+  setCoupon,
+  setStatusCoupon
 };
