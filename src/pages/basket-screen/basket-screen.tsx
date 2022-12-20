@@ -6,17 +6,26 @@ import BasketSummary from '../../components/basket-summary/basket-summary';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { disableBackgroundScrolling } from '../../helpers/utils';
 import { useAppSelector } from '../../hooks';
-import { getBasketModalRemoveOpenedStatus, getBasketProducts, getOrderSuccessStatus } from '../../store/basket-process/selectors';
+import { getBasketModalRemoveOpenedStatus, getBasketProducts, getErrorOrderStatus, getOrderSuccessStatus } from '../../store/basket-process/selectors';
 import { BasketProduct } from '../../types/basket';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const BasketScreen = (): JSX.Element => {
 
   const isModalOpened = useAppSelector(getBasketModalRemoveOpenedStatus);
   const isOrderSuccess = useAppSelector(getOrderSuccessStatus);
+  const isOrderError = useAppSelector(getErrorOrderStatus);
   let counter = 1;
 
   const basketProductsList = useAppSelector(getBasketProducts).slice();
+
+  disableBackgroundScrolling(isModalOpened || isOrderSuccess);
+
+  if (isOrderError) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <>
@@ -30,7 +39,7 @@ const BasketScreen = (): JSX.Element => {
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
                   {
-                    basketProductsList.map((product : BasketProduct) =>
+                    basketProductsList.map((product: BasketProduct) =>
                       (
                         <BasketProductCard
                           key={`basket-${product.productCard.id}-${counter++}`}
@@ -49,8 +58,8 @@ const BasketScreen = (): JSX.Element => {
         </main>
         <Footer />
       </div>
-      {isModalOpened && <BasketRemoveProductModal/>}
-      {isOrderSuccess && <BasketSuccessOrderModal/>}
+      {isModalOpened && <BasketRemoveProductModal />}
+      {isOrderSuccess && <BasketSuccessOrderModal />}
     </>
   );
 };

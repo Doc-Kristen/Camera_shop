@@ -1,7 +1,8 @@
 import { useRef } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useBasket } from '../../hooks/use-basket';
 import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
+import { getOrderPostedStatus } from '../../store/basket-process/selectors';
 import { BasketProduct } from '../../types/basket';
 
 type BasketProductCardProps = {
@@ -22,6 +23,8 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
     previewImgWebp,
     previewImgWebp2x
   } = productCard.productCard;
+
+  const isOrderPosted = useAppSelector(getOrderPostedStatus);
 
   const inpuPriceRef = useRef<HTMLInputElement>(null);
 
@@ -55,6 +58,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={handleButtonClickPrev}
+          disabled={isOrderPosted}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -69,11 +73,13 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           value={formData}
           min="1" max="99"
           aria-label="количество товара"
+          disabled={isOrderPosted}
         />
         <button
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
           onClick={handleButtonClickNext}
+          disabled={isOrderPosted}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -85,11 +91,12 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
         className="cross-btn" type="button"
         aria-label="Удалить товар"
         onClick={
-          ()=> {
+          () => {
             dispatch(setCurrentCatalogProduct(productCard.productCard));
             dispatch(setBasketRemoveProductModalOpeningStatus(true));
           }
         }
+        disabled={isOrderPosted}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

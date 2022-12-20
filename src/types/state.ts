@@ -57,6 +57,8 @@ type BasketProcess = {
     isCouponValid?: boolean;
     isCouponPosted: boolean;
     isOrderSuccess: boolean;
+    isOrderError: boolean;
+    isOrderPosted: boolean;
     currentCatalogProduct: Product;
     basketProductsId: number[];
     basketProducts: BasketProducts;

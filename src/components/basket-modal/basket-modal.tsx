@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { DEFAULT_STEP_PRODUCT_COUNT } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus } from '../../store/action';
@@ -34,14 +35,14 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
       case true:
         basketProductsList.push({
           productCard: product,
-          countProductCards: 1
+          countProductCards: DEFAULT_STEP_PRODUCT_COUNT
         });
         dispatch(setBasketProducts(basketProductsList));
         break;
       case false:
         basketProductsList[indexAddedProduct] = {
           productCard: product,
-          countProductCards: basketProductsList[indexAddedProduct].countProductCards + 1
+          countProductCards: basketProductsList[indexAddedProduct].countProductCards + DEFAULT_STEP_PRODUCT_COUNT
         };
         dispatch(setBasketProducts(basketProductsList));
         break;
@@ -109,6 +110,7 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
           <div className="modal__buttons">
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
+              id='basket-modal-button'
               type="button"
               onClick={() => {
                 addProduct(productCard);

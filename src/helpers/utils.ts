@@ -21,10 +21,21 @@ const sortReviewsDayDown = (reviewA: Review, reviewB: Review) => dayjs(reviewB.c
 
 const isKeyPressed = (evt: KeyboardEvent, keyName: string) => evt.key === keyName;
 
+// Отключение скролла при открытии модальных окон
+
+const disableBackgroundScrolling = (modalOpeningStatus : boolean) => {
+  if (modalOpeningStatus) {
+    document.body.style.position = 'fixed';
+  } else {
+    document.body.style.position = '';
+  }
+};
+
 export {
   humanizeDueDate,
   getRussifiedDate,
   sortReviewsDayDown,
-  isKeyPressed
+  isKeyPressed,
+  disableBackgroundScrolling
 };
 

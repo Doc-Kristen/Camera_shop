@@ -17,7 +17,7 @@ const BasketSuccessModal = (): JSX.Element => {
     let isMounted = true;
     if (isMounted) {
       const succesButton = document.getElementById('succes-modal-button');
-      const buttonCloseModal = document.getElementById('close-succes-modal-button');
+      const buttonCloseModal = document.getElementById('close-succes-basket-modal-button');
 
       buttonCloseModal && buttonCloseModal.focus();
 
@@ -58,6 +58,7 @@ const BasketSuccessModal = (): JSX.Element => {
           <div className="modal__buttons">
             <Link
               className="btn btn--transparent modal__btn"
+              id='succes-modal-button'
               to={{
                 pathname: generatePath(AppRoute.Products, { pageNumber: String(currentPage ? currentPage : DEFAULT_PAGE) }),
                 search
@@ -67,7 +68,6 @@ const BasketSuccessModal = (): JSX.Element => {
             </Link>
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
-              id='succes-modal-button'
               type="button"
               onClick={() => {
                 navigate(AppRoute.Basket);
@@ -77,7 +77,7 @@ const BasketSuccessModal = (): JSX.Element => {
             </button>
           </div>
           <button
-            id='close-succes-modal-button'
+            id='close-succes-basket-modal-button'
             className="cross-btn" type="button"
             aria-label="Закрыть попап"
             onClick={() => dispatch(setBasketSuccessOpeningStatus(false))}

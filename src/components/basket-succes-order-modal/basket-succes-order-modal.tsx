@@ -54,6 +54,7 @@ const BasketSuccessOrderModal = (): JSX.Element => {
           <svg className="modal__icon" width="80" height="78" aria-hidden="true"><use xlinkHref="#icon-review-success"></use></svg>
           <div className="modal__buttons">
             <Link
+              id='succes-modal-order-button'
               className="btn btn--purple modal__btn modal__btn--fit-width"
               to={{
                 pathname: generatePath(AppRoute.Products, { pageNumber: String(currentPage ? currentPage : DEFAULT_PAGE) }),

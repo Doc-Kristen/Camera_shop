@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { couponDefaultValue } from '../../helpers/const';
 import { useAppSelector } from '../../hooks';
 import { useBasketPromo } from '../../hooks/use-basket-promo';
-import { getCoupon, getCouponPostedStatus, getCouponValidStatus } from '../../store/basket-process/selectors';
+import { getCoupon, getCouponPostedStatus, getCouponValidStatus, getOrderPostedStatus } from '../../store/basket-process/selectors';
 
 const BasketPromo = (): JSX.Element => {
 
   const isCouponValid = useAppSelector(getCouponValidStatus);
   const isCouponPosted = useAppSelector(getCouponPostedStatus);
+  const isOrderPosted = useAppSelector(getOrderPostedStatus);
   const coupon = useAppSelector(getCoupon);
 
   const formConteDefault = coupon && isCouponValid ? coupon : couponDefaultValue;
@@ -57,6 +58,7 @@ const BasketPromo = (): JSX.Element => {
                 placeholder="Введите промокод"
                 value={String(formData.coupon)}
                 onChange={handleInputChange}
+                disabled={isCouponPosted || isOrderPosted}
               />
             </label>
             <p className="custom-input__error">Промокод неверный</p>
@@ -66,7 +68,7 @@ const BasketPromo = (): JSX.Element => {
             type='button'
             onClick={handleButtonClick}
             className="btn"
-            disabled={isCouponPosted}
+            disabled={isCouponPosted || isOrderPosted}
           >Применить
           </button>
         </form>

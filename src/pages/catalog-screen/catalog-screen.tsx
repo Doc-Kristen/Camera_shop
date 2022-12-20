@@ -11,10 +11,11 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
 import { DEFAULT_PAGE, DEFAULT_PRODUCTS_COUNT_PER_PAGE, QueryParameterType } from '../../helpers/const';
+import { disableBackgroundScrolling } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCatalogPath } from '../../store/action';
 import { fetchProductsAction, fetchProductsByPriceAction } from '../../store/api-actions';
-import { geBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
+import { getBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
 import { getDataLoadedStatus, getPagesCount, getProducts } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
@@ -29,7 +30,7 @@ const CatalogScreen = (): JSX.Element => {
   const currentCatalogProduct = useAppSelector(getCurrentCatalogProduct);
   const isProductsLoaded = useAppSelector(getDataLoadedStatus);
   const isBasketSuccess = useAppSelector(getBasketSuccessStatus);
-  const isBasketModalOpened = useAppSelector(geBasketModalOpenedStatus);
+  const isBasketModalOpened = useAppSelector(getBasketModalOpenedStatus);
   const currentPage = Number(pageNumber);
   const totalProductsCount = useAppSelector(getPagesCount);
 
@@ -46,6 +47,8 @@ const CatalogScreen = (): JSX.Element => {
     priceMinimum: searchParams.get(QueryParameterType.PriceMinimum),
     priceMaximum: searchParams.get(QueryParameterType.PriceMaximum),
   }), [searchParams]);
+
+  disableBackgroundScrolling(isBasketSuccess || isBasketModalOpened);
 
   useEffect(() => {
     let isMounted = true;

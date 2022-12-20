@@ -14,9 +14,10 @@ import { getReviews, getReviewsErrorStatus } from '../../store/review-data/selec
 import { getFormOpenedStatus, getReviewSuccessStatus } from '../../store/user-process/selectors';
 import ReviewModal from '../../components/review-modal/review-modal';
 import ReviewSuccess from '../../components/review-success/review-success';
-import { geBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
+import { getBasketModalOpenedStatus, getBasketSuccessStatus, getCurrentCatalogProduct } from '../../store/basket-process/selectors';
 import BasketModal from '../../components/basket-modal/basket-modal';
 import BasketSuccessModal from '../../components/basket-success-modal/basket-success-modal';
+import { disableBackgroundScrolling } from '../../helpers/utils';
 
 const ProductScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -33,8 +34,10 @@ const ProductScreen = (): JSX.Element => {
   const allReviews = useAppSelector(getReviews);
   const productsSimilarIsError = useAppSelector(getSimilarProductErrorStatus);
   const isFormOpened = useAppSelector(getFormOpenedStatus);
-  const isBasketModalOpened = useAppSelector(geBasketModalOpenedStatus);
+  const isBasketModalOpened = useAppSelector(getBasketModalOpenedStatus);
   const isBasketSuccess = useAppSelector(getBasketSuccessStatus);
+
+  disableBackgroundScrolling(isFormOpened || isReviewSuccess || isBasketSuccess || isBasketModalOpened);
 
   useEffect(() => {
     let isMounted = true;
@@ -48,17 +51,6 @@ const ProductScreen = (): JSX.Element => {
       isMounted = false;
     };
   }, [ProductId, dispatch, productIsError]);
-
-  if (isFormOpened || isReviewSuccess) {
-    const positionTop = window.pageYOffset;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${positionTop}px`;
-  } else {
-    const scrollY = document.body.style.top;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-  }
 
   if (productIsLoaded) {
     return (<Loading />);
@@ -114,8 +106,8 @@ const ProductScreen = (): JSX.Element => {
       </div>
       {isFormOpened && <ReviewModal />}
       {isReviewSuccess && <ReviewSuccess />}
-      {isBasketSuccess && <BasketSuccessModal/>}
-      {isBasketModalOpened && currentCatalogProduct && <BasketModal productCard={currentCatalogProduct}/>}
+      {isBasketSuccess && <BasketSuccessModal />}
+      {isBasketModalOpened && currentCatalogProduct && <BasketModal productCard={currentCatalogProduct} />}
     </>
   );
 };
