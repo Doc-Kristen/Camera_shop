@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import { Route, Routes } from 'react-router-dom';
-import { Product } from '../../types/product';
 import { BasketProducts } from '../../types/basket';
 import BasketRemoveProductModal from './basket-remove-product-modal';
+import { makeFakeProduct } from '../../helpers/mock';
 
+const mockProduct = makeFakeProduct();
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,7 +19,7 @@ const store = mockStore(
     BASKET: {
       isBasketModalOpened: false,
       isBasketSuccess: false,
-      currentCatalogProduct: {} as Product,
+      currentCatalogProduct: mockProduct,
       basketProducts: [] as BasketProducts,
     }
   }
