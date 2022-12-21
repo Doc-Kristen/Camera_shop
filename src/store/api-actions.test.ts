@@ -6,7 +6,7 @@ import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { makeFakePostedReview, makeFakeProducts, makeFakePromo, makeFakeReviews } from '../helpers/mock';
 import { APIRoute } from '../helpers/const';
-import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview, fetchProductsByPriceAction } from './api-actions';
+import { fetchProductsAction, fetchPromoAction, fetchReviewsAction, fetchSelectedProductAction, fetchSimilarProductsAction, sendReview, fetchProductsByPriceAction, sendCoupon, sendOrder } from './api-actions';
 
 const fakePageNumber = 1;
 const fakeParams = {
@@ -164,6 +164,50 @@ describe('Async actions', () => {
       fetchSimilarProductsAction.pending.type,
       fetchReviewsAction.pending.type,
       sendReview.fulfilled.type
+    ]);
+  });
+
+  it('should dispatch user/postCoupon when POST /coupons', async () => {
+    const mockPostedCoupon = 'camera-333';
+    const discountPercent = 15;
+    mockAPI
+      .onPost(APIRoute.Coupons, mockPostedCoupon)
+      .reply(201, discountPercent);
+
+    const store = mockStore();
+
+    await store.dispatch(sendCoupon({
+      coupon: mockPostedCoupon
+    }));
+
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
+
+    expect(actions).toEqual([
+      sendCoupon.pending.type,
+      sendCoupon.rejected.type
+    ]);
+  });
+
+  it('should dispatch user/postOrder when GET /orders', async () => {
+    const mockPostedCoupon = 'camera-333';
+    const mockIds = [1, 3, 5];
+    const correctServerResponse = 201;
+    mockAPI
+      .onGet(APIRoute.Order, { mockIds, mockPostedCoupon })
+      .reply(200, correctServerResponse);
+
+    const store = mockStore();
+
+    await store.dispatch(sendOrder({
+      camerasIds: mockIds,
+      coupon: mockPostedCoupon
+    }));
+
+    const actions = store.getActions().map(({ type }: Action<string>) => type);
+
+    expect(actions).toEqual([
+      sendOrder.pending.type,
+      sendOrder.rejected.type
     ]);
   });
 
