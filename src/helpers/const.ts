@@ -50,7 +50,6 @@ enum NameSpace {
   User = 'USER',
   Search = 'SEARCH',
   Path = 'PATH',
-  Order = 'ORDER',
   Basket = 'BASKET'
 }
 
