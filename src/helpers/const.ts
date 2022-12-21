@@ -1,9 +1,5 @@
 const MIN_COMMENT_LENGTH = 5;
 
-const MIN_PRODUCTS_COUNT_FOR_ORDER = 1;
-
-const MAX_PRODUCTS_COUNT_FOR_ORDER = 99;
-
 const DEFAULT_PAGE = 1;
 
 const DEFAULT_SEARCH = '';
@@ -14,8 +10,6 @@ const DEFAULT_PRODUCTS_COUNT_PER_PAGE = 9;
 
 const DEFAULT_STEP_PAGINATION = 1;
 
-const DEFAULT_STEP_PRODUCT_COUNT = 1;
-
 const DEFAULT_PRODUCT_DETAILS_SHOWN = 'description';
 
 const couponRegExp = /\s/g;
@@ -24,6 +18,11 @@ const enum Pagination {
   CardsCount = 9,
   SimilarCardsCount = 3,
   ReviewsCount = 3
+}
+
+const enum OrderProductCount {
+  MinCount = 1,
+  MaxCount = 99
 }
 
 enum AppRoute {
@@ -172,7 +171,6 @@ const MonthsDictionary: { [char: string]: string } = {
 
 export {
   MIN_COMMENT_LENGTH,
-  MAX_PRODUCTS_COUNT_FOR_ORDER,
   ERROR_MESSAGE_TIME,
   DEFAULT_PRODUCT_DETAILS_SHOWN,
   DEFAULT_PAGE,
@@ -181,11 +179,10 @@ export {
   ratingValues,
   DEFAULT_PRODUCTS_COUNT_PER_PAGE,
   DEFAULT_STEP_PAGINATION,
-  DEFAULT_STEP_PRODUCT_COUNT,
   productFilterType,
   DEFAULT_SEARCH,
-  MIN_PRODUCTS_COUNT_FOR_ORDER,
   couponRegExp,
+  OrderProductCount,
   AppRoute,
   APIRoute,
   NameSpace,

@@ -9,6 +9,7 @@ const BasketSummary = (): JSX.Element => {
 
   const initialValue = 0;
   const seperator = ',';
+
   const isOrderPosted = useAppSelector(getOrderPostedStatus);
   const basketProducts = useAppSelector(getBasketProducts);
   const discountPercent = useAppSelector(getDiscountPercent);

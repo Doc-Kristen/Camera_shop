@@ -11,6 +11,7 @@ const BasketRemoveProductModal = (): JSX.Element => {
 
   const {
     id,
+    type,
     name,
     vendorCode,
     category,
@@ -22,7 +23,7 @@ const BasketRemoveProductModal = (): JSX.Element => {
 
   const basketProducts = useAppSelector(getBasketProducts).slice();
 
-  const removeProductItem = (selectedProducts : BasketProducts, productId : number) => {
+  const removeProductItem = (selectedProducts: BasketProducts, productId: number) => {
     const newBasketProducts = selectedProducts.filter((item) => item.productCard.id !== productId);
     dispatch(setBasketProducts(newBasketProducts));
     dispatch(setBasketRemoveProductModalOpeningStatus(false));
@@ -79,8 +80,8 @@ const BasketRemoveProductModal = (): JSX.Element => {
               <ul className="basket-item__list">
                 <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">{category}</li>
-                <li className="basket-item__list-item">{level}</li>
+                <li className="basket-item__list-item">{`${type} ${(category === 'Фотоаппарат' ? 'Фотокамера' : category).toLowerCase()}`}</li>
+                <li className="basket-item__list-item">{`${level} уровень`}</li>
               </ul>
             </div>
           </div>

@@ -2,7 +2,6 @@ import { setModalOpeningStatus, setReviewErrorStatus, setSuccessOpeningStatus } 
 import { sendReview } from '../api-actions';
 import { userProcess } from './user-process';
 
-
 describe('Reducer: productData', () => {
   it('without additional parameters should return initial state', () => {
     expect(userProcess.reducer(void 0, {type: 'UNKNOWN_ACTION'}))

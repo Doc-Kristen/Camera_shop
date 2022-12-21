@@ -6,7 +6,7 @@ import Breadcrumbs from './breadcrumbs';
 import thunk from 'redux-thunk';
 import { makeFakeProduct } from '../../helpers/mock';
 import { Provider } from 'react-redux';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { CurrentCatalogPathType } from '../../types/query-parameters';
 
 const history = createMemoryHistory();
@@ -38,7 +38,7 @@ describe('Component: Breadcrumbs', () => {
           <Routes>
             <Route
               path='/catalog/pages/1'
-              element={<Breadcrumbs/>}
+              element={<Breadcrumbs />}
             />
           </Routes>
 

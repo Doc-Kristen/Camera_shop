@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useAppSelector } from '.';
 import { useAppDispatch } from '.';
-import { DEFAULT_STEP_PRODUCT_COUNT, MAX_PRODUCTS_COUNT_FOR_ORDER, MIN_PRODUCTS_COUNT_FOR_ORDER } from '../helpers/const';
+import { OrderProductCount } from '../helpers/const';
 import { setBasketProducts } from '../store/action';
 import { getBasketProducts } from '../store/basket-process/selectors';
 import { BasketProduct } from '../types/basket';
@@ -29,7 +29,7 @@ export const useBasket = (
   const basketProductsList = useAppSelector(getBasketProducts).slice();
   const [formData, setFormData] = useState(countProductCards);
 
-  const isCountValid = (value: number) => value >= MIN_PRODUCTS_COUNT_FOR_ORDER && value <= MAX_PRODUCTS_COUNT_FOR_ORDER;
+  const isCountValid = (value: number) => value >= OrderProductCount.MinCount && value <= OrderProductCount.MaxCount;
 
   const updateBasketProductsList = (product: Product, value: number) => {
     const indexAddedProduct = basketProductsList.findIndex((item: BasketProduct) => item.productCard.id === product.id);
@@ -43,13 +43,13 @@ export const useBasket = (
 
   const validateProductsCount = (value: number) => {
     switch (true) {
-      case value < MIN_PRODUCTS_COUNT_FOR_ORDER:
-        setFormData(MIN_PRODUCTS_COUNT_FOR_ORDER);
-        updateBasketProductsList(productCard, MIN_PRODUCTS_COUNT_FOR_ORDER);
+      case value < OrderProductCount.MinCount:
+        setFormData(OrderProductCount.MinCount);
+        updateBasketProductsList(productCard, OrderProductCount.MinCount);
         break;
-      case value > MAX_PRODUCTS_COUNT_FOR_ORDER:
-        setFormData(MAX_PRODUCTS_COUNT_FOR_ORDER);
-        updateBasketProductsList(productCard, MAX_PRODUCTS_COUNT_FOR_ORDER);
+      case value > OrderProductCount.MaxCount:
+        setFormData(OrderProductCount.MaxCount);
+        updateBasketProductsList(productCard, OrderProductCount.MaxCount);
         break;
       default:
         setFormData(value);
@@ -57,15 +57,15 @@ export const useBasket = (
     }
   };
 
-  const handleInputChangeProductCount = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
 
     if (isCountValid(Number(target.value))) {
       updateBasketProductsList(productCard, Number(target.value));
       setFormData(Number(target.value));
     }
-    if (Number(target.value) > MAX_PRODUCTS_COUNT_FOR_ORDER) {
-      setFormData(MAX_PRODUCTS_COUNT_FOR_ORDER);
-      updateBasketProductsList(productCard, MAX_PRODUCTS_COUNT_FOR_ORDER);
+    if (Number(target.value) > OrderProductCount.MaxCount) {
+      setFormData(OrderProductCount.MaxCount);
+      updateBasketProductsList(productCard, OrderProductCount.MaxCount);
     }
     else {
       setFormData(Number(target.value));
@@ -74,22 +74,22 @@ export const useBasket = (
 
   const handleInputBlur = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (!target.value) {
-      setFormData(MIN_PRODUCTS_COUNT_FOR_ORDER);
-      updateBasketProductsList(productCard, MIN_PRODUCTS_COUNT_FOR_ORDER);
+      setFormData(OrderProductCount.MinCount);
+      updateBasketProductsList(productCard, OrderProductCount.MinCount);
     }
   };
 
   const handleButtonClickPrev = () => {
 
-    validateProductsCount(formData - DEFAULT_STEP_PRODUCT_COUNT);
+    validateProductsCount(formData - OrderProductCount.MinCount);
   };
   const handleButtonClickNext = () => {
-    validateProductsCount(Number(formData) + DEFAULT_STEP_PRODUCT_COUNT);
+    validateProductsCount(Number(formData) + OrderProductCount.MinCount);
   };
 
   return [
     formData,
-    handleInputChangeProductCount,
+    handleInputChange,
     handleInputBlur,
     handleButtonClickPrev,
     handleButtonClickNext,

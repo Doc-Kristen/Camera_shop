@@ -8,6 +8,7 @@ type BreadcrumbsProps = {
 }
 
 const Breadcrumbs = ({ productName }: BreadcrumbsProps): JSX.Element => {
+
   const location = useLocation();
   const { id, pageNumber } = useParams();
 

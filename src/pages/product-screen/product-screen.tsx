@@ -24,6 +24,7 @@ const ProductScreen = (): JSX.Element => {
 
   const { id } = useParams();
   const ProductId = Number(id);
+
   const productDetailed = useAppSelector(getSelectedProduct);
   const currentCatalogProduct = useAppSelector(getCurrentCatalogProduct);
   const similarProducts = useAppSelector(getSimilarProducts);

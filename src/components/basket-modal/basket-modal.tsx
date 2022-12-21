@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { DEFAULT_STEP_PRODUCT_COUNT, MAX_PRODUCTS_COUNT_FOR_ORDER } from '../../helpers/const';
+import { OrderProductCount } from '../../helpers/const';
 import { isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus } from '../../store/action';
@@ -20,6 +20,7 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
     price,
     level,
     vendorCode,
+    type,
     previewImg,
     previewImg2x,
     previewImgWebp,
@@ -35,14 +36,14 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
       case true:
         basketProductsList.push({
           productCard: product,
-          countProductCards: DEFAULT_STEP_PRODUCT_COUNT
+          countProductCards: OrderProductCount.MinCount
         });
         dispatch(setBasketProducts(basketProductsList));
         break;
       case false:
         basketProductsList[indexAddedProduct] = {
           productCard: product,
-          countProductCards: (basketProductsList[indexAddedProduct].countProductCards + DEFAULT_STEP_PRODUCT_COUNT) < MAX_PRODUCTS_COUNT_FOR_ORDER ? basketProductsList[indexAddedProduct].countProductCards + DEFAULT_STEP_PRODUCT_COUNT : MAX_PRODUCTS_COUNT_FOR_ORDER
+          countProductCards: (basketProductsList[indexAddedProduct].countProductCards + OrderProductCount.MinCount) < OrderProductCount.MaxCount ? basketProductsList[indexAddedProduct].countProductCards + OrderProductCount.MinCount : OrderProductCount.MaxCount
         };
         dispatch(setBasketProducts(basketProductsList));
         break;
@@ -101,8 +102,8 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
               <ul className="basket-item__list">
                 <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">{category}</li>
-                <li className="basket-item__list-item">{level}</li>
+                <li className="basket-item__list-item">{`${type} ${(category === 'Фотоаппарат' ? 'Фотокамера' : category).toLowerCase()}`}</li>
+                <li className="basket-item__list-item">{`${level} уровень`}</li>
               </ul>
               <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
             </div>
@@ -141,4 +142,3 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
 };
 
 export default BasketModal;
-

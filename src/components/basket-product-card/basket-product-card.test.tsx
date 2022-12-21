@@ -9,11 +9,11 @@ import thunk from 'redux-thunk';
 import BasketProductCard from './basket-product-card';
 
 const mockBasketProduct = makeFakeBasketProduct();
+const mockBasketProducts = makeFakeBasketProducts();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const mockBasketProducts = makeFakeBasketProducts();
 
 const store = mockStore(
   {

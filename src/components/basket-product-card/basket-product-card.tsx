@@ -1,4 +1,4 @@
-import { MAX_PRODUCTS_COUNT_FOR_ORDER, MIN_PRODUCTS_COUNT_FOR_ORDER } from '../../helpers/const';
+import { OrderProductCount } from '../../helpers/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useBasket } from '../../hooks/use-basket';
 import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
@@ -28,7 +28,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
 
   const [
     formData,
-    handleInputChangeProductCount,
+    handleInputChange,
     handleInputBlur,
     handleButtonClickPrev,
     handleButtonClickNext
@@ -62,7 +62,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={handleButtonClickPrev}
-          disabled={isOrderPosted || formData === MIN_PRODUCTS_COUNT_FOR_ORDER}
+          disabled={isOrderPosted || formData === OrderProductCount.MinCount}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -72,7 +72,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
         <input
           type="number"
           id="counter1"
-          onChange={handleInputChangeProductCount}
+          onChange={handleInputChange}
           onBlur={handleInputBlur}
           value={countProducts}
           min="1" max="99"
@@ -83,7 +83,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
           onClick={handleButtonClickNext}
-          disabled={isOrderPosted || formData === MAX_PRODUCTS_COUNT_FOR_ORDER}
+          disabled={isOrderPosted || formData === OrderProductCount.MaxCount}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>

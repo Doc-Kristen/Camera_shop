@@ -80,7 +80,6 @@ describe('Component: BasketRemoveProductModal', () => {
     expect(screen.getByText(/This is component BasketRemoveProductModal/i)).toBeInTheDocument();
     expect(screen.queryByText(/Удалить этот товар?/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Добавить товар в корзину/i)).not.toBeInTheDocument();
-
   });
 
 });
