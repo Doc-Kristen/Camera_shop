@@ -52,7 +52,6 @@ type SortingProcess = {
 type BasketProcess = {
     isBasketModalOpened: boolean;
     isBasketRemoveProductModalOpened: boolean;
-    isBasketModalBlocked: boolean;
     isBasketSuccess: boolean;
     isCouponValid?: boolean;
     isCouponPosted: boolean;

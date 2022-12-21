@@ -5,6 +5,10 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import HistoryRoute from '../../components/history-route/history-route';
 import BasketScreen from './basket-screen';
+import { makeFakeBasketProducts } from '../../helpers/mock';
+import { CurrentCatalogPathType } from '../../types/query-parameters';
+
+const mockBasketProducts = makeFakeBasketProducts();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -12,8 +16,16 @@ const mockStore = configureMockStore(middlewares);
 
 const store = mockStore(
   {
-    REVIEW: { isReviewsError: true },
-    SEARCH: {}
+    SEARCH: {},
+    BASKET: {
+      isBasketRemoveProductModalOpened: false,
+      isOrderSuccess: false,
+      isOrderError: false,
+      basketProducts: mockBasketProducts
+    },
+    PATH: {
+      currentCatalogPath: {} as CurrentCatalogPathType,
+    }
   },
 );
 

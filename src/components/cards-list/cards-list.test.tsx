@@ -3,12 +3,13 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { makeFakeProducts } from '../../helpers/mock';
+import { makeFakeBasketProducts, makeFakeProducts } from '../../helpers/mock';
 import thunk from 'redux-thunk';
 import { Routes, Route } from 'react-router-dom';
 import CardsList from './cards-list';
 
 const mockProducts = makeFakeProducts();
+const mockBasketProducts = makeFakeBasketProducts();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -17,16 +18,17 @@ const mockStore = configureMockStore(middlewares);
 describe('Component: CardsList', () => {
 
   it('should render correctly', () => {
-    const store = mockStore(
-      {
-        DATA: {
-          isProductsError: false,
-          products: mockProducts
-        }
-      }
-    );
-
     history.push('/catalog/pages/1');
+
+    const store = mockStore({
+      DATA: {
+        isProductsError: false,
+        products: mockProducts
+      },
+      BASKET: {
+        basketProducts: mockBasketProducts
+      },
+    });
 
     render(
       <Provider

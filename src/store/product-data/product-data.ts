@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, ProductDetailsType } from '../../helpers/const';
 import { fetchProductsAction, fetchProductsByPriceAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
-import { setPriceRangeErrorStatus, setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
+import { setPriceRangeErrorStatus, setProductDetailsShown } from '../action';
 import { ProductData } from '../../types/state';
 import { Product } from '../../types/product';
 
@@ -69,9 +69,6 @@ export const productData = createSlice({
       .addCase(fetchSimilarProductsAction.rejected, (state) => {
         state.isDataLoaded = false;
         state.isSimilarProductError = true;
-      })
-      .addCase(setSelectedProductErrorStatus, (state, action) => {
-        state.isSelectedProductError = action.payload;
       })
       .addCase(fetchProductsByPriceAction.fulfilled, (state, action) => {
         state.isRangeByPriceError = false;

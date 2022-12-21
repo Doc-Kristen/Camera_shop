@@ -1,3 +1,4 @@
+import { BasketProduct, BasketProducts } from '../types/basket';
 import { Product, Products } from '../types/product';
 import { Promo } from '../types/promo';
 import { Review, Reviews } from '../types/review';
@@ -33,6 +34,14 @@ const makeFakeProduct = (): Product => ({
   reviewCount: 32
 } as Product);
 
+const makeFakeBasketProduct = () : BasketProduct => ({
+  productCard: makeFakeProduct(),
+  countProductCards: 1
+
+} as BasketProduct);
+
+const makeFakeBasketProducts = (): BasketProducts => Array.from({ length: 5 }, () => makeFakeBasketProduct());
+
 const makeFakeProducts = (): Products => Array.from({ length: 5 }, () => makeFakeProduct());
 
 const makeFakeReview = (): Review => ({
@@ -66,5 +75,7 @@ export {
   makeFakeProducts,
   makeFakeReview,
   makeFakeReviews,
-  makeFakePostedReview
+  makeFakePostedReview,
+  makeFakeBasketProduct,
+  makeFakeBasketProducts
 };

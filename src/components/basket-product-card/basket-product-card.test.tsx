@@ -3,21 +3,22 @@ import { createMemoryHistory } from 'history';
 import HistoryRoute from '../history-route/history-route';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { makeFakeBasketProducts, makeFakeProducts } from '../../helpers/mock';
+import { makeFakeBasketProduct, makeFakeBasketProducts } from '../../helpers/mock';
+import { ProductDetailsType } from '../../helpers/const';
 import thunk from 'redux-thunk';
-import ProductsSimilar from './products-similar';
+import BasketProductCard from './basket-product-card';
 
-const mockProducts = makeFakeProducts();
-const mockBasketProducts = makeFakeBasketProducts();
+const mockBasketProduct = makeFakeBasketProduct();
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const mockBasketProducts = makeFakeBasketProducts();
 
 const store = mockStore(
   {
     DATA: {
-      productsSimilarIsError: false
+      productDetails: ProductDetailsType.Description,
     },
     BASKET: {
       basketProducts: mockBasketProducts
@@ -25,7 +26,7 @@ const store = mockStore(
   }
 );
 
-describe('Component: ProductsSimilar', () => {
+describe('Component: BasketProductCard', () => {
   it('should render correctly', () => {
 
     render(
@@ -33,14 +34,16 @@ describe('Component: ProductsSimilar', () => {
         store={store}
       >
         <HistoryRoute history={history}>
-          <ProductsSimilar
-            productsSimilar={mockProducts}
+          <BasketProductCard
+            productCard={mockBasketProduct}
           />
         </HistoryRoute>
       </Provider>,
     );
 
-    expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
+    expect(screen.getByText(/Тестовое название камеры/i)).toBeInTheDocument();
+    expect(screen.getByTestId('basket-card-item')).toBeInTheDocument();
+
   });
 
 });

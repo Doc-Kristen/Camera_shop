@@ -1,7 +1,7 @@
 import { ProductDetailsType } from '../../helpers/const';
 import { makeFakeProduct, makeFakeProducts, makeFakePromo } from '../../helpers/mock';
 import { Product } from '../../types/product';
-import { setProductDetailsShown, setSelectedProductErrorStatus } from '../action';
+import { setProductDetailsShown } from '../action';
 import { fetchProductsAction, fetchProductsByPriceAction, fetchPromoAction, fetchSelectedProductAction, fetchSimilarProductsAction } from '../api-actions';
 import { productData } from './product-data';
 
@@ -30,40 +30,6 @@ describe('Reducer: productData', () => {
         isProductsError: false,
         isSimilarProductError: false,
         isSelectedProductError: false,
-        products: [],
-        minProductPrice: 'от',
-        maxProductPrice: 'до',
-        pagesCount: fakePagesCount,
-        similarProducts: [],
-        productDetails: ProductDetailsType.Description
-      });
-  });
-
-  it('should update isSelectedProductError when dispatch setSelectedProductErrorStatus', () => {
-    const state = {
-      isPromoError: false,
-      isDataLoaded: false,
-      isRangeByPriceError: false,
-      selectedProduct: {} as Product,
-      isProductsError: false,
-      isSimilarProductError: true,
-      isSelectedProductError: false,
-      products: [],
-      minProductPrice: 'от',
-      maxProductPrice: 'до',
-      pagesCount: fakePagesCount,
-      similarProducts: [],
-      productDetails: ProductDetailsType.Description
-    };
-    expect(productData.reducer(state, setSelectedProductErrorStatus(true)))
-      .toEqual({
-        isPromoError: false,
-        isDataLoaded: false,
-        isRangeByPriceError: false,
-        selectedProduct: {} as Product,
-        isProductsError: false,
-        isSimilarProductError: true,
-        isSelectedProductError: true,
         products: [],
         minProductPrice: 'от',
         maxProductPrice: 'до',

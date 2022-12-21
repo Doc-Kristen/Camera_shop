@@ -1,16 +1,20 @@
-import {render, screen} from '@testing-library/react';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
+import { render, screen } from '@testing-library/react';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
 import HistoryRoute from '../history-route/history-route';
 import App from './app';
 import { AppRoute } from '../../helpers/const';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
 
 const mockStore = configureMockStore();
 
-const store = mockStore({});
+const store = mockStore({
+  BASKET: {
+    isOrderError: false
+  }
+});
 
 const history = createMemoryHistory();
 
@@ -32,7 +36,7 @@ describe('Application Routing', () => {
           <Routes>
             <Route
               path={'/'}
-              element={<MainScreen/>}
+              element={<MainScreen />}
             />
             <Route
               path={'/'}

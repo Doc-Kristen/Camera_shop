@@ -8,6 +8,7 @@ import ProductScreen from './product-screen';
 import HistoryRoute from '../../components/history-route/history-route';
 import { makeFakeProduct, makeFakeProducts, makeFakeReviews } from '../../helpers/mock';
 import { CurrentCatalogPathType } from '../../types/query-parameters';
+import { BasketProducts } from '../../types/basket';
 
 const mockSelectedProduct = makeFakeProduct();
 const mockReviews = makeFakeReviews();
@@ -40,7 +41,12 @@ const store = mockStore(
     },
     PATH: {
       currentCatalogPath: {} as CurrentCatalogPathType
-    }
+    },
+    BASKET: {
+      isBasketModalOpened: false,
+      isBasketSuccess: false,
+      basketProducts: [] as BasketProducts,
+    },
   }
 );
 

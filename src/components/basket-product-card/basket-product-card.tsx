@@ -37,7 +37,10 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
   const countProducts = formData ? formData : '';
 
   return (
-    <li className="basket-item">
+    <li
+      className="basket-item"
+      data-testid="basket-card-item"
+    >
       <div className="basket-item__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImg}, /${previewImgWebp}, /${previewImgWebp2x} 2x`} />

@@ -9,7 +9,6 @@ import { sendCoupon, sendOrder } from '../api-actions';
 const initialState: BasketProcess = {
   isBasketModalOpened: false,
   isBasketRemoveProductModalOpened: false,
-  isBasketModalBlocked: false,
   isBasketSuccess: false,
   isCouponPosted: false,
   isOrderSuccess: false,

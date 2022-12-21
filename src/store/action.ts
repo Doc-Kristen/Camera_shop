@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { BasketProduct, BasketProducts } from '../types/basket';
+import { BasketProducts } from '../types/basket';
 import { Product } from '../types/product';
 import { CurrentCatalogPathType } from '../types/query-parameters';
 
@@ -20,11 +20,7 @@ const Action = {
   REMOVE_SEARCHED_PRODUCTS: 'REMOVE_SEARCHED_PRODUCTS',
   SET_CURRENT_CATALOG_PATH: 'SET_CURRENT_CATALOG_PATH',
   SET_CURRENT_CATALOG_PRODUCT: 'SET_CURRENT_CATALOG_PRODUCT',
-  RESET_PRICE_RANGE: 'RESET_PRICE_RANGE',
-  SET_TOTAL_PRICE_BASKET_PRODUCTS: 'SET_TOTAL_PRICE_BASKET_PRODUCTS',
-  SET_BASKET_PRODUCT: 'SET_BASKET_PRODUCT',
   SET_BASKET_PRODUCTS: 'SET_BASKET_PRODUCTS',
-  SET_DISCOUNT_PERCENT: 'SET_DISCOUNT_PERCENT',
   SET_COUPON: 'SET_COUPON',
   SET_STATUS_COUPON: 'SET_STATUS_COUPON'
 };
@@ -85,11 +81,6 @@ const setPriceRangeErrorStatus = createAction(Action.SET_PRICE_RANGE_ERROR_STATU
     payload: value,
   }));
 
-const setSelectedProductErrorStatus = createAction(Action.SET_SELECTED_PRODUCT_ERROR_STATUS, (value: boolean) => (
-  {
-    payload: value,
-  }));
-
 const setProductDetailsShown = createAction(Action.PRODUCT_DETAILS_SHOWN, (value: string) => (
   {
     payload: value,
@@ -110,22 +101,7 @@ const setCurrentCatalogProduct = createAction(Action.SET_CURRENT_CATALOG_PRODUCT
     payload: value,
   }));
 
-const setTotalPriceBasketProduct = createAction(Action.SET_TOTAL_PRICE_BASKET_PRODUCTS, (value: number) => (
-  {
-    payload: value,
-  }));
-
-const setBasketProduct = createAction(Action.SET_BASKET_PRODUCT, (value: BasketProduct) => (
-  {
-    payload: value,
-  }));
-
 const setBasketProducts = createAction(Action.SET_BASKET_PRODUCTS, (value: BasketProducts) => (
-  {
-    payload: value,
-  }));
-
-const setDiscountPercent = createAction(Action.SET_DISCOUNT_PERCENT, (value: number) => (
   {
     payload: value,
   }));
@@ -147,7 +123,6 @@ export {
   setReviewErrorStatus,
   setSuccessOpeningStatus,
   setOrderSuccesStatus,
-  setSelectedProductErrorStatus,
   setProductDetailsShown,
   removeSearchedProducts,
   setCurrentCatalogPath,
@@ -157,11 +132,8 @@ export {
   setOrderErrorStatus,
   setBasketSuccessOpeningStatus,
   setCurrentCatalogProduct,
-  setTotalPriceBasketProduct,
   setBasketRemoveProductModalOpeningStatus,
-  setBasketProduct,
   setBasketProducts,
-  setDiscountPercent,
   setCoupon,
   setStatusCoupon
 };

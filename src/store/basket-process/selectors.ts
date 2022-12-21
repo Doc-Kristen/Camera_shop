@@ -7,8 +7,6 @@ export const getBasketModalOpenedStatus = (state: State): boolean => state[NameS
 
 export const getBasketModalRemoveOpenedStatus = (state : State) : boolean => state[NameSpace.Basket].isBasketRemoveProductModalOpened;
 
-export const getOrderBlockedStatus = (state: State): boolean => state[NameSpace.Basket].isBasketModalBlocked;
-
 export const getBasketSuccessStatus = (state: State): boolean => state[NameSpace.Basket].isBasketSuccess;
 
 export const getCouponPostedStatus = (state : State) : boolean => state[NameSpace.Basket].isCouponPosted;

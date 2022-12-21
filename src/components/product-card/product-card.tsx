@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProductDetails } from '../../store/product-data/selectors';
 import { AppRoute } from '../../helpers/const';
 import { getBasketProducts } from '../../store/basket-process/selectors';
-import { setBasketModalOpeningStatus, setBasketProduct, setCurrentCatalogProduct } from '../../store/action';
+import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
 
 type ProductCardProps = {
   productCard: Product;
@@ -56,16 +56,15 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
             type="button"
             onClick={() => {
               dispatch(setCurrentCatalogProduct(productCard));
-              dispatch(setBasketProduct({
-                productCard: productCard,
-                countProductCards: 1
-              }));
               dispatch(setBasketModalOpeningStatus(true));
             }}
           >Купить
           </button>
       }
-      <Link className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}>Подробнее
+      <Link
+        data-testid="link-more-details"
+        className="btn btn--transparent" to={`/catalog/${id}/${productDetails}`}
+      >Подробнее
       </Link>
       </div>
     </div>

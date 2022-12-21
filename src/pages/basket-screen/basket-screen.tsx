@@ -1,7 +1,7 @@
 import BasketProductCard from '../../components/basket-product-card/basket-product-card';
 import BasketPromo from '../../components/basket-promo/basket-promo';
 import BasketRemoveProductModal from '../../components/basket-remove-product-modal/basket-remove-product-modal';
-import BasketSuccessOrderModal from '../../components/basket-succes-order-modal/basket-succes-order-modal';
+import BasketSuccessOrderModal from '../../components/basket-success-order-modal/basket-succes-order-modal';
 import BasketSummary from '../../components/basket-summary/basket-summary';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
@@ -17,7 +17,7 @@ const BasketScreen = (): JSX.Element => {
   const isModalOpened = useAppSelector(getBasketModalRemoveOpenedStatus);
   const isOrderSuccess = useAppSelector(getOrderSuccessStatus);
   const isOrderError = useAppSelector(getErrorOrderStatus);
-  let counter = 1;
+  const counter = 1;
 
   const basketProductsList = useAppSelector(getBasketProducts).slice();
 
@@ -38,15 +38,13 @@ const BasketScreen = (): JSX.Element => {
               <div className="container">
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
-                  {
-                    basketProductsList.map((product: BasketProduct) =>
-                      (
-                        <BasketProductCard
-                          key={`basket-${product.productCard.id}-${counter++}`}
-                          productCard={product}
-                        />)
-                    )
-                  }
+                  {basketProductsList ? basketProductsList.map((product : BasketProduct) =>
+                    (
+                      <BasketProductCard
+                        key={product.productCard.id + counter}
+                        productCard={product}
+                      />)
+                  ) : null}
                 </ul>
                 <div className="basket__summary">
                   <BasketPromo />

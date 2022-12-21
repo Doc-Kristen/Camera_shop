@@ -12,8 +12,12 @@ const Pagination = ({ pagesCount }: PaginationProps): JSX.Element => {
 
   return (
 
-    <div className="pagination">
-      <ul className="pagination__list">
+    <div
+      className="pagination"
+    >
+      <ul className="pagination__list"
+        data-testid="catalog-pagination"
+      >
         {currentPage !== DEFAULT_PAGE &&
           <li className="pagination__item">
             <Link className="pagination__link pagination__link--text"

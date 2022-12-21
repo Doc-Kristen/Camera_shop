@@ -11,7 +11,10 @@ const NotFoundScreen = (): JSX.Element => {
   if (isOrderError) {
     return (
       <main>
-        <div className='error-container'>
+        <div
+          data-testid="error-order"
+          className='error-container'
+        >
           <h1>Что-то пошло не так...</h1>
           <p>Попробуйте отправить заказа снова, либо зайдите позже.</p>
           <Link
@@ -28,7 +31,10 @@ const NotFoundScreen = (): JSX.Element => {
   }
   return (
     <main>
-      <div className='error-container'>
+      <div
+        className='error-container'
+        data-testid="page-not-found"
+      >
         <h1>404 Not Found</h1>
         <Link className='btn' to={AppRoute.Main}>Перейти на главную страницу</Link>
       </div>

@@ -53,6 +53,7 @@ const BasketPromo = (): JSX.Element => {
           <div className={`${couponClassName}`}>
             <label><span className="custom-input__label">Промокод</span>
               <input
+                data-testid="input-basket-promo"
                 type="text"
                 name="promo"
                 placeholder="Введите промокод"

@@ -4,11 +4,10 @@ import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import HistoryRoute from '../../components/history-route/history-route';
-import CatalogScreen from './catalog-screen';
 import { CurrentCatalogPathType } from '../../types/query-parameters';
-import { BasketProducts } from '../../types/basket';
+import Pagination from './pagination';
 
-const fakePagesCount = 0;
+const fakePagesCount = 5;
 
 const history = createMemoryHistory();
 const middlewares = [thunk];
@@ -20,16 +19,11 @@ const store = mockStore(
     SEARCH: {},
     PATH: {
       currentCatalogPath: {} as CurrentCatalogPathType
-    },
-    BASKET: {
-      isBasketModalOpened: false,
-      isBasketSuccess: false,
-      basketProducts: [] as BasketProducts,
-    },
+    }
   },
 );
 
-describe('Component: CatalogScreen', () => {
+describe('Component: Pagination', () => {
   it('should render correctly', () => {
 
     render(
@@ -37,13 +31,13 @@ describe('Component: CatalogScreen', () => {
         store={store}
       >
         <HistoryRoute history={history}>
-          <CatalogScreen />
+          <Pagination
+            pagesCount={fakePagesCount}
+          />
         </HistoryRoute>
       </Provider>,
     );
 
-    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
-
+    expect(screen.getByTestId('catalog-pagination')).toBeInTheDocument();
   });
-
 });

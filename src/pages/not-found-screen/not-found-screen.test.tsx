@@ -13,15 +13,23 @@ const history = createMemoryHistory();
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const store = mockStore({});
+const store = mockStore({
+  BASKET: {
+    isOrderError: false
+  }
+});
 
 describe('Component: NotFoundSceen', () => {
   it('should render correctly', () => {
 
     render(
-      <HistoryRoute history={history}>
-        <NotFoundScreen />
-      </HistoryRoute>,
+      <Provider
+        store={store}
+      >
+        <HistoryRoute history={history}>
+          <NotFoundScreen />
+        </HistoryRoute>
+      </Provider>
     );
 
     expect(screen.getByRole('link')).toBeInTheDocument();
