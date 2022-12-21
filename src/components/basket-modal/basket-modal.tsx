@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { OrderProductCount } from '../../helpers/const';
-import { isKeyPressed } from '../../helpers/utils';
+import { changeFormatNumber, isKeyPressed } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setBasketModalOpeningStatus, setBasketProducts, setBasketSuccessOpeningStatus } from '../../store/action';
 import { getBasketProducts } from '../../store/basket-process/selectors';
@@ -105,7 +105,7 @@ const BasketModal = ({ productCard }: BasketModalProps): JSX.Element => {
                 <li className="basket-item__list-item">{`${type} ${(category === 'Фотоаппарат' ? 'Фотокамера' : category).toLowerCase()}`}</li>
                 <li className="basket-item__list-item">{`${level} уровень`}</li>
               </ul>
-              <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
+              <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{changeFormatNumber(price)} ₽</p>
             </div>
           </div>
           <div className="modal__buttons">

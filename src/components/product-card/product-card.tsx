@@ -6,6 +6,7 @@ import { getProductDetails } from '../../store/product-data/selectors';
 import { AppRoute } from '../../helpers/const';
 import { getBasketProducts } from '../../store/basket-process/selectors';
 import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
+import { changeFormatNumber } from '../../helpers/utils';
 
 type ProductCardProps = {
   productCard: Product;
@@ -41,7 +42,7 @@ const ProductCard = ({ productCard, isActive }: ProductCardProps): JSX.Element =
           productCard={productCard}
         />
         <p className="product-card__title">{name}</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{changeFormatNumber(price)} ₽
         </p>
       </div>
       <div className="product-card__buttons"> {

@@ -1,4 +1,5 @@
 import { OrderProductCount } from '../../helpers/const';
+import { changeFormatNumber } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useBasket } from '../../hooks/use-basket';
 import { setBasketRemoveProductModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
@@ -17,6 +18,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
     name,
     price,
     level,
+    type,
     vendorCode,
     previewImg,
     previewImg2x,
@@ -52,11 +54,11 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
         <ul className="basket-item__list">
           <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
           </li>
-          <li className="basket-item__list-item">{category}</li>
-          <li className="basket-item__list-item">{level}</li>
+          <li className="basket-item__list-item">{`${type} ${(category === 'Фотоаппарат' ? 'Фотокамера' : category).toLowerCase()}`}</li>
+          <li className="basket-item__list-item">{`${level} уровень`}</li>
         </ul>
       </div>
-      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
+      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{changeFormatNumber(price)} ₽</p>
       <div className="quantity">
         <button
           className="btn-icon btn-icon--prev"
@@ -90,7 +92,7 @@ const BasketProductCard = ({ productCard }: BasketProductCardProps): JSX.Element
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * productCard.countProductCards} ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{changeFormatNumber(price * productCard.countProductCards)} ₽</div>
       <button
         className="cross-btn" type="button"
         aria-label="Удалить товар"

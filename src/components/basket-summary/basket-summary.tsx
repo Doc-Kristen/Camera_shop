@@ -1,4 +1,5 @@
 import React from 'react';
+import { changeFormatNumber } from '../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendOrder } from '../../store/api-actions';
 import { getBasketProducts, getCoupon, getDiscountPercent, getOrderPostedStatus } from '../../store/basket-process/selectors';
@@ -37,9 +38,9 @@ const BasketSummary = (): JSX.Element => {
 
   return (
     <div className="basket__summary-order">
-      <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{priceAllBasketProducts} ₽</span></p>
-      <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${validCoupon ? 'basket__summary-value--bonus' : ''}`}>{discount} ₽</span></p>
-      <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{finalPrice} ₽</span></p>
+      <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{changeFormatNumber(priceAllBasketProducts)} ₽</span></p>
+      <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${validCoupon ? 'basket__summary-value--bonus' : ''}`}>{changeFormatNumber(discount)} ₽</span></p>
+      <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{changeFormatNumber(finalPrice)} ₽</span></p>
       <button
         className="btn btn--purple"
         type='button'

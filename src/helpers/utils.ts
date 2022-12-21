@@ -31,11 +31,16 @@ const disableBackgroundScrolling = (modalOpeningStatus : boolean) => {
   }
 };
 
+// Добавление пробела в числах
+
+const changeFormatNumber = (number : number) => new Intl.NumberFormat('ru-RU').format(number);
+
 export {
   humanizeDueDate,
   getRussifiedDate,
   sortReviewsDayDown,
   isKeyPressed,
-  disableBackgroundScrolling
+  disableBackgroundScrolling,
+  changeFormatNumber
 };
 

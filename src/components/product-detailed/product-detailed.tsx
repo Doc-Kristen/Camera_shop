@@ -1,3 +1,4 @@
+import { changeFormatNumber } from '../../helpers/utils';
 import { useAppDispatch } from '../../hooks';
 import { setBasketModalOpeningStatus, setCurrentCatalogProduct } from '../../store/action';
 import { Product } from '../../types/product';
@@ -34,7 +35,7 @@ const ProductDetailed = ({ productDetailed }: ProductDetailedProps): JSX.Element
           <Rating
             productCard={productDetailed}
           />
-          <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
+          <p className="product__price"><span className="visually-hidden">Цена:</span>{changeFormatNumber(price)} ₽</p>
           <button
             className="btn btn--purple"
             type="button"
