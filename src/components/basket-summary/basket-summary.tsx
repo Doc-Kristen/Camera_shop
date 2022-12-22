@@ -24,7 +24,7 @@ const BasketSummary = (): JSX.Element => {
   const basketProductsIds = basketProducts.map(
     (item: BasketProduct) => Array(item.countProductCards as unknown as number[]).fill(item.productCard.id as unknown as number[])).join().split(seperator).map((item) => Number(item));
 
-  const discount = Math.round(discountPercent ? priceAllBasketProducts * discountPercent / 100 : 0);
+  const discount = validCoupon ? Math.round(discountPercent ? priceAllBasketProducts * discountPercent / 100 : 0) : 0;
 
   const finalPrice = priceAllBasketProducts - discount;
 

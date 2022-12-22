@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '.';
 import { couponRegExp } from '../helpers/const';
-import { setStatusCoupon } from '../store/action';
+import { setCoupon, setStatusCoupon } from '../store/action';
 import { sendCoupon } from '../store/api-actions';
 import { Coupon } from '../types/order';
 
@@ -28,6 +28,7 @@ export const useBasketPromo = (formContentDefault: Coupon): ResultUseBasketPromo
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     dispatch(setStatusCoupon(undefined));
+    dispatch(setCoupon(''));
     setFormData({ ...formData, coupon: (target.value).replace(couponRegExp, '') });
 
   };
