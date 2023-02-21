@@ -1,6 +1,12 @@
 Сайт разработан в рамках практического этапа "Акселератор" от HTML-Academy. Самостоятельно написана "логика" проекта.
 Стек: TypeScript, React, Jest.
 
+---
+
+[Посмотреть демо](http://mishchenko-camera-shop.vercel.app/)
+
+---
+
 # Руководство по работе с проектом
 
 Данный проект создан с помощью [Create React App](https://github.com/facebook/create-react-app).
